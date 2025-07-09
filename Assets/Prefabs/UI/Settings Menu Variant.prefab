@@ -416,6 +416,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -130
       objectReference: {fileID: 0}
+    - target: {fileID: 7323983295777561338, guid: 615e898d05287c0469f547b2f594473e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7579646782695690600, guid: 615e898d05287c0469f547b2f594473e, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -564,71 +568,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4487438875936547637, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7689571317387743813}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
 --- !u!224 &1392071118862469519 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8337620697582927038, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
   m_PrefabInstance: {fileID: 6981859902813582641}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1491402817028814394 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8382899175720469259, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
-  m_PrefabInstance: {fileID: 6981859902813582641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &2722883989364609576 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4984688847449368345, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
-  m_PrefabInstance: {fileID: 6981859902813582641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
---- !u!114 &3454428862263623172 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5698201592301046581, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
-  m_PrefabInstance: {fileID: 6981859902813582641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
---- !u!1 &6819040783707330052 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4487438875936547637, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}
-  m_PrefabInstance: {fileID: 6981859902813582641}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7689571317387743813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6819040783707330052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db4ebd8839142e418975387cf74be9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QualitySettingsItem
-  selectionHint: {fileID: 0}
-  descriptionMessage: {fileID: 11400000, guid: efb8a8fa961df8a4e8d2e2219a085b39, type: 2}
-  selectedScale: {x: 1.05, y: 1.05, z: 1.05}
-  animationTime: 0.15
-  itemText: {fileID: 1491402817028814394}
-  previousButton: {fileID: 3454428862263623172}
-  nextButton: {fileID: 2722883989364609576}
-  graphicsData: {fileID: 11400000, guid: 2713071e346e98a46b638ec348cfdc8e, type: 2}

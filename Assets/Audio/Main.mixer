@@ -45,11 +45,11 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 41c9e2e90ba5c1e42a5de7f0207375f4
-    name: MainVolume
+    name: GeneralVolume
   - guid: b96326cd4f22167408d885245a45edeb
     name: MusicVolume
   - guid: 38a2c49c2ade3244ca6416ffe22440dd
-    name: SFXVolume
+    name: EffectsVolume
   m_AudioMixerGroupViews:
   - guids:
     - 42ea56d04196d544088643c47071f3ee
@@ -129,7 +129,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SFX
+  m_Name: Effects
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 8296bdc1dbd47d148bc4d4c50d488057
   m_Children: []

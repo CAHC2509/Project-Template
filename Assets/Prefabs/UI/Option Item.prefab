@@ -624,7 +624,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 758120297496691820, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
       propertyPath: m_text
-      value: 1920x1080
+      value: -----
       objectReference: {fileID: 0}
     - target: {fileID: 758120297496691820, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
       propertyPath: m_sharedMaterial
