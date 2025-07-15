@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Inputs_es
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 680b333af882afa4eb418f3c2a3819a6, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4530197076785234148
+  m_TableData:
+  - m_Id: 7220133888
+    m_Localized: Arriba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 217589645312
+    m_Localized: Abajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277656272896
+    m_Localized: Izquierda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 318034837504
+    m_Localized: Derecha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377564594176
+    m_Localized: Interactuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440747589632
+    m_Localized: Reiniciar controles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7443523993600
+    m_Localized: Presiona "Esc" para cancelar y cerrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14786248736768
+    m_Localized: Selecciona una nueva tecla para {displayName}, la tecla actual es
+      {displayKey}
+    m_Metadata:
+      m_Items:
+      - rid: 4530197076785234148
+  - m_Id: 41317624872960
+    m_Localized: "La tecla que presionaste ya est\xE1 en uso, selecciona una diferente"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4530197076785234148
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 14786248736768

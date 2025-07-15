@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8420257643669760626}
   - component: {fileID: 4931712061840310723}
   - component: {fileID: 5659686502466896016}
+  - component: {fileID: 6204159862480081085}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -96,7 +97,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
@@ -121,6 +122,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6204159862480081085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808394096543057354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a537268a9ecc3844e8e1cb4dc777624a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
+  selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
+  button: {fileID: 5659686502466896016}
+  mainImages:
+  - {fileID: 4931712061840310723}
+  secondaryImages: []
+  texts:
+  - {fileID: 7570487777160377189}
 --- !u!1001 &7172726643811251977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,3 +259,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4670078400794517624, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
   m_PrefabInstance: {fileID: 7172726643811251977}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7570487777160377189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 758120297496691820, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
+  m_PrefabInstance: {fileID: 7172726643811251977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI

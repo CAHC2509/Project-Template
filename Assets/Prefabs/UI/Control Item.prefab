@@ -165,7 +165,8 @@ GameObject:
   - component: {fileID: 6046960840837107751}
   - component: {fileID: 1453837602737366371}
   - component: {fileID: 6580599551629493512}
-  - component: {fileID: 6224803219307497802}
+  - component: {fileID: 8153329215631509007}
+  - component: {fileID: 9080986369033174535}
   m_Layer: 5
   m_Name: Control Item
   m_TagString: Untagged
@@ -251,7 +252,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
@@ -276,7 +277,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6224803219307497802
+--- !u!114 &8153329215631509007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,11 +286,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 5286491864154875725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5555522de387b8d4f86708f7140c1885, type: 3}
+  m_Script: {fileID: 11500000, guid: 157579fb83f494f4a84431a98f61c669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IndividualInputRebinder
   assignedInput: {fileID: 0}
+  inputNameText: {fileID: 8664131560040527377}
   inputBindingText: {fileID: 121154574761661214}
+--- !u!114 &9080986369033174535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286491864154875725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a537268a9ecc3844e8e1cb4dc777624a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
+  selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
+  button: {fileID: 6580599551629493512}
+  mainImages:
+  - {fileID: 1453837602737366371}
+  secondaryImages:
+  - {fileID: 3570806047432876606}
+  texts:
+  - {fileID: 8664131560040527377}
+  - {fileID: 121154574761661214}
 --- !u!1 &8092278208858851708
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,3 +635,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4670078400794517624, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
   m_PrefabInstance: {fileID: 8266444918159487613}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8664131560040527377 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 758120297496691820, guid: a562a6698d9bdac4c937bffe16f9e196, type: 3}
+  m_PrefabInstance: {fileID: 8266444918159487613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI

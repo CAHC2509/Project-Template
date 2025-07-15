@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Settings Menu Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Settings Menu
+  m_TableCollectionNameGuidString: 40f6f0d40e2cd3046850a061ee570da8
+  m_Entries:
+  - m_Id: 92356116480
+    m_Key: settings.mainTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 455880638464
+    m_Key: settings.graphicsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 535895375872
+    m_Key: settings.audioButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633962397696
+    m_Key: settings.controlsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 715239620608
+    m_Key: settings.languageButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1304044404736
+    m_Key: settings.resolutionButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1428858503168
+    m_Key: settings.qualityButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1497989021696
+    m_Key: settings.fullScreenButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1942358753280
+    m_Key: settings.mainVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2033517756416
+    m_Key: settings.musicVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2088920317952
+    m_Key: settings.effectsVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2747820310528
+    m_Key: settings.closeButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7985537122304
+    m_Key: settings.description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4530197076785233944
+  references:
+    version: 2
+    RefIds:
+    - rid: 4530197076785233944
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1752245543254

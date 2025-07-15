@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Settings Menu_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 40f6f0d40e2cd3046850a061ee570da8, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 92356116480
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 455880638464
+    m_Localized: Graphics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 535895375872
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633962397696
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 715239620608
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1304044404736
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1428858503168
+    m_Localized: Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1497989021696
+    m_Localized: Full screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1942358753280
+    m_Localized: Main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2033517756416
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2088920317952
+    m_Localized: Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2747820310528
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7985537122304
+    m_Localized: Description
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

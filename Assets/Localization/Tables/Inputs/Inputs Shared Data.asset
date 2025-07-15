@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Inputs Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Inputs
+  m_TableCollectionNameGuidString: 680b333af882afa4eb418f3c2a3819a6
+  m_Entries:
+  - m_Id: 7220133888
+    m_Key: inputs.upInput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 217589645312
+    m_Key: inputs.downInput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277656272896
+    m_Key: inputs.leftInput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 318034837504
+    m_Key: inputs.rightInput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377564594176
+    m_Key: inputs.interactInput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440747589632
+    m_Key: inputs.resetButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7443523993600
+    m_Key: inputs.cancelHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14786248736768
+    m_Key: inputs.rebindHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41317624872960
+    m_Key: inputs.invalidRebind
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4530197076785233945
+  references:
+    version: 2
+    RefIds:
+    - rid: 4530197076785233945
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1752246174984
