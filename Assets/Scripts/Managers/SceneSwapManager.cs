@@ -43,6 +43,18 @@ public class SceneSwapManager : MonoBehaviour
         }
     }
 
+    public void SetActiveScene(SceneField scene)
+    {
+        if (IsSceneActive(scene))
+        {
+            Scene sceneToActivate = SceneManager.GetSceneByName(scene.SceneName);
+
+            if (sceneToActivate != null)
+                SceneManager.SetActiveScene(sceneToActivate);
+        }
+    }
+
+
     private IEnumerator LoadScenesWithFadeOut_Coroutine(List<SceneField> scenes)
     {
         yield return FadeInAndShowLoading();
