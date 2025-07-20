@@ -19,6 +19,10 @@ public class VerticalLoopNavigation : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++)
         {
             Navigation nav = buttons[i].navigation;
+
+            if (nav.mode == Navigation.Mode.Explicit)
+                continue;
+
             nav.mode = Navigation.Mode.Explicit;
 
             int upIndex = (i - 1 + buttons.Count) % buttons.Count;

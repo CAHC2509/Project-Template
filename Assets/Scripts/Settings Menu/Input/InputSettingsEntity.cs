@@ -4,8 +4,12 @@ using UnityEngine.InputSystem;
 
 public class InputSettingsEntity : MonoBehaviour
 {
+    public enum InputDeviceType { KeyboardMouse, Gamepad }
+
     public InputActionReference InputActionToRebind { get; private set; }
     public string InputActionToRebindName { get; private set; }
+    public string InputActionToRebindKey { get; private set; }
+    public InputDeviceType DeviceTypeToRebind { get; private set; }
 
     public event Action OnRebindRequest;
     public event Action OnRebindComplete;
@@ -13,10 +17,12 @@ public class InputSettingsEntity : MonoBehaviour
     public event Action OnRebindCancel;
     public event Action OnRebindsReset;
 
-    public void CreateNewRebindRequest(InputActionReference inputActionReference, string inputActionName)
+    public void CreateNewRebindRequest(InputActionReference inputActionReference, string inputActionName, string inputActionKey, InputDeviceType deviceType)
     {
         InputActionToRebind = inputActionReference;
         InputActionToRebindName = inputActionName;
+        InputActionToRebindKey = inputActionKey;
+        DeviceTypeToRebind = deviceType;
         OnRebindRequest?.Invoke();
     }
 
@@ -42,6 +48,7 @@ public class InputSettingsEntity : MonoBehaviour
     {
         InputActionToRebind = null;
         InputActionToRebindName = string.Empty;
+        InputActionToRebindKey = string.Empty;
     }
 
     public void ResetRebinds() => OnRebindsReset?.Invoke();

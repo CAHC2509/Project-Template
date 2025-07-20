@@ -7,12 +7,14 @@ public class InputSettingsController : MonoBehaviour, ISettings
 {
     [SerializeField] private InputActionAsset inputActionAsset;
     [SerializeField] private InputSettingsView view;
-    [SerializeField] private Transform inputActionsParent;
+    [SerializeField] private Transform inputActionsKeyboardParent;
+    [SerializeField] private Transform inputActionsGamepadParent;
 
     private const string INPUT_ACTIONS_KEY = "InputActions";
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
-    private List<IndividualInputRebinder> inputRebinders = new List<IndividualInputRebinder>();
+    private List<IndividualInputRebinder> inputRebindersKeyboard = new List<IndividualInputRebinder>();
+    private List<IndividualInputRebinder> inputRebindersGamepad = new List<IndividualInputRebinder>();
     private InputSettingsEntity inputSettings;
 
     private void Awake() => GameManager.OnInitialization += OnInitialization;
@@ -35,27 +37,39 @@ public class InputSettingsController : MonoBehaviour, ISettings
 
     private void GetInputRebinders()
     {
-        inputRebinders.Clear();
-        inputRebinders = inputActionsParent.GetComponentsInChildren<IndividualInputRebinder>().ToList();
+        inputRebindersKeyboard.Clear();
+        inputRebindersGamepad.Clear();
+
+        inputRebindersKeyboard = inputActionsKeyboardParent.GetComponentsInChildren<IndividualInputRebinder>().ToList();
+        inputRebindersGamepad = inputActionsGamepadParent.GetComponentsInChildren<IndividualInputRebinder>().ToList();
     }
 
     private void InitializeInputRebinders()
     {
-        foreach (IndividualInputRebinder rebinder in inputRebinders)
+        foreach (var rebinder in inputRebindersKeyboard)
+            rebinder.Initialize(inputSettings);
+
+        foreach (var rebinder in inputRebindersGamepad)
             rebinder.Initialize(inputSettings);
     }
 
     private void PerformRebind()
     {
-        int bindingIndex = 0;
-
         var actionToRebind = inputSettings.InputActionToRebind.action;
         var actionMap = actionToRebind.actionMap;
+
+        int bindingIndex = FindBindingIndexForDeviceType(actionToRebind, inputSettings.DeviceTypeToRebind);
+
+        if (bindingIndex == -1)
+        {
+            Debug.LogWarning("No binding found for the specified device type.");
+            return;
+        }
 
         actionMap.Disable();
 
         rebindingOperation = actionToRebind.PerformInteractiveRebinding(bindingIndex)
-            .WithCancelingThrough("<Keyboard>/escape")
+            .WithCancelingThrough("*/{Cancel}")
             .OnComplete(operation =>
             {
                 string newBindingPath = actionToRebind.bindings[bindingIndex].effectivePath;
@@ -94,6 +108,26 @@ public class InputSettingsController : MonoBehaviour, ISettings
             .Start();
     }
 
+    private int FindBindingIndexForDeviceType(InputAction action, InputSettingsEntity.InputDeviceType deviceType)
+    {
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            var binding = action.bindings[i];
+            if (binding.isComposite || binding.isPartOfComposite)
+                continue;
+
+            string path = binding.effectivePath.ToLower();
+
+            if (deviceType == InputSettingsEntity.InputDeviceType.Gamepad && path.Contains("gamepad"))
+                return i;
+
+            if (deviceType == InputSettingsEntity.InputDeviceType.KeyboardMouse &&
+                (path.Contains("keyboard") || path.Contains("mouse")))
+                return i;
+        }
+
+        return -1;
+    }
 
     private void ResetToDefaults()
     {

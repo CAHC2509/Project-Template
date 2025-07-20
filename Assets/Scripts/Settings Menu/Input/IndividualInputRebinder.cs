@@ -9,6 +9,7 @@ public class IndividualInputRebinder : MonoBehaviour
     [SerializeField] private InputActionReference assignedInput;
     [SerializeField] private TextMeshProUGUI inputNameText;
     [SerializeField] private TextMeshProUGUI inputBindingText;
+    [SerializeField] private InputSettingsEntity.InputDeviceType deviceType;
 
     private InputSettingsEntity inputSettings;
     private Button assignedButton;
@@ -35,10 +36,22 @@ public class IndividualInputRebinder : MonoBehaviour
 
         for (int i = 0; i < bindings.Count; i++)
         {
-            if (!bindings[i].isComposite && !bindings[i].isPartOfComposite)
+            if (bindings[i].isComposite || bindings[i].isPartOfComposite)
+                continue;
+
+            string path = bindings[i].effectivePath;
+
+            if (string.IsNullOrEmpty(path))
+                continue;
+
+            bool isGamepad = path.Contains("Gamepad");
+            bool isKeyboard = path.Contains("Keyboard") || path.Contains("Mouse");
+
+            if ((deviceType == InputSettingsEntity.InputDeviceType.Gamepad && isGamepad) ||
+                (deviceType == InputSettingsEntity.InputDeviceType.KeyboardMouse && isKeyboard))
             {
                 string displayString = InputControlPath.ToHumanReadableString(
-                    bindings[i].effectivePath,
+                    path,
                     InputControlPath.HumanReadableStringOptions.OmitDevice
                 );
 
@@ -47,8 +60,9 @@ public class IndividualInputRebinder : MonoBehaviour
             }
         }
 
-        inputBindingText.text = string.Empty;
+        inputBindingText.text = "----";
     }
 
-    private void RebindRequest() => inputSettings.CreateNewRebindRequest(assignedInput, inputNameText.text);
+
+    private void RebindRequest() => inputSettings.CreateNewRebindRequest(assignedInput, inputNameText.text, inputBindingText.text, deviceType);
 }

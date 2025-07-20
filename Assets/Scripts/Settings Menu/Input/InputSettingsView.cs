@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
-using TMPro;
 
 public class InputSettingsView : MonoBehaviour
 {
-    [Header("Rebind")]
+    [Header("Multiplatform")]
+    [SerializeField] private Button keyboardControlsButton;
+    [SerializeField] private GameObject keyboardControlsPanel;
+    [SerializeField] private Button gamepadControlsButton;
+    [SerializeField] private GameObject gamepadControlsPanel;
+
+    [Space, Header("Rebind")]
     [SerializeField] private Button resetRebindsButton;
     [SerializeField] private GameObject rebindWindow;
     [SerializeField] private LocalizeStringEvent rebindMessageLocalized;
@@ -22,30 +25,30 @@ public class InputSettingsView : MonoBehaviour
     {
         this.inputSettings = inputSettings;
         AddListeners();
+        OpenKeyboardControlsPanel();
     }
 
     private void AddListeners()
     {
         resetRebindsButton.onClick.AddListener(TriggerRebindsReset);
 
+        keyboardControlsButton.onClick.AddListener(OpenKeyboardControlsPanel);
+        gamepadControlsButton.onClick.AddListener(OpenGamepadControlsPanel);
+
         inputSettings.OnRebindRequest += ShowRebindWindow;
         inputSettings.OnRebindComplete += HideRebindWindow;
         inputSettings.OnRebindInvalid += HideRebindWindow;
         inputSettings.OnRebindInvalid += ShowInvalidRebindWindow;
         inputSettings.OnRebindCancel += HideRebindWindow;
+
         UIInputManager.OnCancel += HideRebindWindow;
         UIInputManager.OnCancel += HideInvalidRebindWindow;
     }
 
     private void ShowRebindWindow()
     {
-        var bindings = inputSettings.InputActionToRebind.action.bindings;
-        string displayKey = InputControlPath.ToHumanReadableString(
-            bindings[0].effectivePath,
-            InputControlPath.HumanReadableStringOptions.OmitDevice
-        );
-
         string displayName = inputSettings.InputActionToRebindName;
+        string displayKey = inputSettings.InputActionToRebindKey;
 
         rebindMessageLocalized.StringReference["displayName"] = new StringVariable { Value = displayName };
         rebindMessageLocalized.StringReference["displayKey"] = new StringVariable { Value = displayKey };
@@ -54,11 +57,20 @@ public class InputSettingsView : MonoBehaviour
         rebindWindow.SetActive(true);
     }
 
+    private void OpenKeyboardControlsPanel()
+    {
+        gamepadControlsPanel.SetActive(false);
+        keyboardControlsPanel.SetActive(true);
+    }
+
+    private void OpenGamepadControlsPanel()
+    {
+        keyboardControlsPanel.SetActive(false);
+        gamepadControlsPanel.SetActive(true);
+    }
+
     private void HideRebindWindow() => rebindWindow.SetActive(false);
-
     private void ShowInvalidRebindWindow() => invalidRebindWindow.SetActive(true);
-
     private void HideInvalidRebindWindow() => invalidRebindWindow.SetActive(false);
-
     private void TriggerRebindsReset() => inputSettings.ResetRebinds();
 }
