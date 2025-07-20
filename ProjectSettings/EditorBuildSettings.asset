@@ -6,8 +6,44 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Main Menu/Main Menu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Scene by Distance.unity
+    guid: 0da3a7b88a5d5484fa4418ea63c9b615
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 1.unity
+    guid: fc85b35cd51db3a449a5f9efcb027ecd
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 2.unity
+    guid: 655e6ea4c777a294e8828dd6f416e9ab
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 3.unity
+    guid: c54de2e16f8ecf246a3d4eb5bdc4d8b3
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 4.unity
+    guid: cd4c4d069ba9de74abe149af0d139888
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 5.unity
+    guid: b8dc1f0563f06d148b0c5bd3fa328946
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 6.unity
+    guid: dc278a3435aa56e49b663023b838aabc
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 7.unity
+    guid: dab5c2078dd4ce442ae7b0f16a4b4f58
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 8.unity
+    guid: a2f47bb35c9559b4aa2a4f527b09d293
+  - enabled: 1
+    path: Assets/Scenes/Scene By Distance/Test 9.unity
+    guid: 1cf98f01a38525f449090bc65ca5cd73
+  - enabled: 1
+    path: Assets/Scenes/Scene By Event/Scene Event 1.unity
+    guid: 6210b3d88932c4b40bc4234eede6d551
+  - enabled: 1
+    path: Assets/Scenes/Scene By Event/Scene Event 2.unity
+    guid: f1b1818fffd9d7046868d17f447fd946
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 3fd7d55b037605049b647eadd9fbba22, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

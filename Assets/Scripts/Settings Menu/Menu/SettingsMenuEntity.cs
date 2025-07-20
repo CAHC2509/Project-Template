@@ -6,30 +6,28 @@ public class SettingsMenuEntity
 {
     public SelectableStateController RootSelectable { get; private set; }
     public SelectableStateController CurrentSelectable { get; private set; }
+    public GameObject PreviousPanelSelected { get; private set; }
     public GameObject CurrentPanelSelected { get; private set; }
     public bool CurrentSelectableIsRoot { get; private set; }
 
-    public event Action OnNewPanelSelected;
+    public event Action OnPanelChanged;
 
-    public void SelectNewPanel(SelectableStateController rootSelectable, SelectableStateController newSelectable, GameObject newPanel)
+    public void SetCurrentPanel(SelectableStateController rootSelectable, SelectableStateController newSelectable, GameObject newPanel)
     {
-        if (CurrentPanelSelected != null)
-            CurrentPanelSelected.SetActive(false);
-
         RootSelectable = rootSelectable;
         CurrentSelectable = newSelectable;
+        PreviousPanelSelected = CurrentPanelSelected;
         CurrentPanelSelected = newPanel;
-
         CurrentSelectableIsRoot = false;
 
-        OnNewPanelSelected?.Invoke();
+        OnPanelChanged?.Invoke();
     }
 
-    public void ExitFromCurrentPanel()
+    public void SetRootSelectable()
     {
         CurrentSelectable = RootSelectable;
-        SelectionManager.Instance.Select(CurrentSelectable);
-
         CurrentSelectableIsRoot = true;
+        OnPanelChanged?.Invoke();
     }
 }
+

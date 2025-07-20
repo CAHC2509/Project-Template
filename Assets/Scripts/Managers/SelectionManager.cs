@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -18,22 +18,34 @@ public class SelectionManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Select(SelectableStateController newSelection) => StartCoroutine(DelayedSelection(newSelection));
-
-    private IEnumerator DelayedSelection(SelectableStateController newSelection)
+    public void Select(SelectableStateController newSelection)
     {
+        if (newSelection == null || !newSelection.gameObject.activeInHierarchy)
+            return;
+
         if (currentSelection == newSelection)
-            yield break;
+            return;
 
-        if (currentSelection != null && newSelection != null)
-            Debug.Log($"{currentSelection.name} - {newSelection.name}");
+        if (currentSelection != null)
+            currentSelection.Deselect();
 
-        currentSelection?.Deselect();
         currentSelection = newSelection;
 
-        yield return new WaitUntil(() => currentSelection.gameObject.activeInHierarchy);
+        var rectTransform = currentSelection.GetComponent<RectTransform>();
+        if (rectTransform != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
 
-        EventSystem.current.SetSelectedGameObject(currentSelection.gameObject);
-        currentSelection.Select();
+        if (EventSystem.current.currentSelectedGameObject == newSelection.gameObject)
+        {
+            currentSelection.Select();
+            return;
+        }
+
+        if (!EventSystem.current.alreadySelecting)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(newSelection.gameObject);
+            currentSelection.Select();
+        }
     }
 }

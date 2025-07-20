@@ -25,10 +25,7 @@ public class SelectableStateController : StaticStateMachine, IPointerEnterHandle
         trigger.triggers.Add(selectEntry);
     }
 
-    private void OnDisable()
-    {
-        button.onClick.RemoveListener(OnClickSelect);
-    }
+    private void OnDisable() => button.onClick.RemoveListener(OnClickSelect);
 
     public void OnPointerEnter(PointerEventData eventData) => SelectionManager.Instance.Select(this);
 

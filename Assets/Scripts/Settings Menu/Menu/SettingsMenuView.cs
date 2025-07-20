@@ -26,7 +26,7 @@ public class SettingsMenuView : MonoBehaviour
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private SelectableStateController controlsDefaultSelection;
 
-    [Space, Header("Controls")]
+    [Space, Header("Language")]
     [SerializeField] private SelectableStateController languageButton;
     [SerializeField] private GameObject languagePanel;
     [SerializeField] private SelectableStateController languageDefaultSelection;
@@ -53,7 +53,7 @@ public class SettingsMenuView : MonoBehaviour
         UIInputManager.OnCancel += CloseSettingsFromCancelInput;
         UIInputManager.OnCancel += GoToRootOptionsMenu;
 
-        menuSettings.OnNewPanelSelected += UpdateCurrentPanel;
+        menuSettings.OnPanelChanged += UpdateCurrentPanel;
     }
 
     private void OpenSettingsMenu()
@@ -88,24 +88,28 @@ public class SettingsMenuView : MonoBehaviour
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
-        menuSettings.ExitFromCurrentPanel();
+        menuSettings.SetRootSelectable();
     }
 
     private void UpdateCurrentPanel()
     {
-        StartCoroutine(DelayedSelection());
+        if (menuSettings.PreviousPanelSelected != null)
+            menuSettings.PreviousPanelSelected.SetActive(false);
+
+        menuSettings.CurrentPanelSelected.SetActive(true);
+
+        StartCoroutine(SelectionWithDelay());
     }
 
-    private IEnumerator DelayedSelection()
+    private IEnumerator SelectionWithDelay()
     {
-        menuSettings.CurrentPanelSelected.SetActive(true);
-        yield return new WaitUntil(() => menuSettings.CurrentPanelSelected.gameObject.activeInHierarchy);
+        yield return new WaitUntil(() => menuSettings.CurrentPanelSelected.activeInHierarchy);
         SelectionManager.Instance.Select(menuSettings.CurrentSelectable);
     }
 
     private void SetDefaultPanel() => SetGraphicsPanel();
-    private void SetGraphicsPanel() => menuSettings.SelectNewPanel(graphicsButton, graphicsDefaultSelection, graphicsPanel);
-    private void SetAudioPanel() => menuSettings.SelectNewPanel(audioButton, audioDefaultSelection, audioPanel);
-    private void SetControlsPanel() => menuSettings.SelectNewPanel(controlsButton, controlsDefaultSelection, controlsPanel);
-    private void SetLanguagePanel() => menuSettings.SelectNewPanel(languageButton, languageDefaultSelection, languagePanel);
+    private void SetGraphicsPanel() => menuSettings.SetCurrentPanel(graphicsButton, graphicsDefaultSelection, graphicsPanel);
+    private void SetAudioPanel() => menuSettings.SetCurrentPanel(audioButton, audioDefaultSelection, audioPanel);
+    private void SetControlsPanel() => menuSettings.SetCurrentPanel(controlsButton, controlsDefaultSelection, controlsPanel);
+    private void SetLanguagePanel() => menuSettings.SetCurrentPanel(languageButton, languageDefaultSelection, languagePanel);
 }
