@@ -12,10 +12,18 @@ public class SliderStateController : SelectableStateController
     public event Action OnValueIncreaseRequest;
     public event Action OnValueDecreaseRequest;
 
-    private void Awake()
+    private void Awake() => InitializeStateMachine();
+
+    protected override void OnEnable()
     {
-        InitializeStateMachine();
+        base.OnEnable();
         AddListeners();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        RemoveListeners();
     }
 
     private void InitializeStateMachine()
@@ -29,6 +37,12 @@ public class SliderStateController : SelectableStateController
     {
         UIInputManager.OnRight += IncreaseSliderValue;
         UIInputManager.OnLeft += DecreaseSliderValue;
+    }
+
+    private void RemoveListeners()
+    {
+        UIInputManager.OnRight -= IncreaseSliderValue;
+        UIInputManager.OnLeft -= DecreaseSliderValue;
     }
 
     private void IncreaseSliderValue()

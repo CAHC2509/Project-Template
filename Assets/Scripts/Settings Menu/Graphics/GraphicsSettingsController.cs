@@ -10,7 +10,11 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
     private const string FULL_SCREEN_KEY = "FullScreen";
     private GraphicsSettingsEntity graphicsSettings;
 
-    private void Awake() => GameManager.OnInitialization += OnInitialization;
+    private void Awake()
+    {
+        GameManager.OnInitialization += OnInitialization;
+        GameManager.OnFinalization += OnFinalization;
+    }
 
     private void OnInitialization()
     {
@@ -19,6 +23,12 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
         AddListeners();
 
         view.Initialize(graphicsSettings);
+    }
+
+    private void OnFinalization()
+    {
+        RemoveListeners();
+        view.Conclude();
     }
 
     public void LoadSettings()
@@ -48,6 +58,13 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
         graphicsSettings.OnResolutionChanged += SetResolution;
         graphicsSettings.OnQualityLevelChanged += SetQualityLevel;
         graphicsSettings.OnFullScreenChanged += SetFullScreenMode;
+    }
+
+    private void RemoveListeners()
+    {
+        graphicsSettings.OnResolutionChanged -= SetResolution;
+        graphicsSettings.OnQualityLevelChanged -= SetQualityLevel;
+        graphicsSettings.OnFullScreenChanged -= SetFullScreenMode;
     }
 
     private void SetResolution()

@@ -31,6 +31,11 @@ public class GraphicsSettingsView : MonoBehaviour
         InitializeSelectors();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
     {
         previousResolutionButton.onClick.AddListener(PreviousResolution);
@@ -57,6 +62,34 @@ public class GraphicsSettingsView : MonoBehaviour
         graphicsSettings.OnQualityLevelChanged += UpdateQualityLevelText;
         graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeButtons;
         graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeText;
+    }
+
+    private void RemoveListeners()
+    {
+        previousResolutionButton.onClick.RemoveListener(PreviousResolution);
+        nextResolutionButton.onClick.RemoveListener(NextResolution);
+
+        previousQualityButton.onClick.RemoveListener(PreviousQualityLevel);
+        nextQualityButton.onClick.RemoveListener(NextQualityLevel);
+
+        previousFullScreenButton.onClick.RemoveListener(DisableFullScreenMode);
+        nextFullScreenButton.onClick.RemoveListener(EnableFullScreenMode);
+
+        resolutionListController.OnPreviousItemRequested -= PreviousResolution;
+        resolutionListController.OnNextItemRequested -= NextResolution;
+
+        qualityListController.OnPreviousItemRequested -= PreviousQualityLevel;
+        qualityListController.OnNextItemRequested -= NextQualityLevel;
+
+        fullScreenListController.OnPreviousItemRequested -= DisableFullScreenMode;
+        fullScreenListController.OnNextItemRequested -= EnableFullScreenMode;
+
+        graphicsSettings.OnResolutionChanged -= UpdateResolutionButtons;
+        graphicsSettings.OnResolutionChanged -= UpdateResolutionText;
+        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelsButtons;
+        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelText;
+        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeButtons;
+        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeText;
     }
 
     private void InitializeSelectors()

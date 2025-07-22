@@ -15,7 +15,7 @@ public class SelectableStateController : StaticStateMachine, IPointerEnterHandle
     public event Action OnSelect;
     public event Action OnDeselect;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         button.onClick.AddListener(OnClickSelect);
         EventTrigger trigger = button.gameObject.AddComponent<EventTrigger>();
@@ -25,7 +25,7 @@ public class SelectableStateController : StaticStateMachine, IPointerEnterHandle
         trigger.triggers.Add(selectEntry);
     }
 
-    private void OnDisable() => button.onClick.RemoveListener(OnClickSelect);
+    protected virtual void OnDisable() => button.onClick.RemoveListener(OnClickSelect);
 
     public void OnPointerEnter(PointerEventData eventData) => SelectionManager.Instance.Select(this);
 

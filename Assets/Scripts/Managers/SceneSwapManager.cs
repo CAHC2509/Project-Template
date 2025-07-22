@@ -54,7 +54,6 @@ public class SceneSwapManager : MonoBehaviour
         }
     }
 
-
     private IEnumerator LoadScenesWithFadeOut_Coroutine(List<SceneField> scenes)
     {
         yield return FadeInAndShowLoading();

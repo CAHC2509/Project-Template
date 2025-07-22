@@ -9,7 +9,11 @@ public class LocalizationSettingsController : MonoBehaviour, ISettings
 
     private LocalizationSettingsEntity localizationSettings;
 
-    private void Awake() => GameManager.OnInitialization += OnInitialization;
+    private void Awake()
+    {
+        GameManager.OnInitialization += OnInitialization;
+        GameManager.OnFinalization += OnFinalization;
+    }
 
     private void OnInitialization()
     {
@@ -19,10 +23,14 @@ public class LocalizationSettingsController : MonoBehaviour, ISettings
         view.Initialize(localizationSettings);
     }
 
-    private void AddListeners()
+    private void OnFinalization()
     {
-        localizationSettings.OnNewLanguageSelected += ChangeLocaleByCode;
+        RemoveListeners();
+        view.Conclude();
     }
+
+    private void AddListeners() => localizationSettings.OnNewLanguageSelected += ChangeLocaleByCode;
+    private void RemoveListeners() => localizationSettings.OnNewLanguageSelected -= ChangeLocaleByCode;
 
     public void ChangeLocaleByCode()
     {

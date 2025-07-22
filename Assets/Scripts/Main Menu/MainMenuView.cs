@@ -14,12 +14,21 @@ public class MainMenuView : MonoBehaviour
     public static event Action OnSettingsPressed;
     public static event Action OnQuitPressed;
 
-    private void Awake() => GameManager.OnInitialization += OnInitialization;
+    private void Awake()
+    {
+        GameManager.OnInitialization += OnInitialization;
+        GameManager.OnFinalization += OnFinalization;
+    }
 
     private void OnInitialization()
     {
         AddListeners();
         OpenMainMenu();
+    }
+
+    private void OnFinalization()
+    {
+        RemoveListeners();
     }
 
     private void AddListeners()
@@ -29,6 +38,15 @@ public class MainMenuView : MonoBehaviour
         quitButton.onClick.AddListener(QuitGame);
 
         SettingsMenuView.OnSettingsMenuClose += OpenMainMenu;
+    }
+
+    private void RemoveListeners()
+    {
+        playButton.onClick.RemoveListener(StartGame);
+        settingsButton.onClick.RemoveListener(OpenSettings);
+        quitButton.onClick.RemoveListener(QuitGame);
+
+        SettingsMenuView.OnSettingsMenuClose -= OpenMainMenu;
     }
 
     private void OpenSettings()

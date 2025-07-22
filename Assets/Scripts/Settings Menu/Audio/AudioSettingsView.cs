@@ -31,6 +31,11 @@ public class AudioSettingsView : MonoBehaviour
         SetTexts();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
     {
         generalVolumeSlider.onValueChanged.AddListener(GeneralVolumeChanged);
@@ -45,6 +50,22 @@ public class AudioSettingsView : MonoBehaviour
 
         effectsVolumeController.OnValueIncreaseRequest += IncreaseEffectsVolume;
         effectsVolumeController.OnValueDecreaseRequest += DecreaseEffectsVolume;
+    }
+    
+    private void RemoveListeners()
+    {
+        generalVolumeSlider.onValueChanged.RemoveListener(GeneralVolumeChanged);
+        musicVolumeSlider.onValueChanged.RemoveListener(MusicVolumeChanged);
+        effectsVolumeSlider.onValueChanged.RemoveListener(EffectsVolumeChanged);
+
+        generalVolumeController.OnValueIncreaseRequest -= IncreaseGeneralVolume;
+        generalVolumeController.OnValueDecreaseRequest -= DecreaseGeneralVolume;
+
+        musicVolumeController.OnValueIncreaseRequest -= IncreaseMusicVolume;
+        musicVolumeController.OnValueDecreaseRequest -= DecreaseMusicVolume;
+
+        effectsVolumeController.OnValueIncreaseRequest -= IncreaseEffectsVolume;
+        effectsVolumeController.OnValueDecreaseRequest -= DecreaseEffectsVolume;
     }
 
     private void SetSliders()

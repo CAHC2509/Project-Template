@@ -41,6 +41,11 @@ public class SettingsMenuView : MonoBehaviour
         AddListeners();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
     {
         graphicsButton.Button.onClick.AddListener(SetGraphicsPanel);
@@ -54,6 +59,21 @@ public class SettingsMenuView : MonoBehaviour
         UIInputManager.OnCancel += GoToRootOptionsMenu;
 
         menuSettings.OnPanelChanged += UpdateCurrentPanel;
+    }
+    
+    private void RemoveListeners()
+    {
+        graphicsButton.Button.onClick.RemoveListener(SetGraphicsPanel);
+        audioButton.Button.onClick.RemoveListener(SetAudioPanel);
+        controlsButton.Button.onClick.RemoveListener(SetControlsPanel);
+        languageButton.Button.onClick.RemoveListener(SetLanguagePanel);
+        closeSettingsButton.onClick.RemoveListener(CloseSettingsFromButton);
+
+        MainMenuView.OnSettingsPressed -= OpenSettingsMenu;
+        UIInputManager.OnCancel -= CloseSettingsFromCancelInput;
+        UIInputManager.OnCancel -= GoToRootOptionsMenu;
+
+        menuSettings.OnPanelChanged -= UpdateCurrentPanel;
     }
 
     private void OpenSettingsMenu()

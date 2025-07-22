@@ -11,7 +11,11 @@ public class AudioSettingsController : MonoBehaviour, ISettings
     private const string EFFECTS_VOLUME_KEY = "EffectsVolume";
     private AudioSettingsEntity audioSettings;
 
-    private void Awake() => GameManager.OnInitialization += OnInitialization;
+    private void Awake()
+    {
+        GameManager.OnInitialization += OnInitialization;
+        GameManager.OnFinalization += OnFinalization;
+    }
 
     private void OnInitialization()
     {
@@ -21,11 +25,24 @@ public class AudioSettingsController : MonoBehaviour, ISettings
         view.Initialize(audioSettings);
     }
 
+    private void OnFinalization()
+    {
+        RemoveListeners();
+        view.Conclude();
+    }
+
     private void AddListeners()
     {
         audioSettings.OnGeneralVolumeChanged += UpdateGeneralVolume;
         audioSettings.OnMusicVolumeChanged += UpdateMusicVolume;
         audioSettings.OnEffectsVolumeChanged += UpdateEffectsVolume;
+    }
+
+    private void RemoveListeners()
+    {
+        audioSettings.OnGeneralVolumeChanged -= UpdateGeneralVolume;
+        audioSettings.OnMusicVolumeChanged -= UpdateMusicVolume;
+        audioSettings.OnEffectsVolumeChanged -= UpdateEffectsVolume;
     }
 
     public void InitializeSettings()

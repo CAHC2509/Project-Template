@@ -23,7 +23,19 @@ public class IndividualInputRebinder : MonoBehaviour
         UpdateText();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
+    {
+        assignedButton.onClick.AddListener(RebindRequest);
+        inputSettings.OnRebindComplete += UpdateText;
+        inputSettings.OnRebindsReset += UpdateText;
+    }
+
+    private void RemoveListeners()
     {
         assignedButton.onClick.AddListener(RebindRequest);
         inputSettings.OnRebindComplete += UpdateText;

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputSettingsEntity : MonoBehaviour
+public class InputSettingsEntity
 {
     public enum InputDeviceType { KeyboardMouse, Gamepad }
 

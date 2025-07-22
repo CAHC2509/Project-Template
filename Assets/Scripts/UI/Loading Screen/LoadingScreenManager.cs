@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class LoadingScreenManager : MonoBehaviour
 {
-    public static LoadingScreenManager Instance;
-
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Image loadingBar;
+
+    public static LoadingScreenManager Instance;
 
     private void Awake()
     {

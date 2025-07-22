@@ -14,10 +14,21 @@ public class LocalizationSettingsView : MonoBehaviour
         AddListeners();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
     {
         englishButton.onClick.AddListener(SelectEnglishLanguage);
         spanishButton.onClick.AddListener(SelectSpanishLanguage);
+    }
+
+    private void RemoveListeners()
+    {
+        englishButton.onClick.RemoveListener(SelectEnglishLanguage);
+        spanishButton.onClick.RemoveListener(SelectSpanishLanguage);
     }
 
     private void SelectEnglishLanguage() => localizationSettings.SelectNewLanguage("en");

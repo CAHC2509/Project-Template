@@ -28,6 +28,11 @@ public class InputSettingsView : MonoBehaviour
         OpenKeyboardControlsPanel();
     }
 
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
     private void AddListeners()
     {
         resetRebindsButton.onClick.AddListener(TriggerRebindsReset);
@@ -43,6 +48,23 @@ public class InputSettingsView : MonoBehaviour
 
         UIInputManager.OnCancel += HideRebindWindow;
         UIInputManager.OnCancel += HideInvalidRebindWindow;
+    }
+
+    private void RemoveListeners()
+    {
+        resetRebindsButton.onClick.RemoveListener(TriggerRebindsReset);
+
+        keyboardControlsButton.onClick.RemoveListener(OpenKeyboardControlsPanel);
+        gamepadControlsButton.onClick.RemoveListener(OpenGamepadControlsPanel);
+
+        inputSettings.OnRebindRequest -= ShowRebindWindow;
+        inputSettings.OnRebindComplete -= HideRebindWindow;
+        inputSettings.OnRebindInvalid -= HideRebindWindow;
+        inputSettings.OnRebindInvalid -= ShowInvalidRebindWindow;
+        inputSettings.OnRebindCancel -= HideRebindWindow;
+
+        UIInputManager.OnCancel -= HideRebindWindow;
+        UIInputManager.OnCancel -= HideInvalidRebindWindow;
     }
 
     private void ShowRebindWindow()

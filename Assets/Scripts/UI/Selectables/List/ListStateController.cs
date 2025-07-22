@@ -12,10 +12,18 @@ public class ListStateController : SelectableStateController
     public event Action OnPreviousItemRequested;
     public event Action OnNextItemRequested;
 
-    private void Awake()
+    private void Awake() => InitializeStateMachine();
+
+    protected override void OnEnable()
     {
-        InitializeStateMachine();
+        base.OnEnable();
         AddListeners();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        RemoveListeners();
     }
 
     private void InitializeStateMachine()
@@ -29,6 +37,12 @@ public class ListStateController : SelectableStateController
     {
         UIInputManager.OnLeft += RequestPreviousListItem;
         UIInputManager.OnRight += RequestNextListItem;
+    }
+
+    private void RemoveListeners()
+    {
+        UIInputManager.OnLeft -= RequestPreviousListItem;
+        UIInputManager.OnRight -= RequestNextListItem;
     }
 
     private void RequestPreviousListItem()
