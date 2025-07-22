@@ -11534,6 +11534,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 3072159439592493271, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
+      propertyPath: autoClick
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3455593755822027471, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11613,6 +11617,10 @@ PrefabInstance:
     - target: {fileID: 3455593755822027471, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621656554657451539, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
+      propertyPath: autoClick
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

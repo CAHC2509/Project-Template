@@ -31,13 +31,13 @@ public class SelectableStateController : StaticStateMachine, IPointerEnterHandle
 
     private void OnClickSelect() => SelectionManager.Instance.Select(this);
 
-    public void Select()
+    public virtual void Select()
     {
         OnSelect?.Invoke();
         ChangeState(selectedState);
     }
 
-    public void Deselect()
+    public virtual void Deselect()
     {
         OnDeselect?.Invoke();
         ChangeState(normalState);
