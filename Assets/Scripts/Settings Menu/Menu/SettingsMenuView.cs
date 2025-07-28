@@ -3,10 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsMenuView : MonoBehaviour
+public class SettingsMenuView : UIViewBase
 {
     [Header("Main")]
-    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject rebindWindow;
     [SerializeField] private GameObject invalidRebindWindow;
     [SerializeField] private Button closeSettingsButton;
@@ -33,17 +32,19 @@ public class SettingsMenuView : MonoBehaviour
 
     private SettingsMenuEntity menuSettings;
 
-    public static event Action OnSettingsMenuClose;
-
-    public void Initialize(SettingsMenuEntity menuSettings)
+    public void Dependencies(SettingsMenuEntity menuSettings) => this.menuSettings = menuSettings;
+    
+    public override void Initialize()
     {
-        this.menuSettings = menuSettings;
+        defaultSelection = graphicsButton.Button;
         AddListeners();
+        DisableView();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
         RemoveListeners();
+        DisableView();
     }
 
     private void AddListeners()
@@ -54,7 +55,6 @@ public class SettingsMenuView : MonoBehaviour
         languageButton.Button.onClick.AddListener(SetLanguagePanel);
         closeSettingsButton.onClick.AddListener(CloseSettingsFromButton);
 
-        MainMenuView.OnSettingsPressed += OpenSettingsMenu;
         UIInputManager.OnCancel += CloseSettingsFromCancelInput;
         UIInputManager.OnCancel += GoToRootOptionsMenu;
 
@@ -69,16 +69,16 @@ public class SettingsMenuView : MonoBehaviour
         languageButton.Button.onClick.RemoveListener(SetLanguagePanel);
         closeSettingsButton.onClick.RemoveListener(CloseSettingsFromButton);
 
-        MainMenuView.OnSettingsPressed -= OpenSettingsMenu;
         UIInputManager.OnCancel -= CloseSettingsFromCancelInput;
         UIInputManager.OnCancel -= GoToRootOptionsMenu;
 
         menuSettings.OnPanelChanged -= UpdateCurrentPanel;
     }
 
-    private void OpenSettingsMenu()
+    public override void EnableView()
     {
-        settingsMenu.SetActive(true);
+        base.EnableView();
+
         SetDefaultPanel();
     }
 
@@ -90,8 +90,7 @@ public class SettingsMenuView : MonoBehaviour
         if (!menuSettings.CurrentSelectableIsRoot)
             return;
 
-        settingsMenu.SetActive(false);
-        OnSettingsMenuClose?.Invoke();
+        menuSettings.CloseSettingsMenu();
     }
 
     private void CloseSettingsFromButton()
@@ -99,8 +98,7 @@ public class SettingsMenuView : MonoBehaviour
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
-        settingsMenu.SetActive(false);
-        OnSettingsMenuClose?.Invoke();
+        menuSettings.CloseSettingsMenu();
     }
 
     private void GoToRootOptionsMenu()

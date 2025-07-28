@@ -3,24 +3,62 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static event Action OnInitialization;
-    public static event Action OnFinalization;
+    public static Action<GameStateBase> GetState;
 
-    private void Start()
+    [SerializeField] private SettingsManager settingsManager;
+    [SerializeField] private SceneLoaderController sceneLoader;
+    [SerializeField] private States currentState;
+    [SerializeField] private int targetFPS = 60;
+
+    private GameStateBase currentGameState;
+
+    private void Awake()
     {
-        OnInitialization?.Invoke();
-        AddListeners();
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Application.targetFrameRate = targetFPS;
     }
 
-    private void OnDestroy()
+    private void Start() => StartGame();
+
+    private void StartGame()
     {
-        OnFinalization?.Invoke();
+        AddListeners();
+        sceneLoader.Initialize();
+        sceneLoader.LoadScene(currentState.ToString());
     }
 
     private void AddListeners()
     {
-        MainMenuView.OnQuitPressed += QuitGame;
+        GetState += OnGetState;
     }
 
-    private void QuitGame() => Application.Quit();
+    private void OnGetState(GameStateBase state)
+    {
+        Debug.Log($"Current state: {state.name}");
+        currentGameState = state;
+        currentGameState.FinishState += OnChangeState;
+        StateConfiguration(currentGameState);
+    }
+
+    private void StateConfiguration(GameStateBase state)
+    {
+        switch (state)
+        {
+            case MainState main:
+                main.Dependencies(settingsManager);
+                break;
+        }
+    }
+
+    private void OnChangeState(States nextState)
+    {
+        Debug.Log($"Next state: {nextState}");
+
+        currentGameState.FinishState -= OnChangeState;
+
+        sceneLoader.UnloadScene(currentState.ToString());
+        sceneLoader.LoadScene(nextState.ToString());
+
+        currentState = nextState;
+    }
 }

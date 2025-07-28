@@ -102,10 +102,10 @@ public class AudioSettingsView : MonoBehaviour
 
     private void IncreaseGeneralVolume() => GeneralVolumeChanged(generalVolumeSlider.value += VOLUME_CONSTANT);
     private void DecreaseGeneralVolume() => GeneralVolumeChanged(generalVolumeSlider.value -= VOLUME_CONSTANT);
-    private void IncreaseMusicVolume() => GeneralVolumeChanged(musicVolumeSlider.value += VOLUME_CONSTANT);
-    private void DecreaseMusicVolume() => GeneralVolumeChanged(musicVolumeSlider.value -= VOLUME_CONSTANT);
-    private void IncreaseEffectsVolume() => GeneralVolumeChanged(effectsVolumeSlider.value += VOLUME_CONSTANT);
-    private void DecreaseEffectsVolume() => GeneralVolumeChanged(effectsVolumeSlider.value -= VOLUME_CONSTANT);
+    private void IncreaseMusicVolume() => MusicVolumeChanged(musicVolumeSlider.value += VOLUME_CONSTANT);
+    private void DecreaseMusicVolume() => MusicVolumeChanged(musicVolumeSlider.value -= VOLUME_CONSTANT);
+    private void IncreaseEffectsVolume() => EffectsVolumeChanged(effectsVolumeSlider.value += VOLUME_CONSTANT);
+    private void DecreaseEffectsVolume() => EffectsVolumeChanged(effectsVolumeSlider.value -= VOLUME_CONSTANT);
 
     private string VolumeToPercentage(float volume) => ((int)(volume * 100f)).ToString();
 }

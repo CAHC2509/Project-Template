@@ -11,13 +11,7 @@ public class AudioSettingsController : MonoBehaviour, ISettings
     private const string EFFECTS_VOLUME_KEY = "EffectsVolume";
     private AudioSettingsEntity audioSettings;
 
-    private void Awake()
-    {
-        GameManager.OnInitialization += OnInitialization;
-        GameManager.OnFinalization += OnFinalization;
-    }
-
-    private void OnInitialization()
+    public void Initialize()
     {
         LoadSettings();
         AddListeners();
@@ -25,7 +19,7 @@ public class AudioSettingsController : MonoBehaviour, ISettings
         view.Initialize(audioSettings);
     }
 
-    private void OnFinalization()
+    public void Conclude()
     {
         RemoveListeners();
         view.Conclude();

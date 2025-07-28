@@ -10,13 +10,7 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
     private const string FULL_SCREEN_KEY = "FullScreen";
     private GraphicsSettingsEntity graphicsSettings;
 
-    private void Awake()
-    {
-        GameManager.OnInitialization += OnInitialization;
-        GameManager.OnFinalization += OnFinalization;
-    }
-
-    private void OnInitialization()
+    public void Initialize()
     {
         InitializeAvailiableSettings();
         LoadSettings();
@@ -25,7 +19,7 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
         view.Initialize(graphicsSettings);
     }
 
-    private void OnFinalization()
+    public void Conclude()
     {
         RemoveListeners();
         view.Conclude();

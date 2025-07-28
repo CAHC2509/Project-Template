@@ -11,6 +11,7 @@ public class SettingsMenuEntity
     public bool CurrentSelectableIsRoot { get; private set; }
 
     public event Action OnPanelChanged;
+    public event Action OnSettingsMenuClosed;
 
     public void SetCurrentPanel(SelectableStateController rootSelectable, SelectableStateController newSelectable, GameObject newPanel)
     {
@@ -29,5 +30,7 @@ public class SettingsMenuEntity
         CurrentSelectableIsRoot = true;
         OnPanelChanged?.Invoke();
     }
+
+    public void CloseSettingsMenu() => OnSettingsMenuClosed?.Invoke();
 }
 

@@ -17,13 +17,7 @@ public class InputSettingsController : MonoBehaviour, ISettings
     private List<IndividualInputRebinder> inputRebindersGamepad = new List<IndividualInputRebinder>();
     private InputSettingsEntity inputSettings;
 
-    private void Awake()
-    {
-        GameManager.OnInitialization += OnInitialization;
-        GameManager.OnFinalization += OnFinalization;
-    }
-
-    private void OnInitialization()
+    public void Initialize()
     {
         LoadSettings();
         AddListeners();
@@ -32,7 +26,7 @@ public class InputSettingsController : MonoBehaviour, ISettings
         view.Initialize(inputSettings);
     }
 
-    private void OnFinalization()
+    public void Conclude()
     {
         RemoveListeners();
         view.Conclude();

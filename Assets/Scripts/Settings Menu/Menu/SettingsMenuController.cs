@@ -1,25 +1,37 @@
+using System;
 using UnityEngine;
 
 public class SettingsMenuController : MonoBehaviour
 {
     [SerializeField] private SettingsMenuView view;
-
+    
     private SettingsMenuEntity menuSettings;
+    
+    public void Dependencies(SettingsMenuEntity menuSettings) => this.menuSettings = menuSettings;
 
-    private void Awake()
+    public void Initialize()
     {
-        GameManager.OnInitialization += OnInitialization;
-        GameManager.OnFinalization += OnFinalization;
+        view.Dependencies(menuSettings);
+        view.Initialize();
+        AddListeners();
     }
 
-    private void OnInitialization()
-    {
-        menuSettings = new SettingsMenuEntity();
-        view.Initialize(menuSettings);
-    }
-
-    private void OnFinalization()
+    public void Conclude()
     {
         view.Conclude();
+        RemoveListeners();
     }
+
+    private void AddListeners()
+    {
+        menuSettings.OnSettingsMenuClosed += CloseSettingsView;
+    }
+
+    private void RemoveListeners()
+    {
+        menuSettings.OnSettingsMenuClosed -= CloseSettingsView;
+    }
+
+    public void OpenSettingsView() => view.EnableView();
+    public void CloseSettingsView() => view.DisableView();
 }

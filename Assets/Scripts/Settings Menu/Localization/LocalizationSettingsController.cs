@@ -9,13 +9,7 @@ public class LocalizationSettingsController : MonoBehaviour, ISettings
 
     private LocalizationSettingsEntity localizationSettings;
 
-    private void Awake()
-    {
-        GameManager.OnInitialization += OnInitialization;
-        GameManager.OnFinalization += OnFinalization;
-    }
-
-    private void OnInitialization()
+    public void Initialize()
     {
         LoadSettings();
         AddListeners();
@@ -23,7 +17,7 @@ public class LocalizationSettingsController : MonoBehaviour, ISettings
         view.Initialize(localizationSettings);
     }
 
-    private void OnFinalization()
+    public void Conclude()
     {
         RemoveListeners();
         view.Conclude();
