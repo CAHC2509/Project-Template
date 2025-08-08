@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-    [SerializeField] private SettingsMenuController settingsController;
+    [SerializeField] private SettingsMenuController controller;
+    [SerializeField] private SettingsMenuView view;
+
+    [Space, Header("Settings modules")]
     [SerializeField] private GraphicsSettingsController graphicsSettings;
     [SerializeField] private AudioSettingsController audioSettings;
     [SerializeField] private InputSettingsController inputSettings;
@@ -13,11 +16,17 @@ public class SettingsManager : MonoBehaviour
 
     public event Action OnSettingsClose;
 
-    public void Initialize()
+    public void Dependencies()
     {
         menuSettings = new SettingsMenuEntity();
-        settingsController.Dependencies(menuSettings);
-        settingsController.Initialize();
+        controller.Dependencies(menuSettings);
+        view.Dependencies(menuSettings);
+    }
+
+    public void Initialize()
+    {
+        controller.Initialize();
+        view.Initialize();
 
         graphicsSettings.Initialize();
         audioSettings.Initialize();
@@ -29,7 +38,7 @@ public class SettingsManager : MonoBehaviour
 
     public void Conclude()
     {
-        settingsController.Conclude();
+        controller.Conclude();
         graphicsSettings.Conclude();
         audioSettings.Conclude();
         inputSettings.Conclude();
@@ -40,5 +49,5 @@ public class SettingsManager : MonoBehaviour
 
     private void AddListeners() => menuSettings.OnSettingsMenuClosed += () => OnSettingsClose?.Invoke();
     private void RemoveListeners() => menuSettings.OnSettingsMenuClosed -= () => OnSettingsClose?.Invoke();
-    public void OpenSettingsView() => settingsController.OpenSettingsView();
+    public void OpenSettingsView() => view.EnableView();
 }

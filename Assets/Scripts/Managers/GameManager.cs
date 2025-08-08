@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static Action<GameStateBase> GetState;
+    public static Action<GameStateBase> SetState;
 
     [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private SceneLoaderController sceneLoader;
@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
 
     private void AddListeners()
     {
-        GetState += OnGetState;
+        SetState += OnSetState;
     }
 
-    private void OnGetState(GameStateBase state)
+    private void OnSetState(GameStateBase state)
     {
         Debug.Log($"Current state: {state.name}");
         currentGameState = state;

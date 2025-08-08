@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SettingsMenuController : MonoBehaviour
@@ -24,14 +23,11 @@ public class SettingsMenuController : MonoBehaviour
 
     private void AddListeners()
     {
-        menuSettings.OnSettingsMenuClosed += CloseSettingsView;
+        menuSettings.OnSettingsMenuClosed += () => view.DisableView();
     }
 
     private void RemoveListeners()
     {
-        menuSettings.OnSettingsMenuClosed -= CloseSettingsView;
+        menuSettings.OnSettingsMenuClosed -= () => view.DisableView();
     }
-
-    public void OpenSettingsView() => view.EnableView();
-    public void CloseSettingsView() => view.DisableView();
 }

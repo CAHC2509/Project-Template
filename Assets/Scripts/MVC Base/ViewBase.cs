@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class UIViewBase : MonoBehaviour
+public abstract class ViewBase : MonoBehaviour
 {
     [SerializeField] protected GameObject viewContainer;
 

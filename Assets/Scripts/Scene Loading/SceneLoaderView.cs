@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneLoaderView : UIViewBase
+public class SceneLoaderView : ViewBase
 {
     [SerializeField] private Image progressBar;
     [SerializeField] private TMP_Text progressText;

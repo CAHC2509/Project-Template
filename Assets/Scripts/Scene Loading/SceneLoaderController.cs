@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-public class SceneLoaderController : UIControllerBase
+public class SceneLoaderController : ControllerBase
 {
     [SerializeField] private SceneLoaderView view;
     [SerializeField] private FadeInteractionController fadeController;
@@ -28,12 +28,12 @@ public class SceneLoaderController : UIControllerBase
         view.Conclude();
     }
 
-    private void AddListeners()
+    protected override void AddListeners()
     {
         OnSceneFullyLoaded += ActivateScene;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveListeners()
     {
         OnSceneFullyLoaded -= ActivateScene;
     }
@@ -51,10 +51,6 @@ public class SceneLoaderController : UIControllerBase
 
         view.SetProgress(0f);
         view.EnableView();
-
-        fadeController.FinishInteraction();
-
-        yield return new WaitForSeconds(fadeController.FadeDuration);
 
         var handle = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Additive, activateOnLoad: false);
         loadedSceneHandles[sceneName] = handle;
