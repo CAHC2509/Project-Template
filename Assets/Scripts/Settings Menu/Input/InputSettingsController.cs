@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputSettingsController : MonoBehaviour, ISettings
+public class InputSettingsController : ControllerBase, ISettings
 {
     [SerializeField] private InputActionAsset inputActionAsset;
     [SerializeField] private InputSettingsView view;
@@ -15,31 +15,38 @@ public class InputSettingsController : MonoBehaviour, ISettings
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
     private List<IndividualInputRebinder> inputRebindersKeyboard = new List<IndividualInputRebinder>();
     private List<IndividualInputRebinder> inputRebindersGamepad = new List<IndividualInputRebinder>();
+
     private InputSettingsEntity inputSettings;
 
-    public void Initialize()
+    public void Dependencies()
+    {
+        inputSettings = new InputSettingsEntity();
+        view.Dependencies(inputSettings);
+    }
+
+    public override void Initialize()
     {
         LoadSettings();
         AddListeners();
         GetInputRebinders();
         InitializeInputRebinders();
-        view.Initialize(inputSettings);
+        view.Initialize();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
         RemoveListeners();
         view.Conclude();
     }
 
-    private void AddListeners()
+    protected override void AddListeners()
     {
         inputSettings.OnRebindRequest += PerformRebind;
         inputSettings.OnRebindComplete += SaveSettings;
         inputSettings.OnRebindsReset += ResetToDefaults;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveListeners()
     {
         inputSettings.OnRebindRequest -= PerformRebind;
         inputSettings.OnRebindComplete -= SaveSettings;
@@ -160,8 +167,6 @@ public class InputSettingsController : MonoBehaviour, ISettings
         {
             inputActionAsset.RemoveAllBindingOverrides();
         }
-
-        inputSettings = new InputSettingsEntity();
     }
 
     public void SaveSettings()

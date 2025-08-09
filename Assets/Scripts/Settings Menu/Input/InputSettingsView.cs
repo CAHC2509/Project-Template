@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
-public class InputSettingsView : MonoBehaviour
+public class InputSettingsView : ViewBase
 {
     [Header("Multiplatform")]
     [SerializeField] private Button keyboardControlsButton;
@@ -21,14 +21,15 @@ public class InputSettingsView : MonoBehaviour
 
     private InputSettingsEntity inputSettings;
 
-    public void Initialize(InputSettingsEntity inputSettings)
+    public void Dependencies(InputSettingsEntity inputSettings) => this.inputSettings = inputSettings;
+
+    public override void Initialize()
     {
-        this.inputSettings = inputSettings;
         AddListeners();
         OpenKeyboardControlsPanel();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
         RemoveListeners();
     }

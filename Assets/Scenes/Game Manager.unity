@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876dadb9fe900a24bb6f708f164fcdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputSettingsView
+  viewContainer: {fileID: 534122166144347485}
   keyboardControlsButton: {fileID: 1644144390}
   keyboardControlsPanel: {fileID: 977972792}
   gamepadControlsButton: {fileID: 1861846592}

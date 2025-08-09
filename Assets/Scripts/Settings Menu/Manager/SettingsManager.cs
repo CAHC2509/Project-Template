@@ -22,6 +22,7 @@ public class SettingsManager : MonoBehaviour
 
         graphicsSettings.Dependencies();
         audioSettings.Dependencies();
+        inputSettings.Dependencies();
     }
 
     public void Initialize()

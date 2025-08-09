@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
+[Serializable]
 public class InputSettingsEntity
 {
     public enum InputDeviceType { KeyboardMouse, Gamepad }
