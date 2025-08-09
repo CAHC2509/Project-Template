@@ -1,23 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LocalizationSettingsView : MonoBehaviour
+public class LocalizationSettingsView : ViewBase
 {
     [SerializeField] private Button englishButton;
     [SerializeField] private Button spanishButton;
 
     private LocalizationSettingsEntity localizationSettings;
 
-    public void Initialize(LocalizationSettingsEntity localizationSettings)
-    {
-        this.localizationSettings = localizationSettings;
-        AddListeners();
-    }
-
-    public void Conclude()
-    {
-        RemoveListeners();
-    }
+    public void Dependencies(LocalizationSettingsEntity localizationSettings) => this.localizationSettings = localizationSettings;
+    public override void Initialize() => AddListeners();
+    public override void Conclude() => RemoveListeners();
 
     private void AddListeners()
     {

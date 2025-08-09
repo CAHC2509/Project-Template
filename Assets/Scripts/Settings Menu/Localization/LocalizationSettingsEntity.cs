@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 
+[Serializable]
 public class LocalizationSettingsEntity
 {
     public string CurrentLanguageCode { get; private set; }

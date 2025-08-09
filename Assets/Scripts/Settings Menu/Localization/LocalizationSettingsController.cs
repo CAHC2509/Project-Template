@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class LocalizationSettingsController : MonoBehaviour, ISettings
+public class LocalizationSettingsController : ControllerBase, ISettings
 {
     [SerializeField] private LocalizationSettingsView view;
 
@@ -9,22 +9,27 @@ public class LocalizationSettingsController : MonoBehaviour, ISettings
 
     private LocalizationSettingsEntity localizationSettings;
 
-    public void Initialize()
+    public void Dependencies()
     {
         LoadSettings();
-        AddListeners();
-        ChangeLocaleByCode();
-        view.Initialize(localizationSettings);
+        view.Dependencies(localizationSettings);
     }
 
-    public void Conclude()
+    public override void Initialize()
+    {
+        AddListeners();
+        ChangeLocaleByCode();
+        view.Initialize();
+    }
+
+    public override void Conclude()
     {
         RemoveListeners();
         view.Conclude();
     }
 
-    private void AddListeners() => localizationSettings.OnNewLanguageSelected += ChangeLocaleByCode;
-    private void RemoveListeners() => localizationSettings.OnNewLanguageSelected -= ChangeLocaleByCode;
+    protected override void AddListeners() => localizationSettings.OnNewLanguageSelected += ChangeLocaleByCode;
+    protected override void RemoveListeners() => localizationSettings.OnNewLanguageSelected -= ChangeLocaleByCode;
 
     public void ChangeLocaleByCode()
     {

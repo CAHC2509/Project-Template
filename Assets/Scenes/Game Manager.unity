@@ -1153,6 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f680099f329c8644c8625551d80058ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizationSettingsView
+  viewContainer: {fileID: 534122166144347483}
   englishButton: {fileID: 763299842}
   spanishButton: {fileID: 1021882786}
 --- !u!1 &1264085662
