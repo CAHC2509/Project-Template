@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-    [SerializeField] private SettingsMenuController controller;
     [SerializeField] private SettingsMenuView view;
 
     [Space, Header("Settings modules")]
@@ -19,13 +18,13 @@ public class SettingsManager : MonoBehaviour
     public void Dependencies()
     {
         menuSettings = new SettingsMenuEntity();
-        controller.Dependencies(menuSettings);
         view.Dependencies(menuSettings);
+
+        audioSettings.Dependencies();
     }
 
     public void Initialize()
     {
-        controller.Initialize();
         view.Initialize();
 
         graphicsSettings.Initialize();
@@ -38,7 +37,6 @@ public class SettingsManager : MonoBehaviour
 
     public void Conclude()
     {
-        controller.Conclude();
         graphicsSettings.Conclude();
         audioSettings.Conclude();
         inputSettings.Conclude();

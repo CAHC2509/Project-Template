@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AudioSettingsView : MonoBehaviour
+public class AudioSettingsView : ViewBase
 {
     [Header("Sliders")]
     [SerializeField] private Slider generalVolumeSlider;
@@ -22,16 +22,16 @@ public class AudioSettingsView : MonoBehaviour
     private const float VOLUME_CONSTANT = 0.01f;
     private AudioSettingsEntity audioSettings;
 
-    public void Initialize(AudioSettingsEntity audioSettings)
-    {
-        this.audioSettings = audioSettings;
+    public void Dependencies(AudioSettingsEntity audioSettings) => this.audioSettings = audioSettings;
 
+    public override void Initialize()
+    {
         AddListeners();
         SetSliders();
         SetTexts();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
         RemoveListeners();
     }

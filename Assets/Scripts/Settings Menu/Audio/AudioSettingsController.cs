@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioSettingsController : MonoBehaviour, ISettings
+public class AudioSettingsController : ControllerBase, ISettings
 {
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private AudioSettingsView view;
@@ -9,41 +9,40 @@ public class AudioSettingsController : MonoBehaviour, ISettings
     private const string GENERAL_VOLUME_KEY = "GeneralVolume";
     private const string MUSIC_VOLUME_KEY = "MusicVolume";
     private const string EFFECTS_VOLUME_KEY = "EffectsVolume";
+
     private AudioSettingsEntity audioSettings;
 
-    public void Initialize()
+    public void Dependencies()
     {
         LoadSettings();
-        AddListeners();
-        InitializeSettings();
-        view.Initialize(audioSettings);
+        view.Dependencies(audioSettings);
     }
 
-    public void Conclude()
+    public override void Initialize()
+    {
+        AddListeners();
+        InitializeSettings();
+        view.Initialize();
+    }
+
+    public override void Conclude()
     {
         RemoveListeners();
         view.Conclude();
     }
 
-    private void AddListeners()
+    protected override void AddListeners()
     {
         audioSettings.OnGeneralVolumeChanged += UpdateGeneralVolume;
         audioSettings.OnMusicVolumeChanged += UpdateMusicVolume;
         audioSettings.OnEffectsVolumeChanged += UpdateEffectsVolume;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveListeners()
     {
         audioSettings.OnGeneralVolumeChanged -= UpdateGeneralVolume;
         audioSettings.OnMusicVolumeChanged -= UpdateMusicVolume;
         audioSettings.OnEffectsVolumeChanged -= UpdateEffectsVolume;
-    }
-
-    public void InitializeSettings()
-    {
-        mixer.SetFloat(GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
-        mixer.SetFloat(MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
-        mixer.SetFloat(EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
     }
 
     public void LoadSettings()
@@ -53,6 +52,13 @@ public class AudioSettingsController : MonoBehaviour, ISettings
         float effects = PlayerPrefs.GetFloat(EFFECTS_VOLUME_KEY, 1f);
 
         audioSettings = new AudioSettingsEntity(general, music, effects);
+    }
+
+    public void InitializeSettings()
+    {
+        mixer.SetFloat(GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
+        mixer.SetFloat(MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
+        mixer.SetFloat(EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
     }
 
     public void SaveSettings() 

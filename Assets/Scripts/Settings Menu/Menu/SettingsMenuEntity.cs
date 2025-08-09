@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class SettingsMenuEntity
 {
     public SelectableStateController RootSelectable { get; private set; }

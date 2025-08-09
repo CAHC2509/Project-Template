@@ -24,6 +24,6 @@ public class SceneLoaderView : ViewBase
             progressBar.fillAmount = progress;
 
         if (progressText != null)
-            progressText.text = $"{(progress * 100f):0}%";
+            progressText.text = $"{progress * 100f:0}%";
     }
 }
