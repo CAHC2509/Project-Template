@@ -58,6 +58,7 @@ public class SettingsMenuView : ViewBase
         UIInputManager.OnCancel += GoToRootOptionsMenu;
 
         menuSettings.OnPanelChanged += UpdateCurrentPanel;
+        menuSettings.OnSettingsMenuClosed += DisableView;
     }
     
     private void RemoveListeners()
@@ -72,6 +73,7 @@ public class SettingsMenuView : ViewBase
         UIInputManager.OnCancel -= GoToRootOptionsMenu;
 
         menuSettings.OnPanelChanged -= UpdateCurrentPanel;
+        menuSettings.OnSettingsMenuClosed -= DisableView;
     }
 
     public override void EnableView()
