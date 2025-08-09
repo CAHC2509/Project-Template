@@ -20,6 +20,7 @@ public class SettingsManager : MonoBehaviour
         menuSettings = new SettingsMenuEntity();
         view.Dependencies(menuSettings);
 
+        graphicsSettings.Dependencies();
         audioSettings.Dependencies();
     }
 

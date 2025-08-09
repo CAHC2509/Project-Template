@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoaderController
   view: {fileID: 1264085664}
-  fadeController: {fileID: 0}
+  fadeController: {fileID: 1303824573}
 --- !u!114 &763299842 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2018897556191936696, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8f8cf83035ca6488ed0631cb0e224e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsView
-  viewContainer: {fileID: 0}
+  viewContainer: {fileID: 534122166144347487}
   generalVolumeSlider: {fileID: 452213284}
   musicVolumeSlider: {fileID: 1588437951}
   effectsVolumeSlider: {fileID: 72397077}
@@ -1095,6 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b3786c9247efc47990b42748e4085e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GraphicsSettingsView
+  viewContainer: {fileID: 534122166144347480}
   resolutionListController: {fileID: 1363739102}
   previousResolutionButton: {fileID: 168459721}
   nextResolutionButton: {fileID: 147622093}

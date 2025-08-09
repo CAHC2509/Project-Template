@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GraphicsSettingsView : MonoBehaviour
+public class GraphicsSettingsView : ViewBase
 {
     [Header("Resolution")]
     [SerializeField] private ListStateController resolutionListController;
@@ -24,14 +24,15 @@ public class GraphicsSettingsView : MonoBehaviour
 
     private GraphicsSettingsEntity graphicsSettings;
 
-    public void Initialize(GraphicsSettingsEntity graphicsSettings)
+    public void Dependencies(GraphicsSettingsEntity graphicsSettings) => this.graphicsSettings = graphicsSettings;
+
+    public override void Initialize()
     {
-        this.graphicsSettings = graphicsSettings;
         AddListeners();
         InitializeSelectors();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
         RemoveListeners();
     }

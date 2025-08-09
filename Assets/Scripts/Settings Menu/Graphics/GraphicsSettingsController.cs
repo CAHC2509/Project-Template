@@ -1,25 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphicsSettingsController : MonoBehaviour, ISettings
+public class GraphicsSettingsController : ControllerBase, ISettings
 {
     [SerializeField] private GraphicsSettingsView view;
 
     private const string RESOLUTIONS_KEY = "Resolution";
     private const string QUALITY_LEVELS_KEY = "QualityLevel";
     private const string FULL_SCREEN_KEY = "FullScreen";
+
     private GraphicsSettingsEntity graphicsSettings;
 
-    public void Initialize()
+    public void Dependencies()
     {
-        InitializeAvailiableSettings();
-        LoadSettings();
-        AddListeners();
-
-        view.Initialize(graphicsSettings);
+        LoadAvailiableSettings();
+        view.Dependencies(graphicsSettings);
     }
 
-    public void Conclude()
+    public override void Initialize()
+    {
+        LoadSettings();
+        AddListeners();
+        view.Initialize();
+    }
+
+    public override void Conclude()
     {
         RemoveListeners();
         view.Conclude();
@@ -40,21 +45,21 @@ public class GraphicsSettingsController : MonoBehaviour, ISettings
         PlayerPrefs.Save();
     }
 
-    private void InitializeAvailiableSettings()
+    private void LoadAvailiableSettings()
     {
         List<Resolution> resolutions = GetAvailiableResolutions();
         List<string> qualityLevels = GetAvailiableQualityLevels();
         graphicsSettings = new GraphicsSettingsEntity(resolutions, qualityLevels);
     }
 
-    private void AddListeners()
+    protected override void AddListeners()
     {
         graphicsSettings.OnResolutionChanged += SetResolution;
         graphicsSettings.OnQualityLevelChanged += SetQualityLevel;
         graphicsSettings.OnFullScreenChanged += SetFullScreenMode;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveListeners()
     {
         graphicsSettings.OnResolutionChanged -= SetResolution;
         graphicsSettings.OnQualityLevelChanged -= SetQualityLevel;
