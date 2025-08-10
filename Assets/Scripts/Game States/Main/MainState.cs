@@ -11,7 +11,6 @@ public class MainState : GameStateBase
     public void Dependencies(SettingsManager settingsManager)
     {
         this.settingsManager = settingsManager;
-        settingsManager.Dependencies();
 
         mainEntity = new MainEntity();
         controller.Dependencies(mainEntity);
@@ -27,7 +26,6 @@ public class MainState : GameStateBase
         AddListeners();
         controller.Initialize();
         view.Initialize();
-        settingsManager.Initialize();
 
         view.EnableView();
     }
@@ -39,12 +37,11 @@ public class MainState : GameStateBase
         RemoveListeners();
         controller.Conclude();
         view.Conclude();
-        settingsManager.Conclude();
     }
 
     private void StartGame()
     {
-        nextState = States.Results;
+        nextState = States.Gameplay;
         ExitState();
     }
 

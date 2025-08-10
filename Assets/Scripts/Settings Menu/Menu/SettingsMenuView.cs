@@ -85,6 +85,8 @@ public class SettingsMenuView : ViewBase
 
     private void CloseSettingsFromCancelInput()
     {
+        if (!viewContainer.activeSelf) return;
+
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
@@ -96,6 +98,8 @@ public class SettingsMenuView : ViewBase
 
     private void CloseSettingsFromButton()
     {
+        if (!viewContainer.activeSelf) return;
+
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
@@ -104,6 +108,8 @@ public class SettingsMenuView : ViewBase
 
     private void GoToRootOptionsMenu()
     {
+        if (!viewContainer.activeSelf) return;
+
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
@@ -112,6 +118,8 @@ public class SettingsMenuView : ViewBase
 
     private void UpdateCurrentPanel()
     {
+        if (!viewContainer.activeSelf) return;
+
         if (menuSettings.PreviousPanelSelected != null)
             menuSettings.PreviousPanelSelected.SetActive(false);
 

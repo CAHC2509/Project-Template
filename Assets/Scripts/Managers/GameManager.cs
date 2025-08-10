@@ -18,18 +18,33 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = targetFPS;
     }
 
-    private void Start() => StartGame();
+    private void Start() => Initialize();
+    private void OnDestroy() => Conclude();
 
-    private void StartGame()
+    private void Initialize()
     {
         AddListeners();
+        settingsManager.Dependencies();
+        settingsManager.Initialize();
         sceneLoader.Initialize();
         sceneLoader.LoadScene(currentState.ToString());
+    }
+
+    private void Conclude()
+    {
+        RemoveListeners();
+        settingsManager.Conclude();
+        sceneLoader.Conclude();
     }
 
     private void AddListeners()
     {
         SetState += OnSetState;
+    }
+
+    private void RemoveListeners()
+    {
+        SetState -= OnSetState;
     }
 
     private void OnSetState(GameStateBase state)
@@ -46,6 +61,9 @@ public class GameManager : MonoBehaviour
         {
             case MainState main:
                 main.Dependencies(settingsManager);
+                break;
+            case GameplayState gameplay:
+                gameplay.Dependencies(settingsManager);
                 break;
         }
     }
