@@ -162,6 +162,38 @@ MonoBehaviour:
     m_Localized: Set the game language to Spanish.
     m_Metadata:
       m_Items: []
+  - m_Id: 11266498280194048
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11266637946322944
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267455391006720
+    m_Localized: Very low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267567039184896
+    m_Localized: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267645002907648
+    m_Localized: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267690670489600
+    m_Localized: High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267772019015680
+    m_Localized: Very high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267815753023488
+    m_Localized: Ultra
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

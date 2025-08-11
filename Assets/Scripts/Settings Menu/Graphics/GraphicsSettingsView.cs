@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization;
 using TMPro;
 
 public class GraphicsSettingsView : ViewBase
@@ -21,7 +22,10 @@ public class GraphicsSettingsView : ViewBase
     [SerializeField] private Button previousFullScreenButton;
     [SerializeField] private Button nextFullScreenButton;
     [SerializeField] private TextMeshProUGUI fullScreenModeText;
+    [SerializeField] private LocalizedString possitiveString;
+    [SerializeField] private LocalizedString negativeString;
 
+    private const string QUALITIES_ENTRY_REFERENCE = "settings.qualities.";
     private GraphicsSettingsEntity graphicsSettings;
 
     public void Dependencies(GraphicsSettingsEntity graphicsSettings) => this.graphicsSettings = graphicsSettings;
@@ -130,7 +134,6 @@ public class GraphicsSettingsView : ViewBase
     }
 
     private void EnableFullScreenMode() => graphicsSettings.SetFullscreenMode(true);
-
     private void DisableFullScreenMode() => graphicsSettings.SetFullscreenMode(false);
 
     private void UpdateResolutionButtons()
@@ -163,12 +166,25 @@ public class GraphicsSettingsView : ViewBase
     private void UpdateQualityLevelText()
     {
         string currentQualityLevel = graphicsSettings.AvailableQualityLevels[graphicsSettings.CurrentQualityLevelIndex];
-        qualityLevelText.text = currentQualityLevel;
+        
+        LocalizedString qualityLevelName = new LocalizedString
+        {
+            TableReference = "Settings Menu",
+            TableEntryReference = $"{QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
+        };
+
+        qualityLevelText.text = qualityLevelName.GetLocalizedString();
     }
 
     private void UpdateFullScreenModeText()
     {
-        string currentFullScreenMode = graphicsSettings.CurrentFullScreenMode ? "Yes" : "No";
+        string currentFullScreenMode;
+
+        if (graphicsSettings.CurrentFullScreenMode)
+            currentFullScreenMode = possitiveString.GetLocalizedString();
+        else
+            currentFullScreenMode = negativeString.GetLocalizedString();
+
         fullScreenModeText.text = currentFullScreenMode;
     }
 }

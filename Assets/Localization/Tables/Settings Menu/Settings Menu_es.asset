@@ -163,6 +163,38 @@ MonoBehaviour:
     m_Localized: "Configura el idioma del juego a espa\xF1ol."
     m_Metadata:
       m_Items: []
+  - m_Id: 11266498280194048
+    m_Localized: "S\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11266637946322944
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267455391006720
+    m_Localized: Muy baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267567039184896
+    m_Localized: Baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267645002907648
+    m_Localized: Media
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267690670489600
+    m_Localized: Alta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267772019015680
+    m_Localized: Muy alta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11267815753023488
+    m_Localized: Ultra
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

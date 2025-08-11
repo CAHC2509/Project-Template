@@ -1121,6 +1121,27 @@ MonoBehaviour:
   previousFullScreenButton: {fileID: 2043689164}
   nextFullScreenButton: {fileID: 824112604}
   fullScreenModeText: {fileID: 448763248}
+  possitiveString:
+    m_TableReference:
+      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
+    m_TableEntryReference:
+      m_KeyId: 11266498280194048
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  negativeString:
+    m_TableReference:
+      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
+    m_TableEntryReference:
+      m_KeyId: 11266637946322944
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1242325689
 GameObject:
   m_ObjectHideFlags: 0
