@@ -25,16 +25,16 @@ public class InputSettingsView : ViewBase
 
     public override void Initialize()
     {
-        AddListeners();
+        AddPersistentListeners();
         OpenKeyboardControlsPanel();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        RemovePersistentListeners();
     }
 
-    private void AddListeners()
+    protected override void AddPersistentListeners()
     {
         resetRebindsButton.onClick.AddListener(TriggerRebindsReset);
 
@@ -51,7 +51,7 @@ public class InputSettingsView : ViewBase
         UIInputManager.OnCancel += HideInvalidRebindWindow;
     }
 
-    private void RemoveListeners()
+    protected override void RemovePersistentListeners()
     {
         resetRebindsButton.onClick.RemoveListener(TriggerRebindsReset);
 

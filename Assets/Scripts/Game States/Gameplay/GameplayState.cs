@@ -4,6 +4,7 @@ public class GameplayState : GameStateBase
 {
     [SerializeField] private GameplayController controller;
     [SerializeField] private GameplayView view;
+    [SerializeField] private PauseMenuView pauseView;
 
     private SettingsManager settingsManager;
     private GameplayEntity gameplayEntity;
@@ -14,7 +15,8 @@ public class GameplayState : GameStateBase
         gameplayEntity = new GameplayEntity();
 
         controller.Dependencies(gameplayEntity);
-        view.Dependencies(settingsManager, gameplayEntity);
+        view.Dependencies(gameplayEntity);
+        pauseView.Dependencies(settingsManager, gameplayEntity);
 
         EnterState();
     }
@@ -25,6 +27,7 @@ public class GameplayState : GameStateBase
 
         controller.Initialize();
         view.Initialize();
+        pauseView.Initialize();
 
         view.EnableView();
 
@@ -37,6 +40,7 @@ public class GameplayState : GameStateBase
 
         controller.Conclude();
         view.Conclude();
+        pauseView.Conclude();
 
         RemoveListeners();
     }

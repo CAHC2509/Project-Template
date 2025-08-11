@@ -7,8 +7,13 @@ public abstract class ViewBase : MonoBehaviour
 
     protected Button defaultSelection;
 
-    public abstract void Initialize();
-    public abstract void Conclude();
+    public virtual void Initialize() { }
+    public virtual void Conclude() { }
+
+    protected virtual void AddPersistentListeners() { }
+    protected virtual void RemovePersistentListeners() { }
+    protected virtual void AddTemporaryListeners() { }
+    protected virtual void RemoveTemporaryListeners() { }
 
     protected virtual void SetDefaultSelection()
     {
@@ -20,15 +25,20 @@ public abstract class ViewBase : MonoBehaviour
     {
         viewContainer.SetActive(true);
         SetDefaultSelection();
+        AddTemporaryListeners();
+    }
+
+    public virtual void DisableView()
+    {
+        viewContainer.SetActive(false);
+        RemoveTemporaryListeners();
     }
 
     public virtual void ToggleView()
     {
-        viewContainer.SetActive(!viewContainer.activeSelf);
-
-        if (viewContainer.activeSelf)
-            SetDefaultSelection();
+        if (!viewContainer.activeSelf)
+            EnableView();
+        else
+            DisableView();
     }
-
-    public virtual void DisableView() => viewContainer.SetActive(false);
 }

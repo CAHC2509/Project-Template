@@ -21,8 +21,6 @@ public class GameplayController : ControllerBase
 
     protected override void AddListeners()
     {
-        UIInputManager.OnCancel += gameplayEntity.TogglePause;
-
         gameplayEntity.OnPause += PauseGame;
         gameplayEntity.OnUnPause += UnPauseGame;
         gameplayEntity.OnMainMenuRequest += UnPauseGame;
@@ -30,8 +28,6 @@ public class GameplayController : ControllerBase
 
     protected override void RemoveListeners()
     {
-        UIInputManager.OnCancel -= gameplayEntity.TogglePause;
-
         gameplayEntity.OnPause -= PauseGame;
         gameplayEntity.OnUnPause -= UnPauseGame;
         gameplayEntity.OnMainMenuRequest -= UnPauseGame;

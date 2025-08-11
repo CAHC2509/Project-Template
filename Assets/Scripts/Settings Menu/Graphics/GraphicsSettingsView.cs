@@ -28,16 +28,16 @@ public class GraphicsSettingsView : ViewBase
 
     public override void Initialize()
     {
-        AddListeners();
+        AddPersistentListeners();
         InitializeSelectors();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        RemovePersistentListeners();
     }
 
-    private void AddListeners()
+    protected override void AddPersistentListeners()
     {
         previousResolutionButton.onClick.AddListener(PreviousResolution);
         nextResolutionButton.onClick.AddListener(NextResolution);
@@ -65,7 +65,7 @@ public class GraphicsSettingsView : ViewBase
         graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeText;
     }
 
-    private void RemoveListeners()
+    protected override void RemovePersistentListeners()
     {
         previousResolutionButton.onClick.RemoveListener(PreviousResolution);
         nextResolutionButton.onClick.RemoveListener(NextResolution);

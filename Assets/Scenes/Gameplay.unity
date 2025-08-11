@@ -1522,6 +1522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameplayState
   controller: {fileID: 1239680723}
   view: {fileID: 1115395393}
+  pauseView: {fileID: 744896001}
 --- !u!1 &417010472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,6 +2099,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1680962546538983195, guid: 1f2b8fd51d83dca438793038b2ccb67f, type: 3}
   m_PrefabInstance: {fileID: 849406551}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &744895999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744896000}
+  - component: {fileID: 744896001}
+  m_Layer: 0
+  m_Name: Pause View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &744896000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744895999}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063034532}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &744896001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744895999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780001124e32b85419ccf02afb6e4b55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenuView
+  viewContainer: {fileID: 1410808107}
+  unPauseButton: {fileID: 2077735820}
+  settingsButton: {fileID: 1201973901}
 --- !u!4 &781334360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1680962546538983195, guid: 1f2b8fd51d83dca438793038b2ccb67f, type: 3}
@@ -2662,9 +2710,6 @@ MonoBehaviour:
   mainMenuButton: {fileID: 103113554}
   resultsButton: {fileID: 1577539461}
   pauseButton: {fileID: 1417679409}
-  unPauseButton: {fileID: 2077735820}
-  settingsButton: {fileID: 1201973901}
-  pausePanel: {fileID: 1410808107}
 --- !u!1 &1141319943
 GameObject:
   m_ObjectHideFlags: 0
@@ -9533,6 +9578,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1115395392}
+  - {fileID: 744896000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2077735818

@@ -9,16 +9,16 @@ public class LocalizationSettingsView : ViewBase
     private LocalizationSettingsEntity localizationSettings;
 
     public void Dependencies(LocalizationSettingsEntity localizationSettings) => this.localizationSettings = localizationSettings;
-    public override void Initialize() => AddListeners();
-    public override void Conclude() => RemoveListeners();
+    public override void Initialize() => AddPersistentListeners();
+    public override void Conclude() => RemovePersistentListeners();
 
-    private void AddListeners()
+    protected override void AddPersistentListeners()
     {
         englishButton.onClick.AddListener(SelectEnglishLanguage);
         spanishButton.onClick.AddListener(SelectSpanishLanguage);
     }
 
-    private void RemoveListeners()
+    protected override void RemovePersistentListeners()
     {
         englishButton.onClick.RemoveListener(SelectEnglishLanguage);
         spanishButton.onClick.RemoveListener(SelectSpanishLanguage);

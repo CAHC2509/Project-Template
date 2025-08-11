@@ -17,10 +17,10 @@ public class MainView : ViewBase
         defaultSelection = playButton;
     }
 
-    public override void Initialize() => AddListeners();
-    public override void Conclude() => RemoveListeners();
+    public override void Initialize() => AddPersistentListeners();
+    public override void Conclude() => RemovePersistentListeners();
 
-    private void AddListeners()
+    protected override void AddPersistentListeners()
     {
         playButton.onClick.AddListener(mainEntity.TriggerPlay);
         settingsButton.onClick.AddListener(mainEntity.TriggerSettings);
@@ -29,7 +29,7 @@ public class MainView : ViewBase
         settingsManager.OnSettingsClose += EnableView;
     }
 
-    private void RemoveListeners()
+    protected override void RemovePersistentListeners()
     {
         playButton.onClick.RemoveListener(mainEntity.TriggerPlay);
         settingsButton.onClick.RemoveListener(mainEntity.TriggerSettings);

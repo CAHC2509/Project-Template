@@ -40,6 +40,8 @@ public class SettingsManager : MonoBehaviour
 
     public void Conclude()
     {
+        view.Conclude();
+
         graphicsSettings.Conclude();
         audioSettings.Conclude();
         inputSettings.Conclude();

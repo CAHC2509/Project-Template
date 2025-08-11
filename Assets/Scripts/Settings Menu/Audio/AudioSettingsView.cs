@@ -26,17 +26,17 @@ public class AudioSettingsView : ViewBase
 
     public override void Initialize()
     {
-        AddListeners();
+        AddPersistentListeners();
         SetSliders();
         SetTexts();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        RemovePersistentListeners();
     }
 
-    private void AddListeners()
+    protected override void AddPersistentListeners()
     {
         generalVolumeSlider.onValueChanged.AddListener(GeneralVolumeChanged);
         musicVolumeSlider.onValueChanged.AddListener(MusicVolumeChanged);
@@ -51,8 +51,8 @@ public class AudioSettingsView : ViewBase
         effectsVolumeController.OnValueIncreaseRequest += IncreaseEffectsVolume;
         effectsVolumeController.OnValueDecreaseRequest += DecreaseEffectsVolume;
     }
-    
-    private void RemoveListeners()
+
+    protected override void RemovePersistentListeners()
     {
         generalVolumeSlider.onValueChanged.RemoveListener(GeneralVolumeChanged);
         musicVolumeSlider.onValueChanged.RemoveListener(MusicVolumeChanged);

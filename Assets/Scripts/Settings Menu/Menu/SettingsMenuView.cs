@@ -31,22 +31,33 @@ public class SettingsMenuView : ViewBase
 
     private SettingsMenuEntity menuSettings;
 
-    public void Dependencies(SettingsMenuEntity menuSettings) => this.menuSettings = menuSettings;
+    public void Dependencies(SettingsMenuEntity menuSettings)
+    {
+        this.menuSettings = menuSettings;
+        defaultSelection = graphicsButton.Button;
+    }
     
     public override void Initialize()
     {
-        defaultSelection = graphicsButton.Button;
-        AddListeners();
-        DisableView();
+        AddPersistentListeners();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
-        DisableView();
+        RemovePersistentListeners();
     }
 
-    private void AddListeners()
+    protected override void AddTemporaryListeners()
+    {
+        UIInputManager.OnCancel += OnCancelPressed;
+    }
+
+    protected override void RemoveTemporaryListeners()
+    {
+        UIInputManager.OnCancel -= OnCancelPressed;
+    }
+
+    protected override void AddPersistentListeners()
     {
         graphicsButton.Button.onClick.AddListener(SetGraphicsPanel);
         audioButton.Button.onClick.AddListener(SetAudioPanel);
@@ -54,23 +65,17 @@ public class SettingsMenuView : ViewBase
         languageButton.Button.onClick.AddListener(SetLanguagePanel);
         closeSettingsButton.onClick.AddListener(CloseSettingsFromButton);
 
-        UIInputManager.OnCancel += CloseSettingsFromCancelInput;
-        UIInputManager.OnCancel += GoToRootOptionsMenu;
-
         menuSettings.OnPanelChanged += UpdateCurrentPanel;
         menuSettings.OnSettingsMenuClosed += DisableView;
     }
-    
-    private void RemoveListeners()
+
+    protected override void RemovePersistentListeners()
     {
         graphicsButton.Button.onClick.RemoveListener(SetGraphicsPanel);
         audioButton.Button.onClick.RemoveListener(SetAudioPanel);
         controlsButton.Button.onClick.RemoveListener(SetControlsPanel);
         languageButton.Button.onClick.RemoveListener(SetLanguagePanel);
         closeSettingsButton.onClick.RemoveListener(CloseSettingsFromButton);
-
-        UIInputManager.OnCancel -= CloseSettingsFromCancelInput;
-        UIInputManager.OnCancel -= GoToRootOptionsMenu;
 
         menuSettings.OnPanelChanged -= UpdateCurrentPanel;
         menuSettings.OnSettingsMenuClosed -= DisableView;
@@ -83,43 +88,30 @@ public class SettingsMenuView : ViewBase
         SetDefaultPanel();
     }
 
-    private void CloseSettingsFromCancelInput()
+    private void CloseSettingsFromButton()
     {
-        if (!viewContainer.activeSelf) return;
+        if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
+            return;
 
+        menuSettings.CloseSettingsMenu();
+    }
+
+    private void OnCancelPressed()
+    {
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
         if (!menuSettings.CurrentSelectableIsRoot)
+        {
+            menuSettings.SetRootSelectable();
             return;
+        }
 
         menuSettings.CloseSettingsMenu();
-    }
-
-    private void CloseSettingsFromButton()
-    {
-        if (!viewContainer.activeSelf) return;
-
-        if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
-            return;
-
-        menuSettings.CloseSettingsMenu();
-    }
-
-    private void GoToRootOptionsMenu()
-    {
-        if (!viewContainer.activeSelf) return;
-
-        if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
-            return;
-
-        menuSettings.SetRootSelectable();
     }
 
     private void UpdateCurrentPanel()
     {
-        if (!viewContainer.activeSelf) return;
-
         if (menuSettings.PreviousPanelSelected != null)
             menuSettings.PreviousPanelSelected.SetActive(false);
 
