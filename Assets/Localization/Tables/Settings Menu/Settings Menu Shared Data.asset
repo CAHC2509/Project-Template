@@ -160,11 +160,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11266498280194048
-    m_Key: settings.graphics.possitve
+    m_Key: settings.fullScreen.true
     m_Metadata:
       m_Items: []
   - m_Id: 11266637946322944
-    m_Key: settings.graphics.negative
+    m_Key: settings.fullScreen.false
     m_Metadata:
       m_Items: []
   - m_Id: 11267455391006720

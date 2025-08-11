@@ -16,18 +16,25 @@ public class DescriptionMessageSender : MonoBehaviour
     {
         selectable = GetComponent<SelectableStateController>();
         selectable.OnSelect += SendDescriptionMessage;
+
+        localizedDescription.StringChanged += OnLocalizedDescriptionChanged;
+        localizedDescription.RefreshString();
     }
 
     private void OnDestroy()
     {
         selectable.OnSelect -= SendDescriptionMessage;
+        localizedDescription.StringChanged -= OnLocalizedDescriptionChanged;
     }
 
     private void SendDescriptionMessage()
     {
-        string description = localizedDescription.GetLocalizedString();
+        OnDescriptionSent?.Invoke(localizedDescription.GetLocalizedString());
+    }
 
-        if (description != string.Empty)
-            OnDescriptionSent?.Invoke(description);
+    private void OnLocalizedDescriptionChanged(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+            OnDescriptionSent?.Invoke(value);
     }
 }

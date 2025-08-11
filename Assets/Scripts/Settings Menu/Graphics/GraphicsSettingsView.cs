@@ -22,11 +22,14 @@ public class GraphicsSettingsView : ViewBase
     [SerializeField] private Button previousFullScreenButton;
     [SerializeField] private Button nextFullScreenButton;
     [SerializeField] private TextMeshProUGUI fullScreenModeText;
-    [SerializeField] private LocalizedString possitiveString;
-    [SerializeField] private LocalizedString negativeString;
 
+    private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
     private const string QUALITIES_ENTRY_REFERENCE = "settings.qualities.";
+    private const string FULLSCREEN_MODES_ENTRY_REFERENCE = "settings.fullScreen.";
+
     private GraphicsSettingsEntity graphicsSettings;
+    private LocalizedString qualityLevelName;
+    private LocalizedString fullScreenModeName;
 
     public void Dependencies(GraphicsSettingsEntity graphicsSettings) => this.graphicsSettings = graphicsSettings;
 
@@ -165,26 +168,39 @@ public class GraphicsSettingsView : ViewBase
 
     private void UpdateQualityLevelText()
     {
+        if (qualityLevelName != null)
+            qualityLevelName.StringChanged -= OnQualityLevelChanged;
+
         string currentQualityLevel = graphicsSettings.AvailableQualityLevels[graphicsSettings.CurrentQualityLevelIndex];
-        
-        LocalizedString qualityLevelName = new LocalizedString
+
+        qualityLevelName = new LocalizedString
         {
-            TableReference = "Settings Menu",
+            TableReference = SETTINGS_TABLE_REFERENCE,
             TableEntryReference = $"{QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
         };
 
-        qualityLevelText.text = qualityLevelName.GetLocalizedString();
+        qualityLevelName.StringChanged += OnQualityLevelChanged;
+        qualityLevelName.RefreshString();
     }
+
+    private void OnQualityLevelChanged(string value) => qualityLevelText.text = value;
 
     private void UpdateFullScreenModeText()
     {
-        string currentFullScreenMode;
+        if (fullScreenModeName != null)
+            fullScreenModeName.StringChanged -= OnFullScreenModeChanged;
 
-        if (graphicsSettings.CurrentFullScreenMode)
-            currentFullScreenMode = possitiveString.GetLocalizedString();
-        else
-            currentFullScreenMode = negativeString.GetLocalizedString();
+        string currentFullScreenMode = graphicsSettings.CurrentFullScreenMode.ToString().ToLower();
 
-        fullScreenModeText.text = currentFullScreenMode;
+        fullScreenModeName = new LocalizedString
+        {
+            TableReference = SETTINGS_TABLE_REFERENCE,
+            TableEntryReference = $"{FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
+        };
+
+        fullScreenModeName.StringChanged += OnFullScreenModeChanged;
+        fullScreenModeName.RefreshString();
     }
+
+    private void OnFullScreenModeChanged(string value) => fullScreenModeText.text = value;
 }
