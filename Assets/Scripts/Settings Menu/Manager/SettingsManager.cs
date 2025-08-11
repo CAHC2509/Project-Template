@@ -4,6 +4,7 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private SettingsMenuView view;
+    [SerializeField] private DescriptionMessageView descriptionView;
 
     [Space, Header("Settings modules")]
     [SerializeField] private GraphicsSettingsController graphicsSettings;
@@ -29,6 +30,7 @@ public class SettingsManager : MonoBehaviour
     public void Initialize()
     {
         view.Initialize();
+        descriptionView.Initialize();
 
         graphicsSettings.Initialize();
         audioSettings.Initialize();
@@ -41,6 +43,7 @@ public class SettingsManager : MonoBehaviour
     public void Conclude()
     {
         view.Conclude();
+        descriptionView.Conclude();
 
         graphicsSettings.Conclude();
         audioSettings.Conclude();

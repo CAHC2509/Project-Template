@@ -78,6 +78,91 @@ MonoBehaviour:
     m_Localized: Control
     m_Metadata:
       m_Items: []
+  - m_Id: 11251990857940992
+    m_Localized: Ajusta la calidad visual y las opciones de pantalla del juego.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252118947790848
+    m_Localized: "Configura el volumen general, de la m\xFAsica y de los efectos
+      de sonido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252284144648192
+    m_Localized: "Personaliza las asignaciones de teclas y los m\xE9todos de entrada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252459143593984
+    m_Localized: "Elige el idioma para men\xFAs y textos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252643684581376
+    m_Localized: "Sal del men\xFA de ajustes y regresa al juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252730343096320
+    m_Localized: "Establece la resoluci\xF3n de pantalla del juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252852640612352
+    m_Localized: Ajusta el detalle visual y el equilibrio con el rendimiento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11252940897157120
+    m_Localized: Cambia entre pantalla completa y modo ventana.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253039140339712
+    m_Localized: Controla el nivel general de audio del juego.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253209244532736
+    m_Localized: "Ajusta el volumen de la m\xFAsica de fondo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253242165624832
+    m_Localized: Ajusta el volumen de los efectos de sonido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253475662528512
+    m_Localized: "Tecla o bot\xF3n para moverse hacia arriba."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253615269937152
+    m_Localized: "Tecla o bot\xF3n para moverse hacia abajo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253641316564992
+    m_Localized: "Tecla o bot\xF3n para moverse hacia la izquierda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253666033598464
+    m_Localized: "Tecla o bot\xF3n para moverse hacia la derecha."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11253920833372160
+    m_Localized: "Tecla o bot\xF3n para interactuar con objetos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11254064521838592
+    m_Localized: "Restaura todos los controles a su configuraci\xF3n predeterminada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11254149217419264
+    m_Localized: Ver o editar los controles para entrada por teclado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11254244734304256
+    m_Localized: Ver o editar los controles para entrada por gamepad.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11254471960723456
+    m_Localized: "Configura el idioma del juego a ingl\xE9s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11254579167133696
+    m_Localized: "Configura el idioma del juego a espa\xF1ol."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
