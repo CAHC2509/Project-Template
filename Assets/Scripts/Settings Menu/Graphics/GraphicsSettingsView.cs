@@ -1,206 +1,38 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Localization;
-using TMPro;
 
 public class GraphicsSettingsView : ViewBase
 {
     [Header("Resolution")]
-    [SerializeField] private ListStateController resolutionListController;
-    [SerializeField] private Button previousResolutionButton;
-    [SerializeField] private Button nextResolutionButton;
-    [SerializeField] private TextMeshProUGUI resolutionText;
+    [SerializeField] private ResolutionView resolutionView;
 
-    [Space, Header("Quality")]
-    [SerializeField] private ListStateController qualityListController;
-    [SerializeField] private Button previousQualityButton;
-    [SerializeField] private Button nextQualityButton;
-    [SerializeField] private TextMeshProUGUI qualityLevelText;
+    [Header("Quality")]
+    [SerializeField] private QualityView qualityView;
 
-    [Space, Header("Full Screen")]
-    [SerializeField] private ListStateController fullScreenListController;
-    [SerializeField] private Button previousFullScreenButton;
-    [SerializeField] private Button nextFullScreenButton;
-    [SerializeField] private TextMeshProUGUI fullScreenModeText;
-
-    private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
-    private const string QUALITIES_ENTRY_REFERENCE = "settings.qualities.";
-    private const string FULLSCREEN_MODES_ENTRY_REFERENCE = "settings.fullScreen.";
+    [Header("Full Screen")]
+    [SerializeField] private FullScreenView fullScreenView;
 
     private GraphicsSettingsEntity graphicsSettings;
-    private LocalizedString qualityLevelName;
-    private LocalizedString fullScreenModeName;
 
-    public void Dependencies(GraphicsSettingsEntity graphicsSettings) => this.graphicsSettings = graphicsSettings;
+    public void Dependencies(GraphicsSettingsEntity graphicsSettings)
+    {
+        this.graphicsSettings = graphicsSettings;
+
+        resolutionView.Dependencies(graphicsSettings);
+        qualityView.Dependencies(graphicsSettings);
+        fullScreenView.Dependencies(graphicsSettings);
+    }
 
     public override void Initialize()
     {
-        AddPersistentListeners();
-        InitializeSelectors();
+        resolutionView.Initialize();
+        qualityView.Initialize();
+        fullScreenView.Initialize();
     }
 
     public override void Conclude()
     {
-        RemovePersistentListeners();
+        resolutionView.Conclude();
+        qualityView.Conclude();
+        fullScreenView.Conclude();
     }
-
-    protected override void AddPersistentListeners()
-    {
-        previousResolutionButton.onClick.AddListener(PreviousResolution);
-        nextResolutionButton.onClick.AddListener(NextResolution);
-
-        previousQualityButton.onClick.AddListener(PreviousQualityLevel);
-        nextQualityButton.onClick.AddListener(NextQualityLevel);
-
-        previousFullScreenButton.onClick.AddListener(DisableFullScreenMode);
-        nextFullScreenButton.onClick.AddListener(EnableFullScreenMode);
-
-        resolutionListController.OnPreviousItemRequested += PreviousResolution;
-        resolutionListController.OnNextItemRequested += NextResolution;
-
-        qualityListController.OnPreviousItemRequested += PreviousQualityLevel;
-        qualityListController.OnNextItemRequested += NextQualityLevel;
-
-        fullScreenListController.OnPreviousItemRequested += DisableFullScreenMode;
-        fullScreenListController.OnNextItemRequested += EnableFullScreenMode;
-
-        graphicsSettings.OnResolutionChanged += UpdateResolutionButtons;
-        graphicsSettings.OnResolutionChanged += UpdateResolutionText;
-        graphicsSettings.OnQualityLevelChanged += UpdateQualityLevelsButtons;
-        graphicsSettings.OnQualityLevelChanged += UpdateQualityLevelText;
-        graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeButtons;
-        graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeText;
-    }
-
-    protected override void RemovePersistentListeners()
-    {
-        previousResolutionButton.onClick.RemoveListener(PreviousResolution);
-        nextResolutionButton.onClick.RemoveListener(NextResolution);
-
-        previousQualityButton.onClick.RemoveListener(PreviousQualityLevel);
-        nextQualityButton.onClick.RemoveListener(NextQualityLevel);
-
-        previousFullScreenButton.onClick.RemoveListener(DisableFullScreenMode);
-        nextFullScreenButton.onClick.RemoveListener(EnableFullScreenMode);
-
-        resolutionListController.OnPreviousItemRequested -= PreviousResolution;
-        resolutionListController.OnNextItemRequested -= NextResolution;
-
-        qualityListController.OnPreviousItemRequested -= PreviousQualityLevel;
-        qualityListController.OnNextItemRequested -= NextQualityLevel;
-
-        fullScreenListController.OnPreviousItemRequested -= DisableFullScreenMode;
-        fullScreenListController.OnNextItemRequested -= EnableFullScreenMode;
-
-        graphicsSettings.OnResolutionChanged -= UpdateResolutionButtons;
-        graphicsSettings.OnResolutionChanged -= UpdateResolutionText;
-        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelsButtons;
-        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelText;
-        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeButtons;
-        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeText;
-    }
-
-    private void InitializeSelectors()
-    {
-        UpdateResolutionButtons();
-        UpdateResolutionText();
-
-        UpdateQualityLevelsButtons();
-        UpdateQualityLevelText();
-
-        UpdateFullScreenModeButtons();
-        UpdateFullScreenModeText();
-    }
-
-    private void PreviousResolution()
-    {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex - 1;
-        graphicsSettings.SetResolutionIndex(currentIndex);
-    }
-
-    private void NextResolution()
-    {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex + 1;
-        graphicsSettings.SetResolutionIndex(currentIndex);
-    }
-
-    private void PreviousQualityLevel()
-    {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex - 1;
-        graphicsSettings.SetQualityLevelIndex(currentIndex);
-    }
-
-    private void NextQualityLevel()
-    {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex + 1;
-        graphicsSettings.SetQualityLevelIndex(currentIndex);
-    }
-
-    private void EnableFullScreenMode() => graphicsSettings.SetFullscreenMode(true);
-    private void DisableFullScreenMode() => graphicsSettings.SetFullscreenMode(false);
-
-    private void UpdateResolutionButtons()
-    {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex;
-        previousResolutionButton.gameObject.SetActive(!(currentIndex <= 0));
-        nextResolutionButton.gameObject.SetActive(!(currentIndex >= graphicsSettings.AvailableResolutions.Count - 1));
-    }
-
-    private void UpdateQualityLevelsButtons()
-    {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex;
-        previousQualityButton.gameObject.SetActive(!(currentIndex <= 0));
-        nextQualityButton.gameObject.SetActive(!(currentIndex >= graphicsSettings.AvailableQualityLevels.Count - 1));
-    }
-
-    private void UpdateFullScreenModeButtons()
-    {
-        bool activeMode = graphicsSettings.CurrentFullScreenMode;
-        previousFullScreenButton.gameObject.SetActive(activeMode);
-        nextFullScreenButton.gameObject.SetActive(!activeMode);
-    }
-
-    private void UpdateResolutionText()
-    {
-        Resolution currentResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
-        resolutionText.text = $"{currentResolution.width}x{currentResolution.height}";
-    }
-
-    private void UpdateQualityLevelText()
-    {
-        if (qualityLevelName != null)
-            qualityLevelName.StringChanged -= OnQualityLevelChanged;
-
-        string currentQualityLevel = graphicsSettings.AvailableQualityLevels[graphicsSettings.CurrentQualityLevelIndex];
-
-        qualityLevelName = new LocalizedString
-        {
-            TableReference = SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
-        };
-
-        qualityLevelName.StringChanged += OnQualityLevelChanged;
-        qualityLevelName.RefreshString();
-    }
-
-    private void OnQualityLevelChanged(string value) => qualityLevelText.text = value;
-
-    private void UpdateFullScreenModeText()
-    {
-        if (fullScreenModeName != null)
-            fullScreenModeName.StringChanged -= OnFullScreenModeChanged;
-
-        string currentFullScreenMode = graphicsSettings.CurrentFullScreenMode.ToString().ToLower();
-
-        fullScreenModeName = new LocalizedString
-        {
-            TableReference = SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
-        };
-
-        fullScreenModeName.StringChanged += OnFullScreenModeChanged;
-        fullScreenModeName.RefreshString();
-    }
-
-    private void OnFullScreenModeChanged(string value) => fullScreenModeText.text = value;
 }

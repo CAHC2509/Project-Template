@@ -1109,39 +1109,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GraphicsSettingsView
   viewContainer: {fileID: 534122166144347480}
-  resolutionListController: {fileID: 1363739102}
-  previousResolutionButton: {fileID: 168459721}
-  nextResolutionButton: {fileID: 147622093}
-  resolutionText: {fileID: 995222428}
-  qualityListController: {fileID: 1381417817}
-  previousQualityButton: {fileID: 327186603}
-  nextQualityButton: {fileID: 1142073802}
-  qualityLevelText: {fileID: 925633851}
-  fullScreenListController: {fileID: 2062491941}
-  previousFullScreenButton: {fileID: 2043689164}
-  nextFullScreenButton: {fileID: 824112604}
-  fullScreenModeText: {fileID: 448763248}
-  possitiveString:
-    m_TableReference:
-      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
-    m_TableEntryReference:
-      m_KeyId: 11266498280194048
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  negativeString:
-    m_TableReference:
-      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
-    m_TableEntryReference:
-      m_KeyId: 11266637946322944
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
+  resolutionView:
+    resolutionListController: {fileID: 1363739102}
+    previousResolutionButton: {fileID: 168459721}
+    nextResolutionButton: {fileID: 147622093}
+    resolutionText: {fileID: 995222428}
+  qualityView:
+    qualityListController: {fileID: 1381417817}
+    previousQualityButton: {fileID: 327186603}
+    nextQualityButton: {fileID: 1142073802}
+    qualityLevelText: {fileID: 925633851}
+  fullScreenView:
+    fullScreenListController: {fileID: 2062491941}
+    previousFullScreenButton: {fileID: 2043689164}
+    nextFullScreenButton: {fileID: 824112604}
+    fullScreenModeText: {fileID: 448763248}
 --- !u!1 &1242325689
 GameObject:
   m_ObjectHideFlags: 0
