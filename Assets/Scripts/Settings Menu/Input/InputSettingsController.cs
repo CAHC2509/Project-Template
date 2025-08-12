@@ -26,8 +26,9 @@ public class InputSettingsController : ControllerBase, ISettings
 
     public override void Initialize()
     {
+        base.Initialize();
+
         LoadSettings();
-        AddListeners();
         GetInputRebinders();
         InitializeInputRebinders();
         view.Initialize();
@@ -35,7 +36,8 @@ public class InputSettingsController : ControllerBase, ISettings
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         view.Conclude();
     }
 

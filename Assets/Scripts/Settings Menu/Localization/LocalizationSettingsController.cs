@@ -17,14 +17,16 @@ public class LocalizationSettingsController : ControllerBase, ISettings
 
     public override void Initialize()
     {
-        AddListeners();
+        base.Initialize();
+
         ChangeLocaleByCode();
         view.Initialize();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         view.Conclude();
     }
 

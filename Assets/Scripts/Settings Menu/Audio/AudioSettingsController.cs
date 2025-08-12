@@ -20,14 +20,16 @@ public class AudioSettingsController : ControllerBase, ISettings
 
     public override void Initialize()
     {
-        AddListeners();
+        base.Initialize();
+
         InitializeSettings();
         view.Initialize();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         view.Conclude();
     }
 

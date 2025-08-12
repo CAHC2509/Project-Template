@@ -19,14 +19,16 @@ public class GraphicsSettingsController : ControllerBase, ISettings
 
     public override void Initialize()
     {
+        base.Initialize();
+
         LoadSettings();
-        AddListeners();
         view.Initialize();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         view.Conclude();
     }
 

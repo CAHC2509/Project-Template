@@ -18,13 +18,15 @@ public class SceneLoaderController : ControllerBase
 
     public override void Initialize()
     {
-        AddListeners();
+        base.Initialize();
+
         view.Initialize();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         view.Conclude();
     }
 

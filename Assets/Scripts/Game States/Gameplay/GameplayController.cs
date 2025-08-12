@@ -9,13 +9,15 @@ public class GameplayController : ControllerBase
 
     public override void Initialize()
     {
-        AddListeners();
+        base.Initialize();
+
         UnPauseGame();
     }
 
     public override void Conclude()
     {
-        RemoveListeners();
+        base.Conclude();
+
         UnPauseGame();
     }
 
