@@ -9,28 +9,8 @@ public class GameplayEntity
     public event Action OnMatchFinished;
     public event Action OnMainMenuRequest;
 
-    private bool pauseState;
-
-    public void TogglePause()
-    {
-        if (pauseState)
-            UnPause();
-        else
-            Pause();
-    }
-
-    public void Pause()
-    {
-        pauseState = true;
-        OnPause?.Invoke();
-    }
-
-    public void UnPause()
-    {
-        pauseState = false;
-        OnUnPause?.Invoke();
-    }
-
+    public void Pause() => OnPause?.Invoke();
+    public void UnPause() => OnUnPause?.Invoke();
     public void StartMatch() => OnMatchStarted?.Invoke();
     public void FinishMatch() => OnMatchFinished?.Invoke();
     public void GoToMainMenu() => OnMainMenuRequest?.Invoke();
