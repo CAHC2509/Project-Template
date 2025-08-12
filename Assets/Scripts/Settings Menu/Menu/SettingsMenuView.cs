@@ -123,7 +123,7 @@ public class SettingsMenuView : ViewBase
     private IEnumerator SelectionWithDelay()
     {
         yield return new WaitUntil(() => menuSettings.CurrentPanelSelected.activeInHierarchy);
-        SelectionManager.Instance.Select(menuSettings.CurrentSelectable);
+        SelectionManager.SetNewSelectable?.Invoke(menuSettings.CurrentSelectable);
     }
 
     private void SetDefaultPanel() => SetGraphicsPanel();

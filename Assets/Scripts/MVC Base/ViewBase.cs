@@ -18,7 +18,7 @@ public abstract class ViewBase : MonoBehaviour
     protected virtual void SetDefaultSelection()
     {
         if (defaultSelection != null)
-            SelectionManager.Instance.Select(defaultSelection.GetComponent<SelectableStateController>());
+            SelectionManager.SetNewSelectable?.Invoke(defaultSelection.GetComponent<SelectableStateController>());
     }
 
     public virtual void EnableView()

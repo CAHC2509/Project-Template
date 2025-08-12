@@ -1,22 +1,16 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
-    public static SelectionManager Instance { get; private set; }
+    public static Action<SelectableStateController> SetNewSelectable;
 
     private SelectableStateController currentSelection;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
-        Instance = this;
-    }
+    private void Awake() => SetNewSelectable += Select;
+    private void OnDestroy() => SetNewSelectable -= Select;
 
     public void Select(SelectableStateController newSelection)
     {
