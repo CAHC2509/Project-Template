@@ -26,14 +26,10 @@ public class AudioSettingsView : ViewBase
 
     public override void Initialize()
     {
-        AddPersistentListeners();
+        base.Initialize();
+
         SetSliders();
         SetTexts();
-    }
-
-    public override void Conclude()
-    {
-        RemovePersistentListeners();
     }
 
     protected override void AddPersistentListeners()

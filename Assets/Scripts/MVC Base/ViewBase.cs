@@ -7,8 +7,8 @@ public abstract class ViewBase : MonoBehaviour
 
     protected Button defaultSelection;
 
-    public virtual void Initialize() { }
-    public virtual void Conclude() { }
+    public virtual void Initialize() => AddPersistentListeners();
+    public virtual void Conclude() => RemovePersistentListeners();
 
     protected virtual void AddPersistentListeners() { }
     protected virtual void RemovePersistentListeners() { }

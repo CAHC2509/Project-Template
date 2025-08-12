@@ -25,13 +25,9 @@ public class InputSettingsView : ViewBase
 
     public override void Initialize()
     {
-        AddPersistentListeners();
-        OpenKeyboardControlsPanel();
-    }
+        base.Initialize();
 
-    public override void Conclude()
-    {
-        RemovePersistentListeners();
+        OpenKeyboardControlsPanel();
     }
 
     protected override void AddPersistentListeners()

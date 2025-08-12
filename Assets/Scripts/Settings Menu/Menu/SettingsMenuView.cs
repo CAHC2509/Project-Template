@@ -36,26 +36,9 @@ public class SettingsMenuView : ViewBase
         this.menuSettings = menuSettings;
         defaultSelection = graphicsButton.Button;
     }
-    
-    public override void Initialize()
-    {
-        AddPersistentListeners();
-    }
 
-    public override void Conclude()
-    {
-        RemovePersistentListeners();
-    }
-
-    protected override void AddTemporaryListeners()
-    {
-        UIInputManager.OnCancel += OnCancelPressed;
-    }
-
-    protected override void RemoveTemporaryListeners()
-    {
-        UIInputManager.OnCancel -= OnCancelPressed;
-    }
+    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += OnCancelPressed;
+    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= OnCancelPressed;
 
     protected override void AddPersistentListeners()
     {

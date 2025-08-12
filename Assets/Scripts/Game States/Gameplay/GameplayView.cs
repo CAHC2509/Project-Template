@@ -16,9 +16,6 @@ public class GameplayView : ViewBase
         defaultSelection = pauseButton;
     }
 
-    public override void Initialize() => AddPersistentListeners();
-    public override void Conclude() => RemovePersistentListeners();
-
     protected override void AddTemporaryListeners()
     {
         UIInputManager.OnCancel += gameplayEntity.Pause;

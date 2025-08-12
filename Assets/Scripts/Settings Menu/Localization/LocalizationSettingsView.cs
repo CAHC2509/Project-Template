@@ -9,8 +9,6 @@ public class LocalizationSettingsView : ViewBase
     private LocalizationSettingsEntity localizationSettings;
 
     public void Dependencies(LocalizationSettingsEntity localizationSettings) => this.localizationSettings = localizationSettings;
-    public override void Initialize() => AddPersistentListeners();
-    public override void Conclude() => RemovePersistentListeners();
 
     protected override void AddPersistentListeners()
     {

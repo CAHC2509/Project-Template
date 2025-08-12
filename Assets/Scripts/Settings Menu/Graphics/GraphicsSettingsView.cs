@@ -24,6 +24,8 @@ public class GraphicsSettingsView : ViewBase
 
     public override void Initialize()
     {
+        base.Initialize();
+
         resolutionView.Initialize();
         qualityView.Initialize();
         fullScreenView.Initialize();
@@ -31,6 +33,8 @@ public class GraphicsSettingsView : ViewBase
 
     public override void Conclude()
     {
+        base.Conclude();
+
         resolutionView.Conclude();
         qualityView.Conclude();
         fullScreenView.Conclude();

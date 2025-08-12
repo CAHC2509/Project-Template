@@ -17,9 +17,6 @@ public class MainView : ViewBase
         defaultSelection = playButton;
     }
 
-    public override void Initialize() => AddPersistentListeners();
-    public override void Conclude() => RemovePersistentListeners();
-
     protected override void AddPersistentListeners()
     {
         playButton.onClick.AddListener(mainEntity.TriggerPlay);

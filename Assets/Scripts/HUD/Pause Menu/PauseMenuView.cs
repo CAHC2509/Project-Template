@@ -16,18 +16,8 @@ public class PauseMenuView : ViewBase
         defaultSelection = unPauseButton;
     }
 
-    public override void Initialize() => AddPersistentListeners();
-    public override void Conclude() => RemovePersistentListeners();
-
-    protected override void AddTemporaryListeners()
-    {
-        UIInputManager.OnCancel += gameplayEntity.UnPause;
-    }
-
-    protected override void RemoveTemporaryListeners()
-    {
-        UIInputManager.OnCancel -= gameplayEntity.UnPause;
-    }
+    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += gameplayEntity.UnPause;
+    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= gameplayEntity.UnPause;
 
     protected override void AddPersistentListeners()
     {
