@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class AudioSettingsView : ViewBase
+public class AudioSettingsView : ViewBase, IAudioSettingsView
 {
     [Header("Sliders")]
     [SerializeField] private Slider generalVolumeSlider;
@@ -19,17 +19,22 @@ public class AudioSettingsView : ViewBase
     [SerializeField] private TextMeshProUGUI musicVolumeText;
     [SerializeField] private TextMeshProUGUI effectsVolumeText;
 
+    private IAudioSettingsController controller;
     private const float VOLUME_CONSTANT = 0.01f;
-    private AudioSettingsEntity audioSettings;
 
-    public void Dependencies(AudioSettingsEntity audioSettings) => this.audioSettings = audioSettings;
+    private void Awake()
+    {
+        controller = GetComponentInParent<IAudioSettingsController>();
+    }
 
     public override void Initialize()
     {
         base.Initialize();
 
         SetSliders();
-        SetTexts();
+        UpdateGeneralVolumeText();
+        UpdateMusicVolumeText();
+        UpdateEffectsVolumeText();
     }
 
     protected override void AddPersistentListeners()
@@ -66,42 +71,51 @@ public class AudioSettingsView : ViewBase
 
     private void SetSliders()
     {
-        generalVolumeSlider.value = audioSettings.GeneralVolume;
-        musicVolumeSlider.value = audioSettings.MusicVolume;
-        effectsVolumeSlider.value = audioSettings.EffectsVolume;
-    }
-
-    private void SetTexts()
-    {
-        generalVolumeText.text = VolumeToPercentage(audioSettings.GeneralVolume);
-        musicVolumeText.text = VolumeToPercentage(audioSettings.MusicVolume);
-        effectsVolumeText.text = VolumeToPercentage(audioSettings.EffectsVolume);
+        generalVolumeSlider.SetValueWithoutNotify(controller.GetModel().GeneralVolume);
+        musicVolumeSlider.SetValueWithoutNotify(controller.GetModel().MusicVolume);
+        effectsVolumeSlider.SetValueWithoutNotify(controller.GetModel().EffectsVolume);
     }
 
     private void GeneralVolumeChanged(float volume)
     {
-        audioSettings.SetGeneralVolume(volume);
-        generalVolumeText.text = VolumeToPercentage(volume);
+        controller.UpdateGeneralVolume(volume);
     }
 
     private void MusicVolumeChanged(float volume)
     {
-        audioSettings.SetMusicVolume(volume);
-        musicVolumeText.text = VolumeToPercentage(volume);
+        controller.UpdateMusicVolume(volume);
     }
 
     private void EffectsVolumeChanged(float volume)
     {
-        audioSettings.SetEffectsVolume(volume);
-        effectsVolumeText.text = VolumeToPercentage(volume);
+        controller.UpdateEffectsVolume(volume);
     }
 
-    private void IncreaseGeneralVolume() => GeneralVolumeChanged(generalVolumeSlider.value += VOLUME_CONSTANT);
-    private void DecreaseGeneralVolume() => GeneralVolumeChanged(generalVolumeSlider.value -= VOLUME_CONSTANT);
-    private void IncreaseMusicVolume() => MusicVolumeChanged(musicVolumeSlider.value += VOLUME_CONSTANT);
-    private void DecreaseMusicVolume() => MusicVolumeChanged(musicVolumeSlider.value -= VOLUME_CONSTANT);
-    private void IncreaseEffectsVolume() => EffectsVolumeChanged(effectsVolumeSlider.value += VOLUME_CONSTANT);
-    private void DecreaseEffectsVolume() => EffectsVolumeChanged(effectsVolumeSlider.value -= VOLUME_CONSTANT);
+    public void UpdateGeneralVolumeText()
+    {
+        generalVolumeText.text = controller.VolumeToPercentage(controller.GetModel().GeneralVolume);
+    }
 
-    private string VolumeToPercentage(float volume) => ((int)(volume * 100f)).ToString();
+    public void UpdateMusicVolumeText()
+    {
+        musicVolumeText.text = controller.VolumeToPercentage(controller.GetModel().MusicVolume);
+    }
+
+    public void UpdateEffectsVolumeText()
+    {
+        effectsVolumeText.text = controller.VolumeToPercentage(controller.GetModel().EffectsVolume);
+    }
+
+    private void ChangeSlider(Slider slider, float delta)
+    {
+        float newValue = Mathf.Clamp01(slider.value + delta);
+        slider.value = newValue;
+    }
+
+    private void IncreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, VOLUME_CONSTANT);
+    private void DecreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, -VOLUME_CONSTANT);
+    private void IncreaseMusicVolume() => ChangeSlider(musicVolumeSlider, VOLUME_CONSTANT);
+    private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -VOLUME_CONSTANT);
+    private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, VOLUME_CONSTANT);
+    private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -VOLUME_CONSTANT);
 }

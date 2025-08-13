@@ -149,8 +149,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1650654387}
-  - {fileID: 1215164588}
-  - {fileID: 964105020}
   - {fileID: 639265454}
   - {fileID: 1242325690}
   m_Father: {fileID: 0}
@@ -909,7 +907,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 71244981}
+  m_Father: {fileID: 1073671171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &964105021
 MonoBehaviour:
@@ -1038,7 +1036,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 964105020}
   m_Father: {fileID: 1977341293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1073671172
@@ -1054,7 +1053,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsController
   mixer: {fileID: 24100000, guid: 8c76c1ee5e9ca02478384462c60d8ba8, type: 2}
-  view: {fileID: 964105021}
 --- !u!114 &1142073802 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6929751577356548391, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -1096,7 +1094,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 71244981}
+  m_Father: {fileID: 1949781219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1215164589
 MonoBehaviour:
@@ -1715,7 +1713,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1215164588}
   m_Father: {fileID: 1977341293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1949781220
@@ -1730,7 +1729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacc26c3009ac814b88e206ca4b35ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GraphicsSettingsController
-  view: {fileID: 1215164589}
 --- !u!114 &1971348254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1912649962960851926, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
