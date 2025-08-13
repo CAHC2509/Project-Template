@@ -12,7 +12,14 @@ public class SliderStateController : SelectableStateController
     public event Action OnValueIncreaseRequest;
     public event Action OnValueDecreaseRequest;
 
-    private void Awake() => InitializeStateMachine();
+    private Slider slider;
+
+    private void Awake()
+    {
+        slider = GetComponentInChildren<Slider>();
+        InitializeStateMachine();
+        DisableSliderNavigation();
+    }
 
     protected override void OnEnable()
     {
@@ -55,5 +62,12 @@ public class SliderStateController : SelectableStateController
     {
         if (currentState != selectedState) return;
         OnValueDecreaseRequest?.Invoke();
+    }
+
+    private void DisableSliderNavigation()
+    {
+        var navigation = slider.navigation;
+        navigation.mode = Navigation.Mode.None;
+        slider.navigation = navigation;
     }
 }
