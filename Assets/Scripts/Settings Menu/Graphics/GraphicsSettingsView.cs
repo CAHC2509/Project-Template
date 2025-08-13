@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GraphicsSettingsView : ViewBase
+public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
 {
     [Header("Resolution")]
     [SerializeField] private ResolutionView resolutionView;
@@ -11,24 +11,20 @@ public class GraphicsSettingsView : ViewBase
     [Header("Full Screen")]
     [SerializeField] private FullScreenView fullScreenView;
 
-    private GraphicsSettingsEntity graphicsSettings;
+    private IGraphicsSettingsController controller;
 
-    public void Dependencies(GraphicsSettingsEntity graphicsSettings)
+    private void Awake()
     {
-        this.graphicsSettings = graphicsSettings;
-
-        resolutionView.Dependencies(graphicsSettings);
-        qualityView.Dependencies(graphicsSettings);
-        fullScreenView.Dependencies(graphicsSettings);
+        controller = GetComponentInParent<IGraphicsSettingsController>();
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        resolutionView.Initialize();
-        qualityView.Initialize();
-        fullScreenView.Initialize();
+        resolutionView.Initialize(controller);
+        qualityView.Initialize(controller);
+        fullScreenView.Initialize(controller);
     }
 
     public override void Conclude()
@@ -38,5 +34,23 @@ public class GraphicsSettingsView : ViewBase
         resolutionView.Conclude();
         qualityView.Conclude();
         fullScreenView.Conclude();
+    }
+
+    public void UpdateResolutionView()
+    {
+        resolutionView.UpdateResolutionText();
+        resolutionView.UpdateResolutionButtons();
+    }
+
+    public void UpdateQualityLevelView()
+    {
+        qualityView.UpdateQualityLevelText();
+        qualityView.UpdateQualityLevelButtons();
+    }
+
+    public void UpdateFullScreenModeView()
+    {
+        fullScreenView.UpdateFullScreenModeText();
+        fullScreenView.UpdateFullScreenModeButtons();
     }
 }

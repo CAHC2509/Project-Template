@@ -11,23 +11,17 @@ public class ResolutionView
     [SerializeField] private Button nextResolutionButton;
     [SerializeField] private TextMeshProUGUI resolutionText;
 
-    private GraphicsSettingsEntity graphicsSettings;
+    private IGraphicsSettingsController controller;
 
-    public void Dependencies(GraphicsSettingsEntity graphicsSettings)
+    public void Initialize(IGraphicsSettingsController controller)
     {
-        this.graphicsSettings = graphicsSettings;
-    }
+        this.controller = controller;
 
-    public void Initialize()
-    {
         previousResolutionButton.onClick.AddListener(OnPreviousResolution);
         nextResolutionButton.onClick.AddListener(OnNextResolution);
 
         resolutionListController.OnPreviousItemRequested += OnPreviousResolution;
         resolutionListController.OnNextItemRequested += OnNextResolution;
-
-        graphicsSettings.OnResolutionChanged += UpdateResolutionButtons;
-        graphicsSettings.OnResolutionChanged += UpdateResolutionText;
 
         InitializeSelectors();
     }
@@ -39,9 +33,6 @@ public class ResolutionView
 
         resolutionListController.OnPreviousItemRequested -= OnPreviousResolution;
         resolutionListController.OnNextItemRequested -= OnNextResolution;
-
-        graphicsSettings.OnResolutionChanged -= UpdateResolutionButtons;
-        graphicsSettings.OnResolutionChanged -= UpdateResolutionText;
     }
 
     private void InitializeSelectors()
@@ -52,26 +43,26 @@ public class ResolutionView
 
     private void OnPreviousResolution()
     {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex - 1;
-        graphicsSettings.SetResolutionIndex(currentIndex);
+        int index = controller.GetModel().CurrentResolutionIndex - 1;
+        controller.SetResolution(index);
     }
 
     private void OnNextResolution()
     {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex + 1;
-        graphicsSettings.SetResolutionIndex(currentIndex);
+        int index = controller.GetModel().CurrentResolutionIndex + 1;
+        controller.SetResolution(index);
     }
 
-    private void UpdateResolutionButtons()
+    public void UpdateResolutionButtons()
     {
-        int currentIndex = graphicsSettings.CurrentResolutionIndex;
+        int currentIndex = controller.GetModel().CurrentResolutionIndex;
         previousResolutionButton.gameObject.SetActive(currentIndex > 0);
-        nextResolutionButton.gameObject.SetActive(currentIndex < graphicsSettings.AvailableResolutions.Count - 1);
+        nextResolutionButton.gameObject.SetActive(currentIndex < controller.GetModel().AvailableResolutions.Count - 1);
     }
 
-    private void UpdateResolutionText()
+    public void UpdateResolutionText()
     {
-        Resolution currentResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
+        Resolution currentResolution = controller.GetModel().AvailableResolutions[controller.GetModel().CurrentResolutionIndex];
         resolutionText.text = $"{currentResolution.width}x{currentResolution.height}";
     }
 }

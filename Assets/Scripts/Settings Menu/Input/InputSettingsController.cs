@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputSettingsController : ControllerBase, ISettings
+public class InputSettingsController : ControllerBase, ISettingsController
 {
     [SerializeField] private InputActionAsset inputActionAsset;
     [SerializeField] private InputSettingsView view;

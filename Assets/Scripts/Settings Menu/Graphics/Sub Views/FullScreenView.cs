@@ -15,24 +15,18 @@ public class FullScreenView
     private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
     private const string FULLSCREEN_MODES_ENTRY_REFERENCE = "settings.fullScreen.";
 
-    private GraphicsSettingsEntity graphicsSettings;
+    private IGraphicsSettingsController controller;
     private LocalizedString fullScreenModeName;
 
-    public void Dependencies(GraphicsSettingsEntity graphicsSettings)
+    public void Initialize(IGraphicsSettingsController controller)
     {
-        this.graphicsSettings = graphicsSettings;
-    }
+        this.controller = controller;
 
-    public void Initialize()
-    {
         previousFullScreenButton.onClick.AddListener(OnDisableFullScreenMode);
         nextFullScreenButton.onClick.AddListener(OnEnableFullScreenMode);
 
         fullScreenListController.OnPreviousItemRequested += OnDisableFullScreenMode;
         fullScreenListController.OnNextItemRequested += OnEnableFullScreenMode;
-
-        graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeButtons;
-        graphicsSettings.OnFullScreenChanged += UpdateFullScreenModeText;
 
         InitializeSelectors();
     }
@@ -45,9 +39,6 @@ public class FullScreenView
         fullScreenListController.OnPreviousItemRequested -= OnDisableFullScreenMode;
         fullScreenListController.OnNextItemRequested -= OnEnableFullScreenMode;
 
-        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeButtons;
-        graphicsSettings.OnFullScreenChanged -= UpdateFullScreenModeText;
-
         if (fullScreenModeName != null)
             fullScreenModeName.StringChanged -= OnFullScreenModeChanged;
     }
@@ -58,22 +49,29 @@ public class FullScreenView
         UpdateFullScreenModeText();
     }
 
-    private void OnDisableFullScreenMode() => graphicsSettings.SetFullscreenMode(false);
-    private void OnEnableFullScreenMode() => graphicsSettings.SetFullscreenMode(true);
-
-    private void UpdateFullScreenModeButtons()
+    private void OnDisableFullScreenMode()
     {
-        bool activeMode = graphicsSettings.CurrentFullScreenMode;
+        controller.SetFullScreenMode(false);
+    }
+
+    private void OnEnableFullScreenMode()
+    {
+        controller.SetFullScreenMode(true);
+    }
+
+    public void UpdateFullScreenModeButtons()
+    {
+        bool activeMode = controller.GetModel().CurrentFullScreenMode;
         previousFullScreenButton.gameObject.SetActive(activeMode);
         nextFullScreenButton.gameObject.SetActive(!activeMode);
     }
 
-    private void UpdateFullScreenModeText()
+    public void UpdateFullScreenModeText()
     {
         if (fullScreenModeName != null)
             fullScreenModeName.StringChanged -= OnFullScreenModeChanged;
 
-        string currentFullScreenMode = graphicsSettings.CurrentFullScreenMode.ToString().ToLower();
+        string currentFullScreenMode = controller.GetModel().CurrentFullScreenMode.ToString().ToLower();
 
         fullScreenModeName = new LocalizedString
         {
@@ -85,5 +83,8 @@ public class FullScreenView
         fullScreenModeName.RefreshString();
     }
 
-    private void OnFullScreenModeChanged(string value) => fullScreenModeText.text = value;
+    private void OnFullScreenModeChanged(string value)
+    {
+        fullScreenModeText.text = value;
+    }
 }

@@ -1,20 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphicsSettingsController : ControllerBase, ISettings
+public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsController
 {
-    [SerializeField] private GraphicsSettingsView view;
-
     private const string RESOLUTIONS_KEY = "Resolution";
     private const string QUALITY_LEVELS_KEY = "QualityLevel";
     private const string FULL_SCREEN_KEY = "FullScreen";
 
+    private IGraphicSettingsView view;
     private GraphicsSettingsEntity graphicsSettings;
 
-    public void Dependencies()
+    private void Awake()
     {
+        view = GetComponentInChildren<IGraphicSettingsView>();
         LoadAvailiableSettings();
-        view.Dependencies(graphicsSettings);
     }
 
     public override void Initialize()
@@ -32,6 +31,13 @@ public class GraphicsSettingsController : ControllerBase, ISettings
         view.Conclude();
     }
 
+    private void LoadAvailiableSettings()
+    {
+        List<Resolution> resolutions = GetAvailiableResolutions();
+        List<string> qualityLevels = GetAvailiableQualityLevels();
+        graphicsSettings = new GraphicsSettingsEntity(resolutions, qualityLevels);
+    }
+
     public void LoadSettings()
     {
         graphicsSettings.SetResolutionIndex(PlayerPrefs.GetInt(RESOLUTIONS_KEY, graphicsSettings.AvailableResolutions.Count - 1));
@@ -47,46 +53,37 @@ public class GraphicsSettingsController : ControllerBase, ISettings
         PlayerPrefs.Save();
     }
 
-    private void LoadAvailiableSettings()
+    public void SetResolution(int index)
     {
-        List<Resolution> resolutions = GetAvailiableResolutions();
-        List<string> qualityLevels = GetAvailiableQualityLevels();
-        graphicsSettings = new GraphicsSettingsEntity(resolutions, qualityLevels);
-    }
+        index = Mathf.Clamp(index, 0, graphicsSettings.AvailableResolutions.Count - 1);
+        graphicsSettings.SetResolutionIndex(index);
 
-    protected override void AddListeners()
-    {
-        graphicsSettings.OnResolutionChanged += SetResolution;
-        graphicsSettings.OnQualityLevelChanged += SetQualityLevel;
-        graphicsSettings.OnFullScreenChanged += SetFullScreenMode;
-    }
-
-    protected override void RemoveListeners()
-    {
-        graphicsSettings.OnResolutionChanged -= SetResolution;
-        graphicsSettings.OnQualityLevelChanged -= SetQualityLevel;
-        graphicsSettings.OnFullScreenChanged -= SetFullScreenMode;
-    }
-
-    private void SetResolution()
-    {
-        Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
+        Resolution selectedResolution = graphicsSettings.AvailableResolutions[index];
         Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
         SaveSettings();
+
+        view.UpdateResolutionView();
     }
 
-    private void SetQualityLevel()
+    public void SetQualityLevel(int index)
     {
-        int selectedQualityLevel = graphicsSettings.CurrentQualityLevelIndex;
-        QualitySettings.SetQualityLevel(selectedQualityLevel);
+        index = Mathf.Clamp(index, 0, graphicsSettings.AvailableQualityLevels.Count - 1);
+        graphicsSettings.SetQualityLevelIndex(index);
+
+        QualitySettings.SetQualityLevel(index);
         SaveSettings();
+
+        view.UpdateQualityLevelView();
     }
 
-    private void SetFullScreenMode()
+    public void SetFullScreenMode(bool activeMode)
     {
-        bool selectedFullScreenMode = graphicsSettings.CurrentFullScreenMode;
-        Screen.fullScreenMode = selectedFullScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        graphicsSettings.SetFullscreenMode(activeMode);
+
+        Screen.fullScreenMode = activeMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
         SaveSettings();
+
+        view.UpdateFullScreenModeView();
     }
 
     private List<Resolution> GetAvailiableResolutions()
@@ -102,4 +99,9 @@ public class GraphicsSettingsController : ControllerBase, ISettings
     }
 
     private List<string> GetAvailiableQualityLevels() => new List<string>(QualitySettings.names);
+
+    public GraphicsSettingsEntity GetModel()
+    {
+        return graphicsSettings;
+    }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class LocalizationSettingsController : ControllerBase, ISettings
+public class LocalizationSettingsController : ControllerBase, ISettingsController
 {
     [SerializeField] private LocalizationSettingsView view;
 

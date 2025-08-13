@@ -15,24 +15,18 @@ public class QualityView
     private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
     private const string QUALITIES_ENTRY_REFERENCE = "settings.qualities.";
 
-    private GraphicsSettingsEntity graphicsSettings;
+    private IGraphicsSettingsController controller;
     private LocalizedString qualityLevelName;
 
-    public void Dependencies(GraphicsSettingsEntity graphicsSettings)
+    public void Initialize(IGraphicsSettingsController controller)
     {
-        this.graphicsSettings = graphicsSettings;
-    }
+        this.controller = controller;
 
-    public void Initialize()
-    {
         previousQualityButton.onClick.AddListener(OnPreviousQualityLevel);
         nextQualityButton.onClick.AddListener(OnNextQualityLevel);
 
         qualityListController.OnPreviousItemRequested += OnPreviousQualityLevel;
         qualityListController.OnNextItemRequested += OnNextQualityLevel;
-
-        graphicsSettings.OnQualityLevelChanged += UpdateQualityLevelButtons;
-        graphicsSettings.OnQualityLevelChanged += UpdateQualityLevelText;
 
         InitializeSelectors();
     }
@@ -44,9 +38,6 @@ public class QualityView
 
         qualityListController.OnPreviousItemRequested -= OnPreviousQualityLevel;
         qualityListController.OnNextItemRequested -= OnNextQualityLevel;
-
-        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelButtons;
-        graphicsSettings.OnQualityLevelChanged -= UpdateQualityLevelText;
 
         if (qualityLevelName != null)
             qualityLevelName.StringChanged -= OnQualityLevelChanged;
@@ -60,29 +51,29 @@ public class QualityView
 
     private void OnPreviousQualityLevel()
     {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex - 1;
-        graphicsSettings.SetQualityLevelIndex(currentIndex);
+        int index = controller.GetModel().CurrentQualityLevelIndex - 1;
+        controller.SetQualityLevel(index);
     }
 
     private void OnNextQualityLevel()
     {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex + 1;
-        graphicsSettings.SetQualityLevelIndex(currentIndex);
+        int index = controller.GetModel().CurrentQualityLevelIndex + 1;
+        controller.SetQualityLevel(index);
     }
 
-    private void UpdateQualityLevelButtons()
+    public void UpdateQualityLevelButtons()
     {
-        int currentIndex = graphicsSettings.CurrentQualityLevelIndex;
-        previousQualityButton.gameObject.SetActive(currentIndex > 0);
-        nextQualityButton.gameObject.SetActive(currentIndex < graphicsSettings.AvailableQualityLevels.Count - 1);
+        int index = controller.GetModel().CurrentQualityLevelIndex;
+        previousQualityButton.gameObject.SetActive(index > 0);
+        nextQualityButton.gameObject.SetActive(index < controller.GetModel().AvailableQualityLevels.Count - 1);
     }
 
-    private void UpdateQualityLevelText()
+    public void UpdateQualityLevelText()
     {
         if (qualityLevelName != null)
             qualityLevelName.StringChanged -= OnQualityLevelChanged;
 
-        string currentQualityLevel = graphicsSettings.AvailableQualityLevels[graphicsSettings.CurrentQualityLevelIndex];
+        string currentQualityLevel = controller.GetModel().AvailableQualityLevels[controller.GetModel().CurrentQualityLevelIndex];
 
         qualityLevelName = new LocalizedString
         {
@@ -94,5 +85,8 @@ public class QualityView
         qualityLevelName.RefreshString();
     }
 
-    private void OnQualityLevelChanged(string value) => qualityLevelText.text = value;
+    private void OnQualityLevelChanged(string value)
+    {
+        qualityLevelText.text = value;
+    }
 }

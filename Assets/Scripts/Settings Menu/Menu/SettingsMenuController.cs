@@ -16,8 +16,6 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
     private void Awake()
     {
         view = GetComponentInChildren<IViewBase>();
-
-        graphicsSettings.Dependencies();
         audioSettings.Dependencies();
         inputSettings.Dependencies();
         localizationSettings.Dependencies();

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioSettingsController : ControllerBase, ISettings
+public class AudioSettingsController : ControllerBase, ISettingsController
 {
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private AudioSettingsView view;
