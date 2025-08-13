@@ -17,7 +17,6 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
     {
         view = GetComponentInChildren<IViewBase>();
         inputSettings.Dependencies();
-        localizationSettings.Dependencies();
     }
 
     public override void Initialize()

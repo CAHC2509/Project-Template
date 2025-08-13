@@ -5,16 +5,13 @@ public class LocalizationSettingsEntity
 {
     public string CurrentLanguageCode { get; private set; }
 
-    public event Action OnNewLanguageSelected;
-
     public LocalizationSettingsEntity(string language)
     {
-        CurrentLanguageCode = language;
+        SetCurrentLanguage(language);
     }
 
-    public void SelectNewLanguage(string language)
+    public void SetCurrentLanguage(string language)
     {
         CurrentLanguageCode = language;
-        OnNewLanguageSelected?.Invoke();
     }
 }

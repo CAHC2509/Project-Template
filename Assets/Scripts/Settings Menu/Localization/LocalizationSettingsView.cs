@@ -6,9 +6,12 @@ public class LocalizationSettingsView : ViewBase
     [SerializeField] private Button englishButton;
     [SerializeField] private Button spanishButton;
 
-    private LocalizationSettingsEntity localizationSettings;
+    private ILocalizationSettingsController controller;
 
-    public void Dependencies(LocalizationSettingsEntity localizationSettings) => this.localizationSettings = localizationSettings;
+    private void Awake()
+    {
+        controller = GetComponentInParent<ILocalizationSettingsController>();
+    }
 
     protected override void AddPersistentListeners()
     {
@@ -22,6 +25,6 @@ public class LocalizationSettingsView : ViewBase
         spanishButton.onClick.RemoveListener(SelectSpanishLanguage);
     }
 
-    private void SelectEnglishLanguage() => localizationSettings.SelectNewLanguage("en");
-    private void SelectSpanishLanguage() => localizationSettings.SelectNewLanguage("es");
+    private void SelectEnglishLanguage() => controller.ChangeLocaleByCode("en");
+    private void SelectSpanishLanguage() => controller.ChangeLocaleByCode("es");
 }

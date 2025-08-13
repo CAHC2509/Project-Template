@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class LocalizationSettingsController : ControllerBase, ISettingsController
+public class LocalizationSettingsController : ControllerBase, ILocalizationSettingsController
 {
     [SerializeField] private LocalizationSettingsView view;
 
@@ -9,17 +9,16 @@ public class LocalizationSettingsController : ControllerBase, ISettingsControlle
 
     private LocalizationSettingsEntity localizationSettings;
 
-    public void Dependencies()
+    private void Awake()
     {
         LoadSettings();
-        view.Dependencies(localizationSettings);
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        ChangeLocaleByCode();
+        ChangeLocaleByCode(localizationSettings.CurrentLanguageCode);
         view.Initialize();
     }
 
@@ -30,17 +29,15 @@ public class LocalizationSettingsController : ControllerBase, ISettingsControlle
         view.Conclude();
     }
 
-    protected override void AddListeners() => localizationSettings.OnNewLanguageSelected += ChangeLocaleByCode;
-    protected override void RemoveListeners() => localizationSettings.OnNewLanguageSelected -= ChangeLocaleByCode;
-
-    public void ChangeLocaleByCode()
+    public void ChangeLocaleByCode(string languageCode)
     {
         var locales = LocalizationSettings.AvailableLocales.Locales;
 
         foreach (var locale in locales)
         {
-            if (locale.Identifier.Code == localizationSettings.CurrentLanguageCode)
+            if (locale.Identifier.Code == languageCode)
             {
+                localizationSettings.SetCurrentLanguage(languageCode);
                 LocalizationSettings.SelectedLocale = locale;
                 SaveSettings();
                 return;
@@ -48,7 +45,11 @@ public class LocalizationSettingsController : ControllerBase, ISettingsControlle
         }
     }
 
-    public void SaveSettings() => PlayerPrefs.SetString(LANGUAGE_KEY, localizationSettings.CurrentLanguageCode);
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetString(LANGUAGE_KEY, localizationSettings.CurrentLanguageCode);
+        PlayerPrefs.Save();
+    }
 
     public void LoadSettings()
     {
