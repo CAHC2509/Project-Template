@@ -7,10 +7,10 @@ public class MainView : ViewBase
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button requestQuitButton;
 
-    private SettingsManager settingsManager;
+    private SettingsMenuController settingsManager;
     private MainEntity mainEntity;
 
-    public void Dependencies(SettingsManager settingsManager, MainEntity mainEntity)
+    public void Dependencies(SettingsMenuController settingsManager, MainEntity mainEntity)
     {
         this.settingsManager = settingsManager;
         this.mainEntity = mainEntity;
@@ -23,7 +23,7 @@ public class MainView : ViewBase
         settingsButton.onClick.AddListener(mainEntity.TriggerSettings);
         requestQuitButton.onClick.AddListener(mainEntity.TriggerQuitRequest);
         
-        settingsManager.OnSettingsClose += EnableView;
+        settingsManager.OnSettingsClosed += EnableView;
     }
 
     protected override void RemovePersistentListeners()
@@ -32,6 +32,6 @@ public class MainView : ViewBase
         settingsButton.onClick.RemoveListener(mainEntity.TriggerSettings);
         requestQuitButton.onClick.RemoveListener(mainEntity.TriggerQuitRequest);
         
-        settingsManager.OnSettingsClose -= EnableView;
+        settingsManager.OnSettingsClosed -= EnableView;
     }
 }

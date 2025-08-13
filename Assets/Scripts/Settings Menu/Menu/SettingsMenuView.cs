@@ -29,11 +29,14 @@ public class SettingsMenuView : ViewBase
     [SerializeField] private GameObject languagePanel;
     [SerializeField] private SelectableStateController languageDefaultSelection;
 
-    private SettingsMenuEntity menuSettings;
+    private ISettingsMenuController menuController;
+    private SelectableStateController lastRootSelectable;
+    private GameObject currentPanel;
+    private bool currentSelectableIsRoot;
 
-    public void Dependencies(SettingsMenuEntity menuSettings)
+    private void Awake()
     {
-        this.menuSettings = menuSettings;
+        menuController = GetComponentInParent<ISettingsMenuController>();
         defaultSelection = graphicsButton.Button;
     }
 
@@ -47,9 +50,6 @@ public class SettingsMenuView : ViewBase
         controlsButton.Button.onClick.AddListener(SetControlsPanel);
         languageButton.Button.onClick.AddListener(SetLanguagePanel);
         closeSettingsButton.onClick.AddListener(CloseSettingsFromButton);
-
-        menuSettings.OnPanelChanged += UpdateCurrentPanel;
-        menuSettings.OnSettingsMenuClosed += DisableView;
     }
 
     protected override void RemovePersistentListeners()
@@ -59,16 +59,13 @@ public class SettingsMenuView : ViewBase
         controlsButton.Button.onClick.RemoveListener(SetControlsPanel);
         languageButton.Button.onClick.RemoveListener(SetLanguagePanel);
         closeSettingsButton.onClick.RemoveListener(CloseSettingsFromButton);
-
-        menuSettings.OnPanelChanged -= UpdateCurrentPanel;
-        menuSettings.OnSettingsMenuClosed -= DisableView;
     }
 
     public override void EnableView()
     {
         base.EnableView();
 
-        SetDefaultPanel();
+        SetGraphicsPanel();
     }
 
     private void CloseSettingsFromButton()
@@ -76,7 +73,7 @@ public class SettingsMenuView : ViewBase
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
-        menuSettings.CloseSettingsMenu();
+        menuController.CloseSettingsView();
     }
 
     private void OnCancelPressed()
@@ -84,34 +81,43 @@ public class SettingsMenuView : ViewBase
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
-        if (!menuSettings.CurrentSelectableIsRoot)
+        if (!currentSelectableIsRoot)
         {
-            menuSettings.SetRootSelectable();
+            SetRootSelectable();
             return;
         }
 
-        menuSettings.CloseSettingsMenu();
+        menuController.CloseSettingsView();
     }
 
-    private void UpdateCurrentPanel()
+    private void UpdateCurrentPanel(GameObject newPanel, SelectableStateController newSelectable, SelectableStateController rootSelectable)
     {
-        if (menuSettings.PreviousPanelSelected != null)
-            menuSettings.PreviousPanelSelected.SetActive(false);
+        if (currentPanel != null)
+            currentPanel.SetActive(false);
 
-        menuSettings.CurrentPanelSelected.SetActive(true);
+        currentPanel = newPanel;
+        newPanel.SetActive(true);
 
-        StartCoroutine(SelectionWithDelay());
+        lastRootSelectable = rootSelectable;
+
+        StartCoroutine(SelectionWithDelay(newSelectable));
     }
 
-    private IEnumerator SelectionWithDelay()
+    private IEnumerator SelectionWithDelay(SelectableStateController newSelectable)
     {
-        yield return new WaitUntil(() => menuSettings.CurrentPanelSelected.activeInHierarchy);
-        SelectionManager.SetNewSelectable?.Invoke(menuSettings.CurrentSelectable);
+        yield return new WaitUntil(() => currentPanel.activeSelf);
+        SelectionManager.SetNewSelectable?.Invoke(newSelectable);
+        currentSelectableIsRoot = false;
     }
 
-    private void SetDefaultPanel() => SetGraphicsPanel();
-    private void SetGraphicsPanel() => menuSettings.SetCurrentPanel(graphicsButton, graphicsDefaultSelection, graphicsPanel);
-    private void SetAudioPanel() => menuSettings.SetCurrentPanel(audioButton, audioDefaultSelection, audioPanel);
-    private void SetControlsPanel() => menuSettings.SetCurrentPanel(controlsButton, controlsDefaultSelection, controlsPanel);
-    private void SetLanguagePanel() => menuSettings.SetCurrentPanel(languageButton, languageDefaultSelection, languagePanel);
+    private void SetRootSelectable()
+    {
+        SelectionManager.SetNewSelectable?.Invoke(lastRootSelectable);
+        currentSelectableIsRoot = true;
+    }
+
+    private void SetGraphicsPanel() => UpdateCurrentPanel(graphicsPanel, graphicsDefaultSelection, graphicsButton);
+    private void SetAudioPanel() => UpdateCurrentPanel(audioPanel, audioDefaultSelection, audioButton);
+    private void SetControlsPanel() => UpdateCurrentPanel(controlsPanel, controlsDefaultSelection, controlsButton);
+    private void SetLanguagePanel() => UpdateCurrentPanel(languagePanel, languageDefaultSelection, languageButton);
 }

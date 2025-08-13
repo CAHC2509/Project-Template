@@ -6,10 +6,10 @@ public class PauseMenuView : ViewBase
     [SerializeField] private Button unPauseButton;
     [SerializeField] private Button settingsButton;
 
-    private SettingsManager settingsManager;
+    private SettingsMenuController settingsManager;
     private GameplayEntity gameplayEntity;
 
-    public void Dependencies(SettingsManager settingsManager, GameplayEntity gameplayEntity)
+    public void Dependencies(SettingsMenuController settingsManager, GameplayEntity gameplayEntity)
     {
         this.settingsManager = settingsManager;
         this.gameplayEntity = gameplayEntity;
@@ -24,7 +24,7 @@ public class PauseMenuView : ViewBase
         gameplayEntity.OnPause += EnableView;
         gameplayEntity.OnUnPause += DisableView;
 
-        settingsManager.OnSettingsClose += EnableView;
+        settingsManager.OnSettingsClosed += EnableView;
 
         unPauseButton.onClick.AddListener(gameplayEntity.UnPause);
         settingsButton.onClick.AddListener(DisableView);
@@ -36,7 +36,7 @@ public class PauseMenuView : ViewBase
         gameplayEntity.OnPause -= EnableView;
         gameplayEntity.OnUnPause -= DisableView;
 
-        settingsManager.OnSettingsClose -= EnableView;
+        settingsManager.OnSettingsClosed -= EnableView;
         
         unPauseButton.onClick.RemoveListener(gameplayEntity.UnPause);
         settingsButton.onClick.RemoveListener(DisableView);

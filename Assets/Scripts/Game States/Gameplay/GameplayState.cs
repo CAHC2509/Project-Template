@@ -6,10 +6,10 @@ public class GameplayState : GameStateBase
     [SerializeField] private GameplayView view;
     [SerializeField] private PauseMenuView pauseView;
 
-    private SettingsManager settingsManager;
+    private SettingsMenuController settingsManager;
     private GameplayEntity gameplayEntity;
 
-    public void Dependencies(SettingsManager settingsManager)
+    public void Dependencies(SettingsMenuController settingsManager)
     {
         this.settingsManager = settingsManager;
         gameplayEntity = new GameplayEntity();

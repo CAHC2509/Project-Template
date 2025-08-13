@@ -1,25 +1,21 @@
 using System;
 using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
-{
-    [SerializeField] private SettingsMenuView view;
-    [SerializeField] private DescriptionMessageView descriptionView;
-
-    [Space, Header("Settings modules")]
+public class SettingsMenuController : ControllerBase, ISettingsMenuController
+{    
+    [Header("Settings modules")]
     [SerializeField] private GraphicsSettingsController graphicsSettings;
     [SerializeField] private AudioSettingsController audioSettings;
     [SerializeField] private InputSettingsController inputSettings;
     [SerializeField] private LocalizationSettingsController localizationSettings;
 
-    private SettingsMenuEntity menuSettings;
+    public event Action OnSettingsClosed;
 
-    public event Action OnSettingsClose;
+    private IViewBase view;
 
-    public void Dependencies()
+    private void Awake()
     {
-        menuSettings = new SettingsMenuEntity();
-        view.Dependencies(menuSettings);
+        view = GetComponentInChildren<IViewBase>();
 
         graphicsSettings.Dependencies();
         audioSettings.Dependencies();
@@ -27,10 +23,11 @@ public class SettingsManager : MonoBehaviour
         localizationSettings.Dependencies();
     }
 
-    public void Initialize()
+    public override void Initialize()
     {
+        base.Initialize();
+
         view.Initialize();
-        descriptionView.Initialize();
 
         graphicsSettings.Initialize();
         audioSettings.Initialize();
@@ -40,10 +37,11 @@ public class SettingsManager : MonoBehaviour
         AddListeners();
     }
 
-    public void Conclude()
+    public override void Conclude()
     {
+        base.Conclude();
+
         view.Conclude();
-        descriptionView.Conclude();
 
         graphicsSettings.Conclude();
         audioSettings.Conclude();
@@ -53,7 +51,14 @@ public class SettingsManager : MonoBehaviour
         RemoveListeners();
     }
 
-    private void AddListeners() => menuSettings.OnSettingsMenuClosed += () => OnSettingsClose?.Invoke();
-    private void RemoveListeners() => menuSettings.OnSettingsMenuClosed -= () => OnSettingsClose?.Invoke();
-    public void OpenSettingsView() => view.EnableView();
+    public void OpenSettingsView()
+    {
+        view.EnableView();
+    }
+
+    public void CloseSettingsView()
+    {
+        view.DisableView();
+        OnSettingsClosed?.Invoke();
+    }
 }

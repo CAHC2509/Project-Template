@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderController : ControllerBase
 {
-    [SerializeField] private SceneLoaderView view;
     [SerializeField] private FadeInteractionController fadeController;
 
     private Dictionary<string, AsyncOperationHandle<SceneInstance>> loadedSceneHandles = new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
+    private ISceneLoaderView view;
 
-    public event Action<string> OnSceneFullyLoaded;
+    public void Dependencies()
+    {
+        view = GetComponentInChildren<ISceneLoaderView>();
+    }
 
     public override void Initialize()
     {
@@ -28,16 +30,6 @@ public class SceneLoaderController : ControllerBase
         base.Conclude();
 
         view.Conclude();
-    }
-
-    protected override void AddListeners()
-    {
-        OnSceneFullyLoaded += ActivateScene;
-    }
-
-    protected override void RemoveListeners()
-    {
-        OnSceneFullyLoaded -= ActivateScene;
     }
 
     public void LoadScene(string sceneName)
@@ -75,10 +67,10 @@ public class SceneLoaderController : ControllerBase
 
         view.SetProgress(1f);
 
-        OnSceneFullyLoaded?.Invoke(sceneName);
+        ActivateScene(sceneName);
     }
 
-    public void ActivateScene(string sceneName)
+    private void ActivateScene(string sceneName)
     {
         if (loadedSceneHandles.TryGetValue(sceneName, out var handle))
         {

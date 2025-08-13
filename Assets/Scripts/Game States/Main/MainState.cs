@@ -5,10 +5,10 @@ public class MainState : GameStateBase
     [SerializeField] private MainController controller;
     [SerializeField] private MainView view;
 
-    private SettingsManager settingsManager;
+    private SettingsMenuController settingsManager;
     private MainEntity mainEntity;
 
-    public void Dependencies(SettingsManager settingsManager)
+    public void Dependencies(SettingsMenuController settingsManager)
     {
         this.settingsManager = settingsManager;
 

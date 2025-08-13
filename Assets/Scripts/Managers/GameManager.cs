@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static Action<GameStateBase> SetState;
 
-    [SerializeField] private SettingsManager settingsManager;
+    [SerializeField] private SettingsMenuController settingsController;
     [SerializeField] private SceneLoaderController sceneLoader;
     [SerializeField] private States currentState;
     [SerializeField] private int targetFPS = 60;
@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         AddListeners();
-        settingsManager.Dependencies();
-        settingsManager.Initialize();
+        settingsController.Initialize();
+        sceneLoader.Dependencies();
         sceneLoader.Initialize();
         sceneLoader.LoadScene(currentState.ToString());
     }
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     private void Conclude()
     {
         RemoveListeners();
-        settingsManager.Conclude();
+        settingsController.Conclude();
         sceneLoader.Conclude();
     }
 
@@ -60,10 +60,10 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case MainState main:
-                main.Dependencies(settingsManager);
+                main.Dependencies(settingsController);
                 break;
             case GameplayState gameplay:
-                gameplay.Dependencies(settingsManager);
+                gameplay.Dependencies(settingsController);
                 break;
         }
     }

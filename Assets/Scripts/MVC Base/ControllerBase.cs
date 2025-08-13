@@ -1,9 +1,16 @@
 using UnityEngine;
 
-public abstract class ControllerBase : MonoBehaviour
+public class ControllerBase : MonoBehaviour, IControllerBase
 {
-    public virtual void Initialize() => AddListeners();
-    public virtual void Conclude() => RemoveListeners();
+    public virtual void Conclude()
+    {
+        AddListeners();
+    }
+
+    public virtual void Initialize()
+    {
+        RemoveListeners();
+    }
 
     protected virtual void AddListeners() { }
     protected virtual void RemoveListeners() { }
