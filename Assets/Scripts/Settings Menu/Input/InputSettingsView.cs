@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
-public class InputSettingsView : ViewBase
+public class InputSettingsView : ViewBase, IInputSettingsView
 {
     [Header("Multiplatform")]
     [SerializeField] private Button keyboardControlsButton;
@@ -19,9 +19,12 @@ public class InputSettingsView : ViewBase
     [Space, Header("Invalid rebind")]
     [SerializeField] private GameObject invalidRebindWindow;
 
-    private InputSettingsEntity inputSettings;
+    private IInputSettingsController controller;
 
-    public void Dependencies(InputSettingsEntity inputSettings) => this.inputSettings = inputSettings;
+    private void Awake()
+    {
+        controller = GetComponentInParent<IInputSettingsController>();
+    }
 
     public override void Initialize()
     {
@@ -32,16 +35,10 @@ public class InputSettingsView : ViewBase
 
     protected override void AddPersistentListeners()
     {
-        resetRebindsButton.onClick.AddListener(TriggerRebindsReset);
+        resetRebindsButton.onClick.AddListener(controller.ResetToDefaults);
 
         keyboardControlsButton.onClick.AddListener(OpenKeyboardControlsPanel);
         gamepadControlsButton.onClick.AddListener(OpenGamepadControlsPanel);
-
-        inputSettings.OnRebindRequest += ShowRebindWindow;
-        inputSettings.OnRebindComplete += HideRebindWindow;
-        inputSettings.OnRebindInvalid += HideRebindWindow;
-        inputSettings.OnRebindInvalid += ShowInvalidRebindWindow;
-        inputSettings.OnRebindCancel += HideRebindWindow;
 
         UIInputManager.OnCancel += HideRebindWindow;
         UIInputManager.OnCancel += HideInvalidRebindWindow;
@@ -49,31 +46,13 @@ public class InputSettingsView : ViewBase
 
     protected override void RemovePersistentListeners()
     {
-        resetRebindsButton.onClick.RemoveListener(TriggerRebindsReset);
+        resetRebindsButton.onClick.RemoveListener(controller.ResetToDefaults);
 
         keyboardControlsButton.onClick.RemoveListener(OpenKeyboardControlsPanel);
         gamepadControlsButton.onClick.RemoveListener(OpenGamepadControlsPanel);
 
-        inputSettings.OnRebindRequest -= ShowRebindWindow;
-        inputSettings.OnRebindComplete -= HideRebindWindow;
-        inputSettings.OnRebindInvalid -= HideRebindWindow;
-        inputSettings.OnRebindInvalid -= ShowInvalidRebindWindow;
-        inputSettings.OnRebindCancel -= HideRebindWindow;
-
         UIInputManager.OnCancel -= HideRebindWindow;
         UIInputManager.OnCancel -= HideInvalidRebindWindow;
-    }
-
-    private void ShowRebindWindow()
-    {
-        string displayName = inputSettings.InputActionToRebindName;
-        string displayKey = inputSettings.InputActionToRebindKey;
-
-        rebindMessageLocalized.StringReference["displayName"] = new StringVariable { Value = displayName };
-        rebindMessageLocalized.StringReference["displayKey"] = new StringVariable { Value = displayKey };
-
-        rebindMessageLocalized.RefreshString();
-        rebindWindow.SetActive(true);
     }
 
     private void OpenKeyboardControlsPanel()
@@ -88,8 +67,19 @@ public class InputSettingsView : ViewBase
         gamepadControlsPanel.SetActive(true);
     }
 
-    private void HideRebindWindow() => rebindWindow.SetActive(false);
-    private void ShowInvalidRebindWindow() => invalidRebindWindow.SetActive(true);
+    public void ShowRebindWindow()
+    {
+        string displayName = controller.GetModel().InputActionToRebindName;
+        string displayKey = controller.GetModel().InputActionToRebindKey;
+
+        rebindMessageLocalized.StringReference["displayName"] = new StringVariable { Value = displayName };
+        rebindMessageLocalized.StringReference["displayKey"] = new StringVariable { Value = displayKey };
+
+        rebindMessageLocalized.RefreshString();
+        rebindWindow.SetActive(true);
+    }
+
+    public void HideRebindWindow() => rebindWindow.SetActive(false);
+    public void ShowInvalidRebindWindow() => invalidRebindWindow.SetActive(true);
     private void HideInvalidRebindWindow() => invalidRebindWindow.SetActive(false);
-    private void TriggerRebindsReset() => inputSettings.ResetRebinds();
 }

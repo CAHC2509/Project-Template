@@ -16,7 +16,6 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
     private void Awake()
     {
         view = GetComponentInChildren<IViewBase>();
-        inputSettings.Dependencies();
     }
 
     public override void Initialize()

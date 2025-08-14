@@ -9,14 +9,14 @@ public class IndividualInputRebinder : MonoBehaviour
     [SerializeField] private InputActionReference assignedInput;
     [SerializeField] private TextMeshProUGUI inputNameText;
     [SerializeField] private TextMeshProUGUI inputBindingText;
-    [SerializeField] private InputSettingsEntity.InputDeviceType deviceType;
+    [SerializeField] private InputDeviceType deviceType;
 
-    private InputSettingsEntity inputSettings;
+    private IInputSettingsController controller;
     private Button assignedButton;
 
-    public void Initialize(InputSettingsEntity inputSettings)
+    public void Initialize(IInputSettingsController controller)
     {
-        this.inputSettings = inputSettings;
+        this.controller = controller;
         assignedButton = GetComponent<Button>();
 
         AddListeners();
@@ -31,18 +31,14 @@ public class IndividualInputRebinder : MonoBehaviour
     private void AddListeners()
     {
         assignedButton.onClick.AddListener(RebindRequest);
-        inputSettings.OnRebindComplete += UpdateText;
-        inputSettings.OnRebindsReset += UpdateText;
     }
 
     private void RemoveListeners()
     {
-        assignedButton.onClick.AddListener(RebindRequest);
-        inputSettings.OnRebindComplete += UpdateText;
-        inputSettings.OnRebindsReset += UpdateText;
+        assignedButton.onClick.RemoveListener(RebindRequest);
     }
 
-    private void UpdateText()
+    public void UpdateText()
     {
         var bindings = assignedInput.action.bindings;
 
@@ -59,8 +55,8 @@ public class IndividualInputRebinder : MonoBehaviour
             bool isGamepad = path.Contains("Gamepad");
             bool isKeyboard = path.Contains("Keyboard") || path.Contains("Mouse");
 
-            if ((deviceType == InputSettingsEntity.InputDeviceType.Gamepad && isGamepad) ||
-                (deviceType == InputSettingsEntity.InputDeviceType.KeyboardMouse && isKeyboard))
+            if ((deviceType == InputDeviceType.Gamepad && isGamepad) ||
+                (deviceType == InputDeviceType.KeyboardMouse && isKeyboard))
             {
                 string displayString = InputControlPath.ToHumanReadableString(
                     path,
@@ -76,5 +72,9 @@ public class IndividualInputRebinder : MonoBehaviour
     }
 
 
-    private void RebindRequest() => inputSettings.CreateNewRebindRequest(assignedInput, inputNameText.text, inputBindingText.text, deviceType);
+    private void RebindRequest()
+    {
+        RebindRequestData requestData = new RebindRequestData(this, assignedInput, inputNameText.text, inputBindingText.text, deviceType);
+        controller.CreateNewRebindRequest(requestData);
+    }
 }
