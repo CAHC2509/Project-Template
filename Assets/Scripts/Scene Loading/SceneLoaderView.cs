@@ -15,13 +15,6 @@ public class SceneLoaderView : ViewBase, ISceneLoaderView
         DisableView();
     }
 
-    public override void Conclude()
-    {
-        base.Conclude();
-
-        DisableView();
-    }
-
     public void SetProgress(float progress)
     {
         if (progressBar != null)

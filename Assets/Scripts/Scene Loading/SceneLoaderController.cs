@@ -25,13 +25,6 @@ public class SceneLoaderController : ControllerBase
         view.Initialize();
     }
 
-    public override void Conclude()
-    {
-        base.Conclude();
-
-        view.Conclude();
-    }
-
     public void LoadScene(string sceneName)
     {
         if (loadedSceneHandles.ContainsKey(sceneName)) return;
