@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainController : ControllerBase, IMainController
 {
-    SettingsMenuController settingsMenu;
+    ISettingsMenuController settingsMenu;
     private IMainState mainState;
     private IViewBase view;
 
@@ -11,7 +11,7 @@ public class MainController : ControllerBase, IMainController
         view = GetComponentInChildren<IViewBase>();
     }
 
-    public void Dependencies(IMainState mainState, SettingsMenuController settingsMenu)
+    public void Dependencies(IMainState mainState, ISettingsMenuController settingsMenu)
     {
         this.mainState = mainState;
         this.settingsMenu = settingsMenu;

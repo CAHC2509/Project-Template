@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameplayController : ControllerBase, IGameplayController
 {
-    SettingsMenuController settingsMenu;
+    ISettingsMenuController settingsMenu;
     private IGameplayState gameplayState;
     private IGameplayView gameplayView;
     private IPauseMenuView pauseView;
@@ -14,7 +14,7 @@ public class GameplayController : ControllerBase, IGameplayController
         pauseView = GetComponentInChildren<IPauseMenuView>();
     }
 
-    public void Dependencies(IGameplayState gameplayState, SettingsMenuController settingsMenu)
+    public void Dependencies(IGameplayState gameplayState, ISettingsMenuController settingsMenu)
     {
         this.gameplayState = gameplayState;
         this.settingsMenu = settingsMenu;
