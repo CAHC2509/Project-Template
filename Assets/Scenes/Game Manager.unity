@@ -1431,7 +1431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   settingsController: {fileID: 1848499671}
   sceneLoader: {fileID: 668576716}
-  currentState: 0
+  currentState: 2
   targetFPS: 60
 --- !u!4 &1727931308
 Transform:

@@ -1,45 +1,83 @@
 using UnityEngine;
 
-public class GameplayController : ControllerBase
+public class GameplayController : ControllerBase, IGameplayController
 {
-    private GameplayEntity gameplayEntity;
+    SettingsMenuController settingsMenu;
+    private IGameplayState gameplayState;
+    private IGameplayView gameplayView;
+    private IPauseMenuView pauseView;
     private float lastTimeScale = 1f;
 
-    public void Dependencies(GameplayEntity gameplayEntity) => this.gameplayEntity = gameplayEntity;
+    private void Awake()
+    {
+        gameplayView = GetComponentInChildren<IGameplayView>();
+        pauseView = GetComponentInChildren<IPauseMenuView>();
+    }
+
+    public void Dependencies(IGameplayState gameplayState, SettingsMenuController settingsMenu)
+    {
+        this.gameplayState = gameplayState;
+        this.settingsMenu = settingsMenu;
+    }
 
     public override void Initialize()
     {
         base.Initialize();
 
+        gameplayView.Initialize();
+        pauseView.Initialize();
         UnPauseGame();
     }
 
     public override void Conclude()
     {
         base.Conclude();
-
+        
+        gameplayView.Conclude();
+        pauseView.Conclude();
         UnPauseGame();
     }
 
     protected override void AddListeners()
     {
-        gameplayEntity.OnPause += PauseGame;
-        gameplayEntity.OnUnPause += UnPauseGame;
-        gameplayEntity.OnMainMenuRequest += UnPauseGame;
+        settingsMenu.OnSettingsClosed += pauseView.EnableView;
     }
 
     protected override void RemoveListeners()
     {
-        gameplayEntity.OnPause -= PauseGame;
-        gameplayEntity.OnUnPause -= UnPauseGame;
-        gameplayEntity.OnMainMenuRequest -= UnPauseGame;
+        settingsMenu.OnSettingsClosed -= pauseView.EnableView;
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
         lastTimeScale = Time.timeScale;
         Time.timeScale = 0f;
+
+        gameplayView.DisableView();
+        pauseView.EnableView();
     }
 
-    private void UnPauseGame() => Time.timeScale = lastTimeScale;
+    public void UnPauseGame()
+    {
+        Time.timeScale = lastTimeScale;
+
+        pauseView.DisableView();
+        gameplayView.EnableView();
+    }
+
+    public void FinishMatch()
+    {
+        gameplayState.LoadResults();
+    }
+
+    public void GoToMainMenu()
+    {
+        gameplayState.LoadMainMenu();
+    }
+
+    public void OpenSettingsMenu()
+    {
+        pauseView.DisableView();
+        settingsMenu.OpenSettingsView();
+    }
 }

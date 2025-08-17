@@ -1,45 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuView : ViewBase
+public class PauseMenuView : ViewBase, IPauseMenuView
 {
     [SerializeField] private Button unPauseButton;
     [SerializeField] private Button settingsButton;
 
-    private SettingsMenuController settingsManager;
-    private GameplayEntity gameplayEntity;
+    private IGameplayController controller;
 
-    public void Dependencies(SettingsMenuController settingsManager, GameplayEntity gameplayEntity)
+    private void Awake()
     {
-        this.settingsManager = settingsManager;
-        this.gameplayEntity = gameplayEntity;
+        controller = GetComponentInParent<IGameplayController>();
         defaultSelection = unPauseButton;
     }
 
-    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += gameplayEntity.UnPause;
-    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= gameplayEntity.UnPause;
+    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += controller.UnPauseGame;
+    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= controller.UnPauseGame;
 
     protected override void AddPersistentListeners()
     {
-        gameplayEntity.OnPause += EnableView;
-        gameplayEntity.OnUnPause += DisableView;
-
-        settingsManager.OnSettingsClosed += EnableView;
-
-        unPauseButton.onClick.AddListener(gameplayEntity.UnPause);
-        settingsButton.onClick.AddListener(DisableView);
-        settingsButton.onClick.AddListener(settingsManager.OpenSettingsView);
+        unPauseButton.onClick.AddListener(controller.UnPauseGame);
+        settingsButton.onClick.AddListener(controller.OpenSettingsMenu);
     }
 
     protected override void RemovePersistentListeners()
     {
-        gameplayEntity.OnPause -= EnableView;
-        gameplayEntity.OnUnPause -= DisableView;
-
-        settingsManager.OnSettingsClosed -= EnableView;
-        
-        unPauseButton.onClick.RemoveListener(gameplayEntity.UnPause);
-        settingsButton.onClick.RemoveListener(DisableView);
-        settingsButton.onClick.RemoveListener(settingsManager.OpenSettingsView);
+        unPauseButton.onClick.RemoveListener(controller.UnPauseGame);
+        settingsButton.onClick.RemoveListener(controller.OpenSettingsMenu);
     }
 }

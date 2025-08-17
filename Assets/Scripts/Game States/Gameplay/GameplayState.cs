@@ -1,22 +1,15 @@
 using UnityEngine;
 
-public class GameplayState : GameStateBase
+public class GameplayState : GameStateBase, IGameplayState
 {
     [SerializeField] private GameplayController controller;
-    [SerializeField] private GameplayView view;
-    [SerializeField] private PauseMenuView pauseView;
 
     private SettingsMenuController settingsManager;
-    private GameplayEntity gameplayEntity;
 
     public void Dependencies(SettingsMenuController settingsManager)
     {
         this.settingsManager = settingsManager;
-        gameplayEntity = new GameplayEntity();
-
-        controller.Dependencies(gameplayEntity);
-        view.Dependencies(gameplayEntity);
-        pauseView.Dependencies(settingsManager, gameplayEntity);
+        controller.Dependencies(this, settingsManager);
 
         EnterState();
     }
@@ -26,12 +19,6 @@ public class GameplayState : GameStateBase
         base.EnterState();
 
         controller.Initialize();
-        view.Initialize();
-        pauseView.Initialize();
-
-        view.EnableView();
-
-        AddListeners();
     }
 
     protected override void ExitState()
@@ -39,31 +26,15 @@ public class GameplayState : GameStateBase
         base.ExitState();
 
         controller.Conclude();
-        view.Conclude();
-        pauseView.Conclude();
-
-        RemoveListeners();
     }
 
-    private void AddListeners()
-    {
-        gameplayEntity.OnMainMenuRequest += LoadMainMenu;
-        gameplayEntity.OnMatchFinished += LoadResults;
-    }
-
-    private void RemoveListeners()
-    {
-        gameplayEntity.OnMainMenuRequest -= LoadMainMenu;
-        gameplayEntity.OnMatchFinished -= LoadResults;
-    }
-
-    private void LoadMainMenu()
+    public void LoadMainMenu()
     {
         nextState = States.Main;
         ExitState();
     }
 
-    private void LoadResults()
+    public void LoadResults()
     {
         nextState = States.Results;
         ExitState();
