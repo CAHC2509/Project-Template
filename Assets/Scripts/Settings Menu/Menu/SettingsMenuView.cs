@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsMenuView : ViewBase
+public class SettingsMenuView : ViewBase, ISettingsMenuView
 {
     [Header("Main")]
     [SerializeField] private GameObject rebindWindow;

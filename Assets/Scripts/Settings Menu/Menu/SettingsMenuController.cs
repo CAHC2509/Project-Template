@@ -11,18 +11,21 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
 
     public event Action OnSettingsClosed;
 
-    private IViewBase view;
+    private ISettingsMenuView settingsView;
+    private IDescriptionMessageView descriptionView;
 
     private void Awake()
     {
-        view = GetComponentInChildren<IViewBase>();
+        settingsView = GetComponentInChildren<ISettingsMenuView>();
+        descriptionView = GetComponentInChildren<IDescriptionMessageView>();
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        view.Initialize();
+        settingsView.Initialize();
+        descriptionView.Initialize();
 
         graphicsSettings.Initialize();
         audioSettings.Initialize();
@@ -36,7 +39,8 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
     {
         base.Conclude();
 
-        view.Conclude();
+        settingsView.Conclude();
+        descriptionView.Conclude();
 
         graphicsSettings.Conclude();
         audioSettings.Conclude();
@@ -48,12 +52,12 @@ public class SettingsMenuController : ControllerBase, ISettingsMenuController
 
     public void OpenSettingsView()
     {
-        view.EnableView();
+        settingsView.EnableView();
     }
 
     public void CloseSettingsView()
     {
-        view.DisableView();
+        settingsView.DisableView();
         OnSettingsClosed?.Invoke();
     }
 }
