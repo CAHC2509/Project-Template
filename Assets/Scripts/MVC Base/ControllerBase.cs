@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class ControllerBase : MonoBehaviour, IControllerBase
 {
-    public virtual void Conclude()
+    public virtual void Initialize()
     {
         AddListeners();
     }
 
-    public virtual void Initialize()
+    public virtual void Conclude()
     {
         RemoveListeners();
     }

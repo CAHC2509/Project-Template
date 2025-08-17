@@ -1,11 +1,57 @@
 using UnityEngine;
 
-public class MainController : ControllerBase
+public class MainController : ControllerBase, IMainController
 {
-    private MainEntity mainEntity;
+    SettingsMenuController settingsMenu;
+    private IMainState mainState;
+    private IViewBase view;
 
-    public void Dependencies(MainEntity mainEntity) => this.mainEntity = mainEntity;
-    protected override void AddListeners() => mainEntity.OnQuitConfirmed += QuitGame;
-    protected override void RemoveListeners() => mainEntity.OnQuitConfirmed -= QuitGame;
-    private void QuitGame() => Application.Quit();
+    private void Awake()
+    {
+        view = GetComponentInChildren<IViewBase>();
+    }
+
+    public void Dependencies(IMainState mainState, SettingsMenuController settingsMenu)
+    {
+        this.mainState = mainState;
+        this.settingsMenu = settingsMenu;
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        view.Initialize();
+        view.EnableView();
+    }
+
+    public override void Conclude()
+    {
+        base.Conclude();
+
+        view.Conclude();
+    }
+
+    protected override void AddListeners()
+    {
+        settingsMenu.OnSettingsClosed += view.EnableView;
+    }
+
+    protected override void RemoveListeners()
+    {
+        settingsMenu.OnSettingsClosed -= view.EnableView;
+    }
+
+    public void StartGame()
+    {
+        mainState.StartGame();
+    }
+
+    public void OpenSettingsMenu()
+    {
+        view.DisableView();
+        settingsMenu.OpenSettingsView();
+    }
+
+    public void QuitGame() => Application.Quit();
 }

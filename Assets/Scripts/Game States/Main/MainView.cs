@@ -7,31 +7,25 @@ public class MainView : ViewBase
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button requestQuitButton;
 
-    private SettingsMenuController settingsManager;
-    private MainEntity mainEntity;
+    private IMainController controller;
 
-    public void Dependencies(SettingsMenuController settingsManager, MainEntity mainEntity)
+    private void Awake()
     {
-        this.settingsManager = settingsManager;
-        this.mainEntity = mainEntity;
+        controller = GetComponentInParent<IMainController>();
         defaultSelection = playButton;
     }
 
     protected override void AddPersistentListeners()
     {
-        playButton.onClick.AddListener(mainEntity.TriggerPlay);
-        settingsButton.onClick.AddListener(mainEntity.TriggerSettings);
-        requestQuitButton.onClick.AddListener(mainEntity.TriggerQuitRequest);
-        
-        settingsManager.OnSettingsClosed += EnableView;
+        playButton.onClick.AddListener(controller.StartGame);
+        settingsButton.onClick.AddListener(controller.OpenSettingsMenu);
+        requestQuitButton.onClick.AddListener(controller.QuitGame);
     }
 
     protected override void RemovePersistentListeners()
     {
-        playButton.onClick.RemoveListener(mainEntity.TriggerPlay);
-        settingsButton.onClick.RemoveListener(mainEntity.TriggerSettings);
-        requestQuitButton.onClick.RemoveListener(mainEntity.TriggerQuitRequest);
-        
-        settingsManager.OnSettingsClosed -= EnableView;
+        playButton.onClick.RemoveListener(controller.StartGame);
+        settingsButton.onClick.RemoveListener(controller.OpenSettingsMenu);
+        requestQuitButton.onClick.RemoveListener(controller.QuitGame);
     }
 }

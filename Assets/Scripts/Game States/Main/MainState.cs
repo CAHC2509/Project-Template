@@ -1,20 +1,14 @@
 using UnityEngine;
 
-public class MainState : GameStateBase
+public class MainState : GameStateBase, IMainState
 {
     [SerializeField] private MainController controller;
-    [SerializeField] private MainView view;
 
-    private SettingsMenuController settingsManager;
-    private MainEntity mainEntity;
+    private SettingsMenuController settingsMenu;
 
-    public void Dependencies(SettingsMenuController settingsManager)
+    public void Dependencies(SettingsMenuController settingsMenu)
     {
-        this.settingsManager = settingsManager;
-
-        mainEntity = new MainEntity();
-        controller.Dependencies(mainEntity);
-        view.Dependencies(settingsManager, mainEntity);
+        this.settingsMenu = settingsMenu;
 
         EnterState();
     }
@@ -23,39 +17,20 @@ public class MainState : GameStateBase
     {
         base.EnterState();
 
-        AddListeners();
+        controller.Dependencies(this, settingsMenu);
         controller.Initialize();
-        view.Initialize();
-
-        view.EnableView();
     }
 
     protected override void ExitState()
     {
         base.ExitState();
 
-        RemoveListeners();
         controller.Conclude();
-        view.Conclude();
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         nextState = States.Gameplay;
         ExitState();
-    }
-
-    private void AddListeners()
-    {
-        mainEntity.OnPlay += StartGame;
-        mainEntity.OnSettings += settingsManager.OpenSettingsView;
-        mainEntity.OnSettings += view.DisableView;
-    }
-
-    private void RemoveListeners()
-    {
-        mainEntity.OnPlay -= StartGame;
-        mainEntity.OnSettings -= settingsManager.OpenSettingsView;
-        mainEntity.OnSettings -= view.DisableView;
     }
 }
