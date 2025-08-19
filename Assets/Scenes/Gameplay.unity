@@ -1521,7 +1521,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayState
   controller: {fileID: 1239680723}
-  pauseView: {fileID: 744896001}
 --- !u!1 &417010472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2161,7 @@ GameObject:
   - component: {fileID: 818465794}
   - component: {fileID: 818465793}
   - component: {fileID: 818465792}
+  - component: {fileID: 818465795}
   m_Layer: 5
   m_Name: Buttons Container
   m_TagString: Untagged
@@ -2256,6 +2256,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818465790}
   m_CullTransparentMesh: 1
+--- !u!114 &818465795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818465790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bf83d07392369498c812970b7a4f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VerticalLoopNavigation
 --- !u!1001 &849406551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10357,6 +10369,7 @@ GameObject:
   - component: {fileID: 9063831125476927259}
   - component: {fileID: 3856665883974661050}
   - component: {fileID: 4817589096419644123}
+  - component: {fileID: 9063831125476927260}
   m_Layer: 5
   m_Name: Buttons Container
   m_TagString: Untagged
@@ -10372,6 +10385,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8889056550596440893}
   m_CullTransparentMesh: 1
+--- !u!114 &9063831125476927260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8889056550596440893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bf83d07392369498c812970b7a4f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VerticalLoopNavigation
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

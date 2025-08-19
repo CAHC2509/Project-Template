@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
             case GameplayState gameplay:
                 gameplay.Dependencies(settingsController);
                 break;
+            case ResultsState results:
+                results.Dependencies();
+                break;
         }
     }
 
