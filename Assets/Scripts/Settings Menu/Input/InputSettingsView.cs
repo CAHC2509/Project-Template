@@ -24,6 +24,7 @@ public class InputSettingsView : ViewBase, IInputSettingsView
     private void Awake()
     {
         controller = GetComponentInParent<IInputSettingsController>();
+        defaultSelection = keyboardControlsButton;
     }
 
     public override void Initialize()

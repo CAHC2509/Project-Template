@@ -423,6 +423,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &369888333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369888334}
+  - component: {fileID: 369888335}
+  m_Layer: 0
+  m_Name: Settings Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &369888334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369888333}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 983931430}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &369888335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369888333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5bc23198fa31474784825913e99d87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+  menuController: {fileID: 1848499671}
+  descriptionView: {fileID: 1650654388}
+  graphicsSettings: {fileID: 1949781220}
+  audioSettings: {fileID: 1073671172}
+  inputSettings: {fileID: 1864986336}
+  localizationSettings: {fileID: 2089755885}
 --- !u!1 &371089998
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,17 +522,9 @@ MonoBehaviour:
   invalidRebindWindow: {fileID: 1034989472}
   closeSettingsButton: {fileID: 534122166144347488}
   graphicsButton: {fileID: 534122166144347481}
-  graphicsPanel: {fileID: 534122166144347480}
-  graphicsDefaultSelection: {fileID: 1363739102}
   audioButton: {fileID: 534122166144347491}
-  audioPanel: {fileID: 534122166144347487}
-  audioDefaultSelection: {fileID: 176899657}
   controlsButton: {fileID: 534122166144347490}
-  controlsPanel: {fileID: 534122166144347485}
-  controlsDefaultSelection: {fileID: 1644144389}
   languageButton: {fileID: 534122166144347489}
-  languagePanel: {fileID: 534122166144347483}
-  languageDefaultSelection: {fileID: 534122166144347482}
 --- !u!114 &398497923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1599765299596598369, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -944,6 +986,7 @@ Transform:
   - {fileID: 1727931308}
   - {fileID: 2456399035920695138}
   - {fileID: 6386891441084628866}
+  - {fileID: 369888334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &995222428 stripped
@@ -1075,6 +1118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GraphicsSettingsView
   viewContainer: {fileID: 534122166144347480}
+  resolutionButton: {fileID: 3510469211565531056}
   resolutionView:
     resolutionListController: {fileID: 1363739102}
     previousResolutionButton: {fileID: 168459721}
@@ -1284,17 +1328,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3455593755822027471, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
   m_PrefabInstance: {fileID: 3510469211565531055}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1644144389 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3621656554657451539, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
-  m_PrefabInstance: {fileID: 3510469211565531055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a537268a9ecc3844e8e1cb4dc777624a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
 --- !u!114 &1644144390 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3084984537740140094, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -1336,7 +1369,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1848499670}
+  m_Father: {fileID: 1977341293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1650654388
 MonoBehaviour:
@@ -1397,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ce7fcef5f0dca4ba9ed564ceb30154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  settingsController: {fileID: 1848499671}
+  settingsManager: {fileID: 369888335}
   sceneLoader: {fileID: 668576716}
   currentState: 0
   targetFPS: 60
@@ -1542,7 +1575,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 371089999}
-  - {fileID: 1650654387}
   m_Father: {fileID: 1977341293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1848499671
@@ -1554,13 +1586,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1848499668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e6e3d742aeeaff4db640208ddb4da33, type: 3}
+  m_Script: {fileID: 11500000, guid: 34a6939456442064990da051cb2ce032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsMenuController
-  graphicsSettings: {fileID: 1949781220}
-  audioSettings: {fileID: 1073671172}
-  inputSettings: {fileID: 1864986336}
-  localizationSettings: {fileID: 2089755885}
 --- !u!114 &1861846592 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3616431039247171834, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -1743,6 +1771,7 @@ Transform:
   - {fileID: 1073671171}
   - {fileID: 1864986335}
   - {fileID: 2089755884}
+  - {fileID: 1650654387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2013681418 stripped
@@ -1949,17 +1978,6 @@ GameObject:
 --- !u!114 &534122166144347481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6472447095585761670, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
-  m_PrefabInstance: {fileID: 3510469211565531055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a537268a9ecc3844e8e1cb4dc777624a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
---- !u!114 &534122166144347482 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 330509640586088597, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
   m_PrefabInstance: {fileID: 3510469211565531055}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -2749,6 +2767,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
+--- !u!114 &3510469211565531056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3959588987402893491, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
+  m_PrefabInstance: {fileID: 3510469211565531055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!114 &3995771781695839490
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -107,4 +107,7 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     {
         return audioSettings;
     }
+
+    public void EnableView() => view.EnableView();
+    public void DisableView() => view.DisableView();
 }

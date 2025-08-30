@@ -25,6 +25,7 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
     private void Awake()
     {
         controller = GetComponentInParent<IAudioSettingsController>();
+        defaultSelection = generalVolumeController.Button;
     }
 
     public override void Initialize()

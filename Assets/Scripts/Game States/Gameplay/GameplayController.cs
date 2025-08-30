@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameplayController : ControllerBase, IGameplayController
 {
-    ISettingsMenuController settingsMenu;
+    SettingsManager settingsManager;
     private IGameplayState gameplayState;
     private IGameplayView gameplayView;
     private IPauseMenuView pauseView;
@@ -14,10 +14,10 @@ public class GameplayController : ControllerBase, IGameplayController
         pauseView = GetComponentInChildren<IPauseMenuView>();
     }
 
-    public void Dependencies(IGameplayState gameplayState, ISettingsMenuController settingsMenu)
+    public void Dependencies(IGameplayState gameplayState, SettingsManager settingsManager)
     {
         this.gameplayState = gameplayState;
-        this.settingsMenu = settingsMenu;
+        this.settingsManager = settingsManager;
     }
 
     public override void Initialize()
@@ -40,12 +40,12 @@ public class GameplayController : ControllerBase, IGameplayController
 
     protected override void AddListeners()
     {
-        settingsMenu.OnSettingsClosed += pauseView.EnableView;
+        settingsManager.OnSettingsClosed += pauseView.EnableView;
     }
 
     protected override void RemoveListeners()
     {
-        settingsMenu.OnSettingsClosed -= pauseView.EnableView;
+        settingsManager.OnSettingsClosed -= pauseView.EnableView;
     }
 
     public void PauseGame()
@@ -78,6 +78,6 @@ public class GameplayController : ControllerBase, IGameplayController
     public void OpenSettingsMenu()
     {
         pauseView.DisableView();
-        settingsMenu.OpenSettingsView();
+        settingsManager.OpenSettingsView();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,19 +27,23 @@ public abstract class ViewBase : MonoBehaviour, IViewBase
     protected virtual void SetDefaultSelection()
     {
         if (defaultSelection != null)
-            SelectionManager.SetNewSelectable?.Invoke(defaultSelection.GetComponent<SelectableStateController>());
+            StartCoroutine(SelectionWithDelay(defaultSelection.GetComponent<SelectableStateController>()));
     }
 
     public virtual void EnableView()
     {
-        viewContainer.SetActive(true);
+        if (viewContainer != null)
+            viewContainer.SetActive(true);
+
         SetDefaultSelection();
         AddTemporaryListeners();
     }
 
     public virtual void DisableView()
     {
-        viewContainer.SetActive(false);
+        if (viewContainer != null)
+            viewContainer.SetActive(false);
+
         RemoveTemporaryListeners();
     }
 
@@ -48,5 +53,13 @@ public abstract class ViewBase : MonoBehaviour, IViewBase
             EnableView();
         else
             DisableView();
+    }
+
+    private IEnumerator SelectionWithDelay(SelectableStateController newSelectable)
+    {
+        yield return new WaitUntil(() => defaultSelection.gameObject.activeSelf);
+
+        if (newSelectable != null)
+            SelectionManager.SetNewSelectable?.Invoke(newSelectable);
     }
 }

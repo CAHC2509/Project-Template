@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainController : ControllerBase, IMainController
 {
-    ISettingsMenuController settingsMenu;
+    SettingsManager settingsManager;
     private IMainState mainState;
     private IViewBase view;
 
@@ -11,10 +11,10 @@ public class MainController : ControllerBase, IMainController
         view = GetComponentInChildren<IViewBase>();
     }
 
-    public void Dependencies(IMainState mainState, ISettingsMenuController settingsMenu)
+    public void Dependencies(IMainState mainState, SettingsManager settingsManager)
     {
         this.mainState = mainState;
-        this.settingsMenu = settingsMenu;
+        this.settingsManager = settingsManager;
     }
 
     public override void Initialize()
@@ -34,12 +34,14 @@ public class MainController : ControllerBase, IMainController
 
     protected override void AddListeners()
     {
-        settingsMenu.OnSettingsClosed += view.EnableView;
+        settingsManager.OnSettingsClosed += view.EnableView;
+        settingsManager.OnSettingsClosed += Test;
     }
 
     protected override void RemoveListeners()
     {
-        settingsMenu.OnSettingsClosed -= view.EnableView;
+        settingsManager.OnSettingsClosed -= view.EnableView;
+        settingsManager.OnSettingsClosed -= Test;
     }
 
     public void StartGame()
@@ -50,8 +52,13 @@ public class MainController : ControllerBase, IMainController
     public void OpenSettingsMenu()
     {
         view.DisableView();
-        settingsMenu.OpenSettingsView();
+        settingsManager.OpenSettingsView();
     }
 
     public void QuitGame() => Application.Quit();
+
+    private void Test()
+    {
+        Debug.Log("Settings closed");
+    }
 }

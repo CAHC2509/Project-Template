@@ -11,6 +11,7 @@ public class LocalizationSettingsView : ViewBase
     private void Awake()
     {
         controller = GetComponentInParent<ILocalizationSettingsController>();
+        defaultSelection = englishButton;
     }
 
     protected override void AddPersistentListeners()

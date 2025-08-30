@@ -97,3 +97,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Assets/UI/Fonts/F_LexendDeca-ExtraBold SDF (Outline-Shadow).asset
+Assets/UI/Fonts/F_LexendDeca-ExtraBold SDF.asset
+Assets/UI/Fonts/F_LexendDeca-SemiBold SDF.asset

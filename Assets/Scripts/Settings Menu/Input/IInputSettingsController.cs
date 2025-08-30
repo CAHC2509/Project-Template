@@ -1,4 +1,4 @@
-public interface IInputSettingsController : IControllerBase
+public interface IInputSettingsController : IControllerBase, ISettingsSubmenuController
 {
     public InputSettingsEntity GetModel();
     public void ResetToDefaults();

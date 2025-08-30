@@ -104,4 +104,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     {
         return graphicsSettings;
     }
+
+    public void EnableView() => view.EnableView();
+    public void DisableView() => view.DisableView();
 }

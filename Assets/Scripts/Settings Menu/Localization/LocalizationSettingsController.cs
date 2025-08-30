@@ -56,4 +56,7 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
         string savedLocale = PlayerPrefs.GetString(LANGUAGE_KEY, "en");
         localizationSettings = new LocalizationSettingsEntity(savedLocale);
     }
+
+    public void EnableView() => view.EnableView();
+    public void DisableView() => view.DisableView();
 }

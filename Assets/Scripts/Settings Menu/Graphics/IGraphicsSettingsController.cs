@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IGraphicsSettingsController : ISettingsController
+public interface IGraphicsSettingsController : ISettingsSubmenuController
 {
     public GraphicsSettingsEntity GetModel();
     public void SetResolution(int index);

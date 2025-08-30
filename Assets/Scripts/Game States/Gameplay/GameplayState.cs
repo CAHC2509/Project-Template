@@ -4,9 +4,9 @@ public class GameplayState : GameStateBase, IGameplayState
 {
     [SerializeField] private GameplayController controller;
 
-    private ISettingsMenuController settingsManager;
+    private SettingsManager settingsManager;
 
-    public void Dependencies(ISettingsMenuController settingsManager)
+    public void Dependencies(SettingsManager settingsManager)
     {
         this.settingsManager = settingsManager;
         controller.Dependencies(this, settingsManager);

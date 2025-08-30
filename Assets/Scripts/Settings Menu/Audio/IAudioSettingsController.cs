@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IAudioSettingsController : IControllerBase, ISettingsController
+public interface IAudioSettingsController : IControllerBase, ISettingsSubmenuController
 {
     public AudioSettingsEntity GetModel();
     public void UpdateGeneralVolume(float volume);

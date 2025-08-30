@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,34 +8,19 @@ public class SettingsMenuView : ViewBase, ISettingsMenuView
     [SerializeField] private GameObject invalidRebindWindow;
     [SerializeField] private Button closeSettingsButton;
 
-    [Space, Header("Graphics")]
+    [Space, Header("Submenus")]
     [SerializeField] private SelectableStateController graphicsButton;
-    [SerializeField] private GameObject graphicsPanel;
-    [SerializeField] private SelectableStateController graphicsDefaultSelection;
-
-    [Space, Header("Audio")]
     [SerializeField] private SelectableStateController audioButton;
-    [SerializeField] private GameObject audioPanel;
-    [SerializeField] private SelectableStateController audioDefaultSelection;
-
-    [Space, Header("Controls")]
     [SerializeField] private SelectableStateController controlsButton;
-    [SerializeField] private GameObject controlsPanel;
-    [SerializeField] private SelectableStateController controlsDefaultSelection;
-
-    [Space, Header("Language")]
     [SerializeField] private SelectableStateController languageButton;
-    [SerializeField] private GameObject languagePanel;
-    [SerializeField] private SelectableStateController languageDefaultSelection;
 
-    private ISettingsMenuController menuController;
+    private ISettingsMenuController controller;
     private SelectableStateController lastRootSelectable;
-    private GameObject currentPanel;
     private bool currentSelectableIsRoot;
 
     private void Awake()
     {
-        menuController = GetComponentInParent<ISettingsMenuController>();
+        controller = GetComponentInParent<ISettingsMenuController>();
         defaultSelection = graphicsButton.Button;
     }
 
@@ -73,7 +57,7 @@ public class SettingsMenuView : ViewBase, ISettingsMenuView
         if (rebindWindow.activeSelf || invalidRebindWindow.activeSelf)
             return;
 
-        menuController.CloseSettingsView();
+        controller.CloseMenuView();
     }
 
     private void OnCancelPressed()
@@ -87,26 +71,13 @@ public class SettingsMenuView : ViewBase, ISettingsMenuView
             return;
         }
 
-        menuController.CloseSettingsView();
+        controller.CloseMenuView();
     }
 
-    private void UpdateCurrentPanel(GameObject newPanel, SelectableStateController newSelectable, SelectableStateController rootSelectable)
+    private void UpdateCurrentPanel(SettingsSubmenuType submenuType, SelectableStateController rootSelectable)
     {
-        if (currentPanel != null)
-            currentPanel.SetActive(false);
-
-        currentPanel = newPanel;
-        newPanel.SetActive(true);
-
+        controller.ChangeCurrentPanel(submenuType);
         lastRootSelectable = rootSelectable;
-
-        StartCoroutine(SelectionWithDelay(newSelectable));
-    }
-
-    private IEnumerator SelectionWithDelay(SelectableStateController newSelectable)
-    {
-        yield return new WaitUntil(() => currentPanel.activeSelf);
-        SelectionManager.SetNewSelectable?.Invoke(newSelectable);
         currentSelectableIsRoot = false;
     }
 
@@ -116,8 +87,8 @@ public class SettingsMenuView : ViewBase, ISettingsMenuView
         currentSelectableIsRoot = true;
     }
 
-    private void SetGraphicsPanel() => UpdateCurrentPanel(graphicsPanel, graphicsDefaultSelection, graphicsButton);
-    private void SetAudioPanel() => UpdateCurrentPanel(audioPanel, audioDefaultSelection, audioButton);
-    private void SetControlsPanel() => UpdateCurrentPanel(controlsPanel, controlsDefaultSelection, controlsButton);
-    private void SetLanguagePanel() => UpdateCurrentPanel(languagePanel, languageDefaultSelection, languageButton);
+    private void SetGraphicsPanel() => UpdateCurrentPanel(SettingsSubmenuType.Graphics, graphicsButton);
+    private void SetAudioPanel() => UpdateCurrentPanel(SettingsSubmenuType.Audio, audioButton);
+    private void SetControlsPanel() => UpdateCurrentPanel(SettingsSubmenuType.Input, controlsButton);
+    private void SetLanguagePanel() => UpdateCurrentPanel(SettingsSubmenuType.Localization, languageButton);
 }

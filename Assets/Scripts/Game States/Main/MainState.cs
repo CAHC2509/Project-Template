@@ -4,9 +4,9 @@ public class MainState : GameStateBase, IMainState
 {
     [SerializeField] private MainController controller;
 
-    private ISettingsMenuController settingsMenu;
+    private SettingsManager settingsMenu;
 
-    public void Dependencies(ISettingsMenuController settingsMenu)
+    public void Dependencies(SettingsManager settingsMenu)
     {
         this.settingsMenu = settingsMenu;
 

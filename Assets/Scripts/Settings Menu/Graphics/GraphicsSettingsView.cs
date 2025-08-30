@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
 {
     [Header("Resolution")]
+    [SerializeField] private Button resolutionButton;
     [SerializeField] private ResolutionView resolutionView;
 
     [Header("Quality")]
@@ -16,6 +18,7 @@ public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
     private void Awake()
     {
         controller = GetComponentInParent<IGraphicsSettingsController>();
+        defaultSelection = resolutionButton;
     }
 
     public override void Initialize()

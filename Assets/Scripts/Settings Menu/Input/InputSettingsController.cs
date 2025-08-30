@@ -180,4 +180,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
         view.ShowRebindWindow();
         PerformRebind();
     }
+
+    public void EnableView() => view.EnableView();
+    public void DisableView() => view.DisableView();
 }

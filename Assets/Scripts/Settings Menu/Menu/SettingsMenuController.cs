@@ -1,63 +1,49 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class SettingsMenuController : ControllerBase, ISettingsMenuController
-{    
-    [Header("Settings modules")]
-    [SerializeField] private GraphicsSettingsController graphicsSettings;
-    [SerializeField] private AudioSettingsController audioSettings;
-    [SerializeField] private InputSettingsController inputSettings;
-    [SerializeField] private LocalizationSettingsController localizationSettings;
-
-    public event Action OnSettingsClosed;
-
-    private ISettingsMenuView settingsView;
-    private IDescriptionMessageView descriptionView;
+{
+    public event Action<SettingsSubmenuType> OnSubmenuUpdateRequest;
+    private ISettingsMenuView view;
+    SettingsManager settingsManager;
 
     private void Awake()
     {
-        settingsView = GetComponentInChildren<ISettingsMenuView>();
-        descriptionView = GetComponentInChildren<IDescriptionMessageView>();
+        view = GetComponentInChildren<ISettingsMenuView>();
+    }
+
+    public void Dependencies(SettingsManager settingsManager)
+    {
+        this.settingsManager = settingsManager;
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        settingsView.Initialize();
-        descriptionView.Initialize();
-
-        graphicsSettings.Initialize();
-        audioSettings.Initialize();
-        inputSettings.Initialize();
-        localizationSettings.Initialize();
-
-        AddListeners();
+        view.Initialize();
     }
 
     public override void Conclude()
     {
         base.Conclude();
 
-        settingsView.Conclude();
-        descriptionView.Conclude();
-
-        graphicsSettings.Conclude();
-        audioSettings.Conclude();
-        inputSettings.Conclude();
-        localizationSettings.Conclude();
-
-        RemoveListeners();
+        view.Conclude();
     }
 
-    public void OpenSettingsView()
+    public void OpenMenuView()
     {
-        settingsView.EnableView();
+        view.EnableView();
     }
 
-    public void CloseSettingsView()
+    public void CloseMenuView()
     {
-        settingsView.DisableView();
-        OnSettingsClosed?.Invoke();
+        view.DisableView();
+        settingsManager.NotifySettingsClosing();
+    }
+
+    public void ChangeCurrentPanel(SettingsSubmenuType submenuType)
+    {
+        OnSubmenuUpdateRequest?.Invoke(submenuType);
     }
 }
