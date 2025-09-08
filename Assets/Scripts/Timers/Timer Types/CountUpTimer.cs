@@ -5,8 +5,6 @@ using UnityEngine;
 [Serializable]
 public class CountUpTimer : TimerBase
 {
-    private float lastTickTime;
-
     public CountUpTimer(float duration, float tickRate)
     {
         Duration = duration;
@@ -14,7 +12,7 @@ public class CountUpTimer : TimerBase
         Progress = 0f;
     }
 
-    public IEnumerator TimerCoroutine()
+    public override IEnumerator TimerCoroutine()
     {
         lastTickTime = 0f;
 

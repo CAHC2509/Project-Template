@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 [Serializable]
 public abstract class TimerBase
@@ -8,10 +9,13 @@ public abstract class TimerBase
     public float Progress { get; protected set; }
 
     protected float tickRate;
+    protected float lastTickTime;
 
     public event Action OnTick;
     public event Action OnComplete;
 
     protected virtual void NotifyTick() => OnTick?.Invoke();
     protected virtual void FinishTimer() => OnComplete?.Invoke();
+
+    public abstract IEnumerator TimerCoroutine();
 }

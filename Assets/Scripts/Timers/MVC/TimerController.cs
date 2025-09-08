@@ -6,7 +6,7 @@ public class TimerController : ControllerBase
     [SerializeField] private float timerTickRate = 1f;
 
     private ITimerView view;
-    private CountdownTimer timer;
+    private TimerBase timer;
     private Coroutine timerRoutine;
 
     private void Awake()
