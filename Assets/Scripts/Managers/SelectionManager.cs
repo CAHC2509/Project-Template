@@ -9,14 +9,28 @@ public class SelectionManager : MonoBehaviour
 
     private SelectableStateController currentSelection;
 
-    private void Awake() => SetNewSelectable += Select;
-    private void OnDestroy() => SetNewSelectable -= Select;
+    public void Initialize()
+    {
+        AddListeners();
+    }
+
+    public void Conclude()
+    {
+        RemoveListeners();
+    }
+
+    private void AddListeners()
+    {
+        SetNewSelectable += Select;
+    }
+
+    private void RemoveListeners()
+    {
+        SetNewSelectable -= Select;
+    }
 
     public void Select(SelectableStateController newSelection)
     {
-        if (newSelection == null || !newSelection.gameObject.activeInHierarchy)
-            return;
-
         if (currentSelection == newSelection)
             return;
 

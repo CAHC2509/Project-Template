@@ -17,8 +17,8 @@ public class ListStateController : SelectableStateController
 
     private void InitializeStateMachine()
     {
-        normalState = new ListNormalState(selectableData, mainImages, secondaryImages, texts);
-        selectedState = new ListSelectedState(selectableData, mainImages, secondaryImages, texts);
+        normalState = new ListNormalState(this, selectableData, mainImages, secondaryImages, texts);
+        selectedState = new ListSelectedState(this, selectableData, mainImages, secondaryImages, texts);
         Initialize(normalState);
     }
 

@@ -8,6 +8,7 @@ public class SliderStateController : SelectableStateController
     [SerializeField] private Image[] mainImages;
     [SerializeField] private Image[] secondaryImages;
     [SerializeField] private TextMeshProUGUI[] texts;
+    [SerializeField] private AudioClip sliderModifiedSFX;
 
     public event Action OnValueIncreaseRequest;
     public event Action OnValueDecreaseRequest;
@@ -17,37 +18,29 @@ public class SliderStateController : SelectableStateController
     private void Awake()
     {
         slider = GetComponentInChildren<Slider>();
-        InitializeStateMachine();
         DisableSliderNavigation();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        AddListeners();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        RemoveListeners();
+        InitializeStateMachine();
     }
 
     private void InitializeStateMachine()
     {
-        normalState = new SliderNormalState(selectableData, mainImages, secondaryImages, texts);
-        selectedState = new SliderSelectedState(selectableData, mainImages, secondaryImages, texts);
+        normalState = new SliderNormalState(this, selectableData, mainImages, secondaryImages, texts);
+        selectedState = new SliderSelectedState(this, selectableData, mainImages, secondaryImages, texts);
         Initialize(normalState);
     }
 
-    private void AddListeners()
+    protected override void AddTemporalListeners()
     {
+        base.AddTemporalListeners();
+
         UIInputManager.OnRight += IncreaseSliderValue;
         UIInputManager.OnLeft += DecreaseSliderValue;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveTemporalListeners()
     {
+        base.RemoveTemporalListeners();
+
         UIInputManager.OnRight -= IncreaseSliderValue;
         UIInputManager.OnLeft -= DecreaseSliderValue;
     }
@@ -56,12 +49,14 @@ public class SliderStateController : SelectableStateController
     {
         if (currentState != selectedState) return;
         OnValueIncreaseRequest?.Invoke();
+        AudioManager.Instance.PlaySFX(sliderModifiedSFX);
     }
 
     private void DecreaseSliderValue()
     {
         if (currentState != selectedState) return;
         OnValueDecreaseRequest?.Invoke();
+        AudioManager.Instance.PlaySFX(sliderModifiedSFX);
     }
 
     private void DisableSliderNavigation()

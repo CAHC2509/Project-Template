@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static Action<GameStateBase> SetState;
 
+    [SerializeField] private SelectionManager selectionManager;
     [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private SceneLoaderController sceneLoader;
     [SerializeField] private States currentState;
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        selectionManager.Initialize();
+
         settingsManager.Dependencies();
         settingsManager.Initialize();
 
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Conclude()
     {
+        selectionManager.Conclude();
         settingsManager.Conclude();
         sceneLoader.Conclude();
 
