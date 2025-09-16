@@ -8,23 +8,12 @@ public class ListStateController : SelectableStateController
     [SerializeField] private Image[] mainImages;
     [SerializeField] private Image[] secondaryImages;
     [SerializeField] private TextMeshProUGUI[] texts;
+    [SerializeField] private AudioClip listModifiedSFX;
 
     public event Action OnPreviousItemRequested;
     public event Action OnNextItemRequested;
 
     private void Awake() => InitializeStateMachine();
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        AddListeners();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        RemoveListeners();
-    }
 
     private void InitializeStateMachine()
     {
@@ -33,14 +22,18 @@ public class ListStateController : SelectableStateController
         Initialize(normalState);
     }
 
-    private void AddListeners()
+    protected override void AddTemporalListeners()
     {
+        base.AddTemporalListeners();
+
         UIInputManager.OnLeft += RequestPreviousListItem;
         UIInputManager.OnRight += RequestNextListItem;
     }
 
-    private void RemoveListeners()
+    protected override void RemoveTemporalListeners()
     {
+        base.RemoveTemporalListeners();
+
         UIInputManager.OnLeft -= RequestPreviousListItem;
         UIInputManager.OnRight -= RequestNextListItem;
     }
@@ -49,11 +42,13 @@ public class ListStateController : SelectableStateController
     {
         if (currentState != selectedState) return;
         OnPreviousItemRequested?.Invoke();
+        AudioManager.Instance.PlaySFX(listModifiedSFX);
     }
 
     private void RequestNextListItem()
     {
         if (currentState != selectedState) return;
         OnNextItemRequested?.Invoke();
+        AudioManager.Instance.PlaySFX(listModifiedSFX);
     }
 }

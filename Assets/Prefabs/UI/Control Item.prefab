@@ -292,6 +292,7 @@ MonoBehaviour:
   assignedInput: {fileID: 0}
   inputNameText: {fileID: 8664131560040527377}
   inputBindingText: {fileID: 121154574761661214}
+  deviceType: 0
 --- !u!114 &9080986369033174535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
   selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
   button: {fileID: 6580599551629493512}
+  selectionSFX: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
   mainImages:
   - {fileID: 1453837602737366371}
   secondaryImages:
@@ -313,6 +315,8 @@ MonoBehaviour:
   texts:
   - {fileID: 8664131560040527377}
   - {fileID: 121154574761661214}
+  clickSFX: {fileID: 8300000, guid: c837f9a87c2ffdd4a88cd2f311ca5c3b, type: 3}
+  autoClick: 0
 --- !u!1 &8092278208858851708
 GameObject:
   m_ObjectHideFlags: 0

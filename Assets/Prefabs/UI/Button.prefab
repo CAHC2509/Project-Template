@@ -136,11 +136,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
   selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
   button: {fileID: 5659686502466896016}
+  selectionSFX: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
   mainImages:
   - {fileID: 4931712061840310723}
   secondaryImages: []
   texts:
   - {fileID: 7570487777160377189}
+  clickSFX: {fileID: 8300000, guid: c837f9a87c2ffdd4a88cd2f311ca5c3b, type: 3}
+  autoClick: 0
 --- !u!1001 &7172726643811251977
 PrefabInstance:
   m_ObjectHideFlags: 0

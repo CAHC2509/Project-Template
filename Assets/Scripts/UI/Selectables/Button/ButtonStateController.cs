@@ -7,6 +7,7 @@ public class ButtonStateController : SelectableStateController
     [SerializeField] private Image[] mainImages;
     [SerializeField] private Image[] secondaryImages;
     [SerializeField] private TextMeshProUGUI[] texts;
+    [SerializeField] private AudioClip clickSFX;
     [SerializeField] private bool autoClick;
 
     private void Awake() => InitializeStateMachine();
@@ -17,6 +18,22 @@ public class ButtonStateController : SelectableStateController
         selectedState = new ButtonSelectedState(selectableData, mainImages, secondaryImages, texts);
         Initialize(normalState);
     }
+
+    protected override void AddTemporalListeners()
+    {
+        base.AddTemporalListeners();
+
+        button.onClick.AddListener(OnButtonCLicked);
+    }
+
+    protected override void RemoveTemporalListeners()
+    {
+        base.RemoveTemporalListeners();
+
+        button.onClick.RemoveListener(OnButtonCLicked);
+    }
+
+    private void OnButtonCLicked() => AudioManager.Instance.PlaySFX(clickSFX);
 
     public override void Select()
     {
