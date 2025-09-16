@@ -5,10 +5,6 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
 {
     [SerializeField] private AudioMixer mixer;
 
-    private const string GENERAL_VOLUME_KEY = "GeneralVolume";
-    private const string MUSIC_VOLUME_KEY = "MusicVolume";
-    private const string EFFECTS_VOLUME_KEY = "EffectsVolume";
-
     private IAudioSettingsView view;
     private AudioSettingsEntity audioSettings;
 
@@ -35,25 +31,25 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
 
     public void LoadSettings()
     {
-        float general = PlayerPrefs.GetFloat(GENERAL_VOLUME_KEY, 1f);
-        float music = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 1f);
-        float effects = PlayerPrefs.GetFloat(EFFECTS_VOLUME_KEY, 1f);
+        float general = PlayerPrefs.GetFloat(Constants.GENERAL_VOLUME_KEY, 1f);
+        float music = PlayerPrefs.GetFloat(Constants.MUSIC_VOLUME_KEY, 1f);
+        float effects = PlayerPrefs.GetFloat(Constants.EFFECTS_VOLUME_KEY, 1f);
 
         audioSettings = new AudioSettingsEntity(general, music, effects);
     }
 
     public void InitializeSettings()
     {
-        mixer.SetFloat(GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
-        mixer.SetFloat(MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
-        mixer.SetFloat(EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
+        mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
+        mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
+        mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetFloat(GENERAL_VOLUME_KEY, audioSettings.GeneralVolume);
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, audioSettings.MusicVolume);
-        PlayerPrefs.SetFloat(EFFECTS_VOLUME_KEY, audioSettings.EffectsVolume);
+        PlayerPrefs.SetFloat(Constants.GENERAL_VOLUME_KEY, audioSettings.GeneralVolume);
+        PlayerPrefs.SetFloat(Constants.MUSIC_VOLUME_KEY, audioSettings.MusicVolume);
+        PlayerPrefs.SetFloat(Constants.EFFECTS_VOLUME_KEY, audioSettings.EffectsVolume);
         PlayerPrefs.Save();
     }
 
@@ -61,8 +57,8 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     {
         audioSettings.SetGeneralVolume(volume);
 
-        mixer.SetFloat(GENERAL_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(GENERAL_VOLUME_KEY, volume);
+        mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(volume));
+        PlayerPrefs.SetFloat(Constants.GENERAL_VOLUME_KEY, volume);
         PlayerPrefs.Save();
 
         view.UpdateGeneralVolumeText();
@@ -72,8 +68,8 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     {
         audioSettings.SetMusicVolume(volume);
 
-        mixer.SetFloat(MUSIC_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, volume);
+        mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(volume));
+        PlayerPrefs.SetFloat(Constants.MUSIC_VOLUME_KEY, volume);
         PlayerPrefs.Save();
 
         view.UpdateMusicVolumeText();
@@ -83,8 +79,8 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     {
         audioSettings.SetEffectsVolume(volume);
 
-        mixer.SetFloat(EFFECTS_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(EFFECTS_VOLUME_KEY, volume);
+        mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(volume));
+        PlayerPrefs.SetFloat(Constants.EFFECTS_VOLUME_KEY, volume);
         PlayerPrefs.Save();
 
         view.UpdateEffectsVolumeText();

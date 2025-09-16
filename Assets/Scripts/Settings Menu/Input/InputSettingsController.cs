@@ -9,8 +9,6 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     [SerializeField] private Transform inputActionsKeyboardParent;
     [SerializeField] private Transform inputActionsGamepadParent;
 
-    private const string INPUT_ACTIONS_KEY = "InputActions";
-
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
     private List<IndividualInputRebinder> inputRebindersKeyboard = new List<IndividualInputRebinder>();
     private List<IndividualInputRebinder> inputRebindersGamepad = new List<IndividualInputRebinder>();
@@ -143,7 +141,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void ResetToDefaults()
     {
         inputActionAsset.RemoveAllBindingOverrides();
-        PlayerPrefs.DeleteKey(INPUT_ACTIONS_KEY);
+        PlayerPrefs.DeleteKey(Constants.INPUT_ACTIONS_KEY);
         PlayerPrefs.Save();
         LoadSettings();
         InitializeInputRebinders();
@@ -151,9 +149,9 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
 
     public void LoadSettings()
     {
-        if (PlayerPrefs.HasKey(INPUT_ACTIONS_KEY))
+        if (PlayerPrefs.HasKey(Constants.INPUT_ACTIONS_KEY))
         {
-            string rebinds = PlayerPrefs.GetString(INPUT_ACTIONS_KEY);
+            string rebinds = PlayerPrefs.GetString(Constants.INPUT_ACTIONS_KEY);
             inputActionAsset.LoadBindingOverridesFromJson(rebinds);
         }
         else
@@ -165,7 +163,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void SaveSettings()
     {
         string rebinds = inputActionAsset.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString(INPUT_ACTIONS_KEY, rebinds);
+        PlayerPrefs.SetString(Constants.INPUT_ACTIONS_KEY, rebinds);
         PlayerPrefs.Save();
     }
 

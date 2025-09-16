@@ -5,8 +5,6 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
 {
     [SerializeField] private LocalizationSettingsView view;
 
-    private const string LANGUAGE_KEY = "LanguageSelected";
-
     private LocalizationSettingsEntity localizationSettings;
 
     private void Awake()
@@ -47,13 +45,13 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetString(LANGUAGE_KEY, localizationSettings.CurrentLanguageCode);
+        PlayerPrefs.SetString(Constants.LANGUAGE_KEY, localizationSettings.CurrentLanguageCode);
         PlayerPrefs.Save();
     }
 
     public void LoadSettings()
     {
-        string savedLocale = PlayerPrefs.GetString(LANGUAGE_KEY, "en");
+        string savedLocale = PlayerPrefs.GetString(Constants.LANGUAGE_KEY, "en");
         localizationSettings = new LocalizationSettingsEntity(savedLocale);
     }
 

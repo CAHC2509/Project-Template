@@ -12,9 +12,6 @@ public class FullScreenView
     [SerializeField] private Button nextFullScreenButton;
     [SerializeField] private TextMeshProUGUI fullScreenModeText;
 
-    private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
-    private const string FULLSCREEN_MODES_ENTRY_REFERENCE = "settings.fullScreen.";
-
     private IGraphicsSettingsController controller;
     private LocalizedString fullScreenModeName;
 
@@ -75,8 +72,8 @@ public class FullScreenView
 
         fullScreenModeName = new LocalizedString
         {
-            TableReference = SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
+            TableReference = Constants.SETTINGS_TABLE_REFERENCE,
+            TableEntryReference = $"{Constants.FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
         };
 
         fullScreenModeName.StringChanged += OnFullScreenModeChanged;

@@ -12,9 +12,6 @@ public class QualityView
     [SerializeField] private Button nextQualityButton;
     [SerializeField] private TextMeshProUGUI qualityLevelText;
 
-    private const string SETTINGS_TABLE_REFERENCE = "Settings Menu";
-    private const string QUALITIES_ENTRY_REFERENCE = "settings.qualities.";
-
     private IGraphicsSettingsController controller;
     private LocalizedString qualityLevelName;
 
@@ -77,8 +74,8 @@ public class QualityView
 
         qualityLevelName = new LocalizedString
         {
-            TableReference = SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
+            TableReference = Constants.SETTINGS_TABLE_REFERENCE,
+            TableEntryReference = $"{Constants.QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
         };
 
         qualityLevelName.StringChanged += OnQualityLevelChanged;

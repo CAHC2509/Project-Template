@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsController
 {
-    private const string RESOLUTIONS_KEY = "Resolution";
-    private const string QUALITY_LEVELS_KEY = "QualityLevel";
-    private const string FULL_SCREEN_KEY = "FullScreen";
-
     private IGraphicSettingsView view;
     private GraphicsSettingsEntity graphicsSettings;
 
@@ -40,16 +36,16 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
     public void LoadSettings()
     {
-        graphicsSettings.SetResolutionIndex(PlayerPrefs.GetInt(RESOLUTIONS_KEY, graphicsSettings.AvailableResolutions.Count - 1));
-        graphicsSettings.SetQualityLevelIndex(PlayerPrefs.GetInt(QUALITY_LEVELS_KEY, graphicsSettings.AvailableQualityLevels.Count - 1));
-        graphicsSettings.SetFullscreenMode(PlayerPrefs.GetInt(FULL_SCREEN_KEY, 1) == 1 ? true : false);
+        graphicsSettings.SetResolutionIndex(PlayerPrefs.GetInt(Constants.RESOLUTIONS_KEY, graphicsSettings.AvailableResolutions.Count - 1));
+        graphicsSettings.SetQualityLevelIndex(PlayerPrefs.GetInt(Constants.QUALITY_LEVELS_KEY, graphicsSettings.AvailableQualityLevels.Count - 1));
+        graphicsSettings.SetFullscreenMode(PlayerPrefs.GetInt(Constants.FULL_SCREEN_KEY, 1) == 1 ? true : false);
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt(RESOLUTIONS_KEY, graphicsSettings.CurrentResolutionIndex);
-        PlayerPrefs.SetInt(QUALITY_LEVELS_KEY, graphicsSettings.CurrentQualityLevelIndex);
-        PlayerPrefs.SetInt(FULL_SCREEN_KEY, graphicsSettings.CurrentFullScreenMode ? 1 : 0);
+        PlayerPrefs.SetInt(Constants.RESOLUTIONS_KEY, graphicsSettings.CurrentResolutionIndex);
+        PlayerPrefs.SetInt(Constants.QUALITY_LEVELS_KEY, graphicsSettings.CurrentQualityLevelIndex);
+        PlayerPrefs.SetInt(Constants.FULL_SCREEN_KEY, graphicsSettings.CurrentFullScreenMode ? 1 : 0);
         PlayerPrefs.Save();
     }
 

@@ -20,7 +20,6 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
     [SerializeField] private TextMeshProUGUI effectsVolumeText;
 
     private IAudioSettingsController controller;
-    private const float VOLUME_CONSTANT = 0.01f;
 
     private void Awake()
     {
@@ -113,10 +112,10 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         slider.value = newValue;
     }
 
-    private void IncreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, VOLUME_CONSTANT);
-    private void DecreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, -VOLUME_CONSTANT);
-    private void IncreaseMusicVolume() => ChangeSlider(musicVolumeSlider, VOLUME_CONSTANT);
-    private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -VOLUME_CONSTANT);
-    private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, VOLUME_CONSTANT);
-    private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -VOLUME_CONSTANT);
+    private void IncreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, Constants.VOLUME_CONSTANT);
+    private void DecreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, -Constants.VOLUME_CONSTANT);
+    private void IncreaseMusicVolume() => ChangeSlider(musicVolumeSlider, Constants.VOLUME_CONSTANT);
+    private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -Constants.VOLUME_CONSTANT);
+    private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, Constants.VOLUME_CONSTANT);
+    private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -Constants.VOLUME_CONSTANT);
 }
