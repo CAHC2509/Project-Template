@@ -35,13 +35,11 @@ public class MainController : ControllerBase, IMainController
     protected override void AddListeners()
     {
         settingsManager.OnSettingsClosed += view.EnableView;
-        settingsManager.OnSettingsClosed += Test;
     }
 
     protected override void RemoveListeners()
     {
         settingsManager.OnSettingsClosed -= view.EnableView;
-        settingsManager.OnSettingsClosed -= Test;
     }
 
     public void StartGame()
@@ -56,9 +54,4 @@ public class MainController : ControllerBase, IMainController
     }
 
     public void QuitGame() => Application.Quit();
-
-    private void Test()
-    {
-        Debug.Log("Settings closed");
-    }
 }
