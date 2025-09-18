@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class MainView : ViewBase
 {
     [SerializeField] private Button playButton;
+    [SerializeField] private Button tutorialButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button requestQuitButton;
 
@@ -18,6 +19,7 @@ public class MainView : ViewBase
     protected override void AddPersistentListeners()
     {
         playButton.onClick.AddListener(controller.StartGame);
+        tutorialButton.onClick.AddListener(controller.StartTutorial);
         settingsButton.onClick.AddListener(controller.OpenSettingsMenu);
         requestQuitButton.onClick.AddListener(controller.QuitGame);
     }
@@ -25,6 +27,7 @@ public class MainView : ViewBase
     protected override void RemovePersistentListeners()
     {
         playButton.onClick.RemoveListener(controller.StartGame);
+        tutorialButton.onClick.RemoveListener(controller.StartTutorial);
         settingsButton.onClick.RemoveListener(controller.OpenSettingsMenu);
         requestQuitButton.onClick.RemoveListener(controller.QuitGame);
     }

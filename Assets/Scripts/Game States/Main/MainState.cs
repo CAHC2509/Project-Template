@@ -33,4 +33,10 @@ public class MainState : GameStateBase, IMainState
         nextState = States.Gameplay;
         ExitState();
     }
+
+    public void StartTutorial()
+    {
+        nextState = States.Onboarding;
+        ExitState();
+    }
 }

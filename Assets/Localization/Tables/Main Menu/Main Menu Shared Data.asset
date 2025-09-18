@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Key: main.exitButton
     m_Metadata:
       m_Items: []
+  - m_Id: 23665466897235968
+    m_Key: main.Tutorial
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

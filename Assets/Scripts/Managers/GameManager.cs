@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
             case MainState main:
                 main.Dependencies(settingsManager);
                 break;
+            case OnboardingState onboarding:
+                onboarding.Dependencies(settingsManager);
+                break;
             case GameplayState gameplay:
                 gameplay.Dependencies(settingsManager);
                 break;

@@ -47,6 +47,11 @@ public class MainController : ControllerBase, IMainController
         mainState.StartGame();
     }
 
+    public void StartTutorial()
+    {
+        mainState.StartTutorial();
+    }
+
     public void OpenSettingsMenu()
     {
         view.DisableView();
