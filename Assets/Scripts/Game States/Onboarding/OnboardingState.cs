@@ -30,7 +30,8 @@ public class OnboardingState : GameStateBase, IOnboardingState
 
     public void PlayAgain()
     {
-        // TODO: Implement reloading logic
+        nextState = States.Onboarding;
+        ExitState();
     }
 
     public void StartGameplay()

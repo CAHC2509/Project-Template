@@ -90,6 +90,29 @@ public class SceneLoaderController : ControllerBase
         }
     }
 
+    public void ReloadScene(string sceneName)
+    {
+        if (loadedSceneHandles.TryGetValue(sceneName, out var handle))
+        {
+            Addressables.UnloadSceneAsync(handle, true).Completed += (unloadOp) =>
+            {
+                if (unloadOp.Status == AsyncOperationStatus.Succeeded)
+                {
+                    loadedSceneHandles.Remove(sceneName);
+                    StartCoroutine(LoadSceneCoroutine(sceneName));
+                }
+                else
+                {
+                    Debug.LogError("Failed to unload scene for reload: " + sceneName);
+                }
+            };
+        }
+        else
+        {
+            StartCoroutine(LoadSceneCoroutine(sceneName));
+        }
+    }
+
     public void FocusScene(string sceneName)
     {
         if (loadedSceneHandles.TryGetValue(sceneName, out var handle))

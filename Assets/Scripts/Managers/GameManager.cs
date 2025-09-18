@@ -88,8 +88,15 @@ public class GameManager : MonoBehaviour
 
         currentGameState.FinishState -= OnChangeState;
 
-        sceneLoader.UnloadScene(currentState.ToString());
-        sceneLoader.LoadScene(nextState.ToString());
+        if (currentState == nextState)
+        {
+            sceneLoader.ReloadScene(nextState.ToString());
+        }
+        else
+        {
+            sceneLoader.UnloadScene(currentState.ToString());
+            sceneLoader.LoadScene(nextState.ToString());
+        }
 
         currentState = nextState;
     }
