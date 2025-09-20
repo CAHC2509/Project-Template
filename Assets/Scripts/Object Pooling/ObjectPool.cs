@@ -46,13 +46,11 @@ public class ObjectPool : MonoBehaviour
         {
             PooledObject newInstance = Instantiate(objectToPool);
             newInstance.Pool = this;
-            newInstance.StartDeactivationCoroutine();
             return newInstance;
         }
 
         PooledObject nextInstance = stack.Pop();
         nextInstance.gameObject.SetActive(true);
-        nextInstance.StartDeactivationCoroutine();
         return nextInstance;
     }
 
