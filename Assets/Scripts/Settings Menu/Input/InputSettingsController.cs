@@ -179,6 +179,13 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
         PerformRebind();
     }
 
-    public void EnableView() => view.EnableView();
-    public void DisableView() => view.DisableView();
+    public void EnableView()
+    {
+        view.EnableView();
+    }
+
+    public void DisableView()
+    {
+        view.DisableView();
+    }
 }

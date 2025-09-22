@@ -55,6 +55,13 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
         localizationSettings = new LocalizationSettingsEntity(savedLocale);
     }
 
-    public void EnableView() => view.EnableView();
-    public void DisableView() => view.DisableView();
+    public void EnableView()
+    {
+        view.EnableView();
+    }
+
+    public void DisableView()
+    {
+        view.DisableView();
+    }
 }

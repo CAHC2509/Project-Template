@@ -80,7 +80,18 @@ public class InputSettingsView : ViewBase, IInputSettingsView
         rebindWindow.SetActive(true);
     }
 
-    public void HideRebindWindow() => rebindWindow.SetActive(false);
-    public void ShowInvalidRebindWindow() => invalidRebindWindow.SetActive(true);
-    private void HideInvalidRebindWindow() => invalidRebindWindow.SetActive(false);
+    public void HideRebindWindow()
+    {
+        rebindWindow.SetActive(false);
+    }
+
+    public void ShowInvalidRebindWindow()
+    {
+        invalidRebindWindow.SetActive(true);
+    }
+
+    private void HideInvalidRebindWindow()
+    {
+        invalidRebindWindow.SetActive(false);
+    }
 }

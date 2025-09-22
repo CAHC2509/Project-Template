@@ -19,8 +19,15 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = targetFPS;
     }
 
-    private void Start() => Initialize();
-    private void OnApplicationQuit() => Conclude();
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Conclude();
+    }
 
     private void Initialize()
     {

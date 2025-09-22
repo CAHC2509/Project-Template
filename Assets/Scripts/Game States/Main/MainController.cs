@@ -58,5 +58,8 @@ public class MainController : ControllerBase, IMainController
         settingsManager.OpenSettingsView();
     }
 
-    public void QuitGame() => Application.Quit();
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

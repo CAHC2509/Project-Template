@@ -94,13 +94,23 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         return filteredResolutions.Count > 0 ? filteredResolutions : new List<Resolution>(Screen.resolutions);
     }
 
-    private List<string> GetAvailiableQualityLevels() => new List<string>(QualitySettings.names);
+    private List<string> GetAvailiableQualityLevels()
+    {
+        return new List<string>(QualitySettings.names);
+    }
 
     public GraphicsSettingsEntity GetModel()
     {
         return graphicsSettings;
     }
 
-    public void EnableView() => view.EnableView();
-    public void DisableView() => view.DisableView();
+    public void EnableView()
+    {
+        view.EnableView();
+    }
+
+    public void DisableView()
+    {
+        view.DisableView();
+    }
 }

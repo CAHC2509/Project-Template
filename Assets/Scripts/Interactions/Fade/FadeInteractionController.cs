@@ -10,7 +10,10 @@ public class FadeInteractionController : InteractionBaseController
 
     public float FadeDuration => fadeDuration;
 
-    public override void Initialize() => fadeCanvas.SetActive(false);
+    public override void Initialize()
+    {
+        fadeCanvas.SetActive(false);
+    }
 
     public override void BeginInteraction()
     {
@@ -31,5 +34,8 @@ public class FadeInteractionController : InteractionBaseController
         fadeImage.DOFade(0f, fadeDuration).OnComplete(Conclude);
     }
 
-    public override void Conclude() => fadeCanvas.SetActive(false);
+    public override void Conclude()
+    {
+        fadeCanvas.SetActive(false);
+    }
 }

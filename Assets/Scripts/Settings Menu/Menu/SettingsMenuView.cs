@@ -24,8 +24,15 @@ public class SettingsMenuView : ViewBase, ISettingsMenuView
         defaultSelection = graphicsButton.Button;
     }
 
-    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += OnCancelPressed;
-    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= OnCancelPressed;
+    protected override void AddTemporaryListeners()
+    {
+        UIInputManager.OnCancel += OnCancelPressed;
+    }
+
+    protected override void RemoveTemporaryListeners()
+    {
+        UIInputManager.OnCancel -= OnCancelPressed;
+    }
 
     protected override void AddPersistentListeners()
     {

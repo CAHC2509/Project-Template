@@ -16,8 +16,15 @@ public class GameplayView : ViewBase, IGameplayView
         defaultSelection = pauseButton;
     }
 
-    protected override void AddTemporaryListeners() => UIInputManager.OnCancel += controller.PauseGame;
-    protected override void RemoveTemporaryListeners() => UIInputManager.OnCancel -= controller.PauseGame;
+    protected override void AddTemporaryListeners()
+    {
+        UIInputManager.OnCancel += controller.PauseGame;
+    }
+
+    protected override void RemoveTemporaryListeners()
+    {
+        UIInputManager.OnCancel -= controller.PauseGame;
+    }
 
     protected override void AddPersistentListeners()
     {

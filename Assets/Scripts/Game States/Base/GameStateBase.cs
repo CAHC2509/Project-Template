@@ -9,9 +9,15 @@ public abstract class GameStateBase : MonoBehaviour
 
     protected virtual void Awake() { }
 
-    protected virtual void Start() => GameManager.SetState?.Invoke(this);
+    protected virtual void Start()
+    {
+        GameManager.SetState?.Invoke(this);
+    }
 
     protected virtual void EnterState() { }
     
-    protected virtual void ExitState() => FinishState?.Invoke(nextState);
+    protected virtual void ExitState()
+    {
+        FinishState?.Invoke(nextState);
+    }
 }

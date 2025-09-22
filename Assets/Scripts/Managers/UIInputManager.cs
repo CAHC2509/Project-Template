@@ -31,7 +31,13 @@ public class UIInputManager : MonoBehaviour
 
     private void CancelInput(InputAction.CallbackContext callbackContext) => OnCancel?.Invoke();
 
-    private void LeftInput() => OnLeft?.Invoke();
+    private void LeftInput()
+    {
+        OnLeft?.Invoke();
+    }
 
-    private void RightInput() => OnRight?.Invoke();
+    private void RightInput()
+    {
+        OnRight?.Invoke();
+    }
 }

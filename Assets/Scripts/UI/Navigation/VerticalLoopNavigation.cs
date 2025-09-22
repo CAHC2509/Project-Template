@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 public class VerticalLoopNavigation : MonoBehaviour
 {
-    private void Awake() => SetupNavigation();
+    private void Awake()
+    {
+        SetupNavigation();
+    }
 
     private void SetupNavigation()
     {

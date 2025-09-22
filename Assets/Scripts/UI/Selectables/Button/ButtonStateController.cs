@@ -10,7 +10,10 @@ public class ButtonStateController : SelectableStateController
     [SerializeField] private AudioClip clickSFX;
     [SerializeField] private bool autoClick;
 
-    private void Awake() => InitializeStateMachine();
+    private void Awake()
+    {
+        InitializeStateMachine();
+    }
 
     private void InitializeStateMachine()
     {
