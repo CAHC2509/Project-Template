@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MEC;
 
 public abstract class ViewBase : MonoBehaviour, IViewBase
 {
@@ -27,7 +29,7 @@ public abstract class ViewBase : MonoBehaviour, IViewBase
     protected virtual void SetDefaultSelection()
     {
         if (defaultSelection != null)
-            StartCoroutine(SelectionWithDelay(defaultSelection.GetComponent<SelectableStateController>()));
+            Timing.RunCoroutine(SelectionWithDelay(defaultSelection.GetComponent<SelectableStateController>()));
     }
 
     public virtual void EnableView()
@@ -55,9 +57,10 @@ public abstract class ViewBase : MonoBehaviour, IViewBase
             DisableView();
     }
 
-    private IEnumerator SelectionWithDelay(SelectableStateController newSelectable)
+    private IEnumerator<float> SelectionWithDelay(SelectableStateController newSelectable)
     {
-        yield return new WaitUntil(() => defaultSelection.gameObject.activeSelf);
+        while (!defaultSelection.gameObject.activeSelf)
+            yield return Timing.WaitForOneFrame;
 
         if (newSelectable != null)
             SelectionManager.SetNewSelectable?.Invoke(newSelectable);
