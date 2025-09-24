@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 [Serializable]
 public abstract class TimerBase
@@ -17,5 +17,5 @@ public abstract class TimerBase
     protected virtual void NotifyTick() => OnTick?.Invoke();
     protected virtual void FinishTimer() => OnComplete?.Invoke();
 
-    public abstract IEnumerator TimerCoroutine();
+    public abstract IEnumerator<float> TimerCoroutine();
 }

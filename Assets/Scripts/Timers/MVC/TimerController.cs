@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using MEC;
 
 public class TimerController : ControllerBase
 {
@@ -7,12 +9,12 @@ public class TimerController : ControllerBase
 
     private ITimerView view;
     private TimerBase timer;
-    private Coroutine timerRoutine;
+    private CoroutineHandle timerCoroutine;
 
     private void Awake()
     {
         view = GetComponentInChildren<ITimerView>();
-        timer = new CountdownTimer(timerDuration, timerTickRate);
+        timer = new CountUpTimer(timerDuration, timerTickRate);
     }
 
     private void Start()
@@ -29,7 +31,7 @@ public class TimerController : ControllerBase
     {
         base.Initialize();
 
-        timerRoutine = StartCoroutine(timer.TimerCoroutine());
+        timerCoroutine = Timing.RunCoroutine(timer.TimerCoroutine());
         UpdateTimerView();
     }
 
@@ -37,8 +39,8 @@ public class TimerController : ControllerBase
     {
         base.Conclude();
 
-        if (timerRoutine != null)
-            StopCoroutine(timerRoutine);
+        if (timerCoroutine != null)
+            Timing.KillCoroutines(timerCoroutine);
     }
 
     protected override void AddListeners()

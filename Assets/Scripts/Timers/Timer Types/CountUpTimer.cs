@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using MEC;
 
 [Serializable]
 public class CountUpTimer : TimerBase
@@ -12,7 +13,7 @@ public class CountUpTimer : TimerBase
         Progress = 0f;
     }
 
-    public override IEnumerator TimerCoroutine()
+    public override IEnumerator<float> TimerCoroutine()
     {
         lastTickTime = 0f;
 
@@ -27,7 +28,7 @@ public class CountUpTimer : TimerBase
                 lastTickTime = CurrentTime;
             }
 
-            yield return null;
+            yield return Timing.WaitForOneFrame;
         }
 
         Progress = 1f;
