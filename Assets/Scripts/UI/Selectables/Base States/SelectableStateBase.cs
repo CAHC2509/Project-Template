@@ -1,7 +1,8 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MEC;
 
 public abstract class SelectableStateBase
 {
@@ -11,31 +12,25 @@ public abstract class SelectableStateBase
     protected TextMeshProUGUI[] texts;
     protected Transform container;
 
-    private Coroutine scalingCoroutine;
-    private MonoBehaviour runner;
-
-    protected SelectableStateBase(MonoBehaviour runner)
-    {
-        this.runner = runner;
-    }
+    private CoroutineHandle scalingHandle;
 
     protected void StartScaleAnimation(Transform target, Vector3 initialScale, Vector3 finalScale, float scaleDuration)
     {
-        if (scalingCoroutine != null)
-            runner.StopCoroutine(scalingCoroutine);
+        if (scalingHandle.IsValid)
+            Timing.KillCoroutines(scalingHandle);
 
-        scalingCoroutine = runner.StartCoroutine(ScalingCoroutine(target, initialScale, finalScale, scaleDuration));
+        scalingHandle = Timing.RunCoroutine(ScalingCoroutine(target, initialScale, finalScale, scaleDuration));
     }
 
     protected void StopScalingAnimation()
     {
-        if (scalingCoroutine != null)
-            runner.StopCoroutine(scalingCoroutine);
+        if (scalingHandle.IsValid)
+            Timing.KillCoroutines(scalingHandle);
 
-        scalingCoroutine = null;
+        scalingHandle = default;
     }
 
-    private IEnumerator ScalingCoroutine(Transform target, Vector3 initialScale, Vector3 finalScale, float scaleDuration)
+    private IEnumerator<float> ScalingCoroutine(Transform target, Vector3 initialScale, Vector3 finalScale, float scaleDuration)
     {
         float currentDuration = 0f;
 
@@ -43,10 +38,10 @@ public abstract class SelectableStateBase
         {
             target.localScale = Vector3.Lerp(initialScale, finalScale, currentDuration / scaleDuration);
             currentDuration += Time.unscaledDeltaTime;
-            yield return null;
+            yield return Timing.WaitForOneFrame;
         }
 
         target.localScale = finalScale;
-        scalingCoroutine = null;
+        scalingHandle = default;
     }
 }

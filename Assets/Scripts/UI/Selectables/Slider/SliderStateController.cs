@@ -24,8 +24,8 @@ public class SliderStateController : SelectableStateController
 
     private void InitializeStateMachine()
     {
-        normalState = new SliderNormalState(this, selectableData, mainImages, secondaryImages, texts);
-        selectedState = new SliderSelectedState(this, selectableData, mainImages, secondaryImages, texts);
+        normalState = new SliderNormalState(selectableData, mainImages, secondaryImages, texts);
+        selectedState = new SliderSelectedState(selectableData, mainImages, secondaryImages, texts);
         Initialize(normalState);
     }
 

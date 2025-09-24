@@ -4,11 +4,7 @@ using TMPro;
 
 public abstract class SelectableSelectedStateBase : SelectableStateBase, IStaticState
 {
-    protected SelectableSelectedStateBase(MonoBehaviour runner,
-        SelectableData selectableData,
-        Image[] mainImages,
-        Image[] secondaryImages,
-        TextMeshProUGUI[] texts) : base(runner)
+    protected SelectableSelectedStateBase(SelectableData selectableData, Image[] mainImages, Image[] secondaryImages, TextMeshProUGUI[] texts)
     {
         this.selectableData = selectableData;
         this.mainImages = mainImages;

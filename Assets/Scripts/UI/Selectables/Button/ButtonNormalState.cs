@@ -4,10 +4,7 @@ using TMPro;
 
 public class ButtonNormalState : SelectableNormalState
 {
-    public ButtonNormalState(MonoBehaviour runner,
-        SelectableData selectableData,
-        Image[] mainImages,
-        Image[] secondaryImages,
-        TextMeshProUGUI[] texts)
-        : base(runner, selectableData, mainImages, secondaryImages, texts) { }
+    public ButtonNormalState(SelectableData selectableData, Image[] mainImages, Image[] secondaryImages, TextMeshProUGUI[] texts) : base(selectableData, mainImages, secondaryImages, texts)
+    {
+    }
 }

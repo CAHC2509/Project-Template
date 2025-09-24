@@ -4,11 +4,7 @@ using TMPro;
 
 public class ListSelectedState : SelectableSelectedStateBase
 {
-    public ListSelectedState(
-        MonoBehaviour runner,
-        SelectableData selectableData,
-        Image[] mainImages,
-        Image[] secondaryImages,
-        TextMeshProUGUI[] texts)
-        : base(runner, selectableData, mainImages, secondaryImages, texts) { }
+    public ListSelectedState(SelectableData selectableData, Image[] mainImages, Image[] secondaryImages, TextMeshProUGUI[] texts) : base(selectableData, mainImages, secondaryImages, texts)
+    {
+    }
 }

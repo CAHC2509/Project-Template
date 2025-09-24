@@ -4,11 +4,7 @@ using TMPro;
 
 public class SliderNormalState : SelectableNormalState
 {
-    public SliderNormalState(
-        MonoBehaviour runner,
-        SelectableData selectableData,
-        Image[] mainImages,
-        Image[] secondaryImages,
-        TextMeshProUGUI[] texts)
-        : base(runner, selectableData, mainImages, secondaryImages, texts) { }
+    public SliderNormalState(SelectableData selectableData, Image[] mainImages, Image[] secondaryImages, TextMeshProUGUI[] texts) : base(selectableData, mainImages, secondaryImages, texts)
+    {
+    }
 }

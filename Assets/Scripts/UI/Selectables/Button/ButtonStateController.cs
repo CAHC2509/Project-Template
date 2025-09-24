@@ -17,8 +17,8 @@ public class ButtonStateController : SelectableStateController
 
     private void InitializeStateMachine()
     {
-        normalState = new ButtonNormalState(this, selectableData, mainImages, secondaryImages, texts);
-        selectedState = new ButtonSelectedState(this, selectableData, mainImages, secondaryImages, texts);
+        normalState = new ButtonNormalState(selectableData, mainImages, secondaryImages, texts);
+        selectedState = new ButtonSelectedState(selectableData, mainImages, secondaryImages, texts);
         Initialize(normalState);
     }
 
