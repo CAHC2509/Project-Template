@@ -19,7 +19,7 @@ public abstract class SelectableStateBase
         if (scalingHandle.IsValid)
             Timing.KillCoroutines(scalingHandle);
 
-        scalingHandle = Timing.RunCoroutine(ScalingCoroutine(target, initialScale, finalScale, scaleDuration));
+        scalingHandle = Timing.RunCoroutine(ScalingCoroutine(target, initialScale, finalScale, scaleDuration).CancelWith(target.gameObject));
     }
 
     protected void StopScalingAnimation()
