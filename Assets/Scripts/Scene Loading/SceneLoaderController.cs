@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using MEC;
 
 public class SceneLoaderController : ControllerBase
 {
@@ -28,13 +29,13 @@ public class SceneLoaderController : ControllerBase
     public void LoadScene(string sceneName)
     {
         if (loadedSceneHandles.ContainsKey(sceneName)) return;
-        StartCoroutine(LoadSceneCoroutine(sceneName));
+        Timing.RunCoroutine(LoadSceneCoroutine(sceneName));
     }
 
-    private IEnumerator LoadSceneCoroutine(string sceneName)
+    private IEnumerator<float> LoadSceneCoroutine(string sceneName)
     {
         fadeController.BeginInteraction();
-        yield return new WaitForSeconds(fadeController.FadeDuration);
+        yield return Timing.WaitForSeconds(fadeController.FadeDuration);
 
         view.SetProgress(0f);
         view.EnableView();
@@ -45,7 +46,7 @@ public class SceneLoaderController : ControllerBase
         while (!handle.IsDone)
         {
             view.SetProgress(Mathf.Clamp01(handle.PercentComplete));
-            yield return null;
+            yield return Timing.WaitForOneFrame;
         }
 
         if (handle.Status != AsyncOperationStatus.Succeeded)
@@ -109,7 +110,7 @@ public class SceneLoaderController : ControllerBase
         }
         else
         {
-            StartCoroutine(LoadSceneCoroutine(sceneName));
+            Timing.RunCoroutine(LoadSceneCoroutine(sceneName));
         }
     }
 
