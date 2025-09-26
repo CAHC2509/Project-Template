@@ -307,7 +307,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonStateController
   selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
   button: {fileID: 6580599551629493512}
-  selectionSFX: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+  selectionSFX:
+    AudioClip: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
   mainImages:
   - {fileID: 1453837602737366371}
   secondaryImages:
@@ -315,7 +320,12 @@ MonoBehaviour:
   texts:
   - {fileID: 8664131560040527377}
   - {fileID: 121154574761661214}
-  clickSFX: {fileID: 8300000, guid: c837f9a87c2ffdd4a88cd2f311ca5c3b, type: 3}
+  clickSFX:
+    AudioClip: {fileID: 8300000, guid: c837f9a87c2ffdd4a88cd2f311ca5c3b, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
   autoClick: 0
 --- !u!1 &8092278208858851708
 GameObject:

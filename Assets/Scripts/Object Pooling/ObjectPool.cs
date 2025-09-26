@@ -25,7 +25,7 @@ public class ObjectPool : MonoBehaviour
 
         for (int i = 0; i < initialPoolSize; i++)
         {
-            instance = Instantiate(objectToPool);
+            instance = Instantiate(objectToPool, transform);
             instance.Pool = this;
             instance.gameObject.SetActive(false);
             stack.Push(instance);
@@ -44,7 +44,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (stack.Count <= 0)
         {
-            PooledObject newInstance = Instantiate(objectToPool);
+            PooledObject newInstance = Instantiate(objectToPool, transform);
             newInstance.Pool = this;
             return newInstance;
         }

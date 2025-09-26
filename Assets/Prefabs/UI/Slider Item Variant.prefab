@@ -153,7 +153,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SliderStateController
   selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
   button: {fileID: 7736956997431683713}
-  selectionSFX: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+  selectionSFX:
+    AudioClip: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
   mainImages:
   - {fileID: 8794821585419748925}
   secondaryImages:
@@ -164,7 +169,12 @@ MonoBehaviour:
   texts:
   - {fileID: 7660616079053220433}
   - {fileID: 1340907723888335844}
-  sliderModifiedSFX: {fileID: 8300000, guid: bb41dd818ac386e49a00b1e4d63f3071, type: 3}
+  sliderModifiedSFX:
+    AudioClip: {fileID: 8300000, guid: bb41dd818ac386e49a00b1e4d63f3071, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
 --- !u!114 &1340907723888335844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3446142937797229799, guid: 8725e19a72fd2cb42be9fadc21025448, type: 3}

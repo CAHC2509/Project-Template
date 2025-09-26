@@ -8,16 +8,19 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
     [SerializeField] private Slider generalVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider effectsVolumeSlider;
+    [SerializeField] private Slider uiVolumeSlider;
 
     [Header("Slider controllers")]
     [SerializeField] private SliderStateController generalVolumeController;
     [SerializeField] private SliderStateController musicVolumeController;
     [SerializeField] private SliderStateController effectsVolumeController;
+    [SerializeField] private SliderStateController uiVolumeController;
 
     [Space, Header("Texts")]
     [SerializeField] private TextMeshProUGUI generalVolumeText;
     [SerializeField] private TextMeshProUGUI musicVolumeText;
     [SerializeField] private TextMeshProUGUI effectsVolumeText;
+    [SerializeField] private TextMeshProUGUI uiVolumeText;
 
     private IAudioSettingsController controller;
 
@@ -35,6 +38,7 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         UpdateGeneralVolumeText();
         UpdateMusicVolumeText();
         UpdateEffectsVolumeText();
+        UpdateUIVolumeText();
     }
 
     protected override void AddPersistentListeners()
@@ -42,6 +46,7 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         generalVolumeSlider.onValueChanged.AddListener(GeneralVolumeChanged);
         musicVolumeSlider.onValueChanged.AddListener(MusicVolumeChanged);
         effectsVolumeSlider.onValueChanged.AddListener(EffectsVolumeChanged);
+        uiVolumeSlider.onValueChanged.AddListener(UIVolumeChanged);
 
         generalVolumeController.OnValueIncreaseRequest += IncreaseGeneralVolume;
         generalVolumeController.OnValueDecreaseRequest += DecreaseGeneralVolume;
@@ -51,6 +56,9 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
 
         effectsVolumeController.OnValueIncreaseRequest += IncreaseEffectsVolume;
         effectsVolumeController.OnValueDecreaseRequest += DecreaseEffectsVolume;
+
+        uiVolumeController.OnValueIncreaseRequest += IncreaseUIVolume;
+        uiVolumeController.OnValueDecreaseRequest += DecreaseUIVolume;
     }
 
     protected override void RemovePersistentListeners()
@@ -58,6 +66,7 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         generalVolumeSlider.onValueChanged.RemoveListener(GeneralVolumeChanged);
         musicVolumeSlider.onValueChanged.RemoveListener(MusicVolumeChanged);
         effectsVolumeSlider.onValueChanged.RemoveListener(EffectsVolumeChanged);
+        uiVolumeSlider.onValueChanged.RemoveListener(UIVolumeChanged);
 
         generalVolumeController.OnValueIncreaseRequest -= IncreaseGeneralVolume;
         generalVolumeController.OnValueDecreaseRequest -= DecreaseGeneralVolume;
@@ -67,6 +76,9 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
 
         effectsVolumeController.OnValueIncreaseRequest -= IncreaseEffectsVolume;
         effectsVolumeController.OnValueDecreaseRequest -= DecreaseEffectsVolume;
+
+        uiVolumeController.OnValueIncreaseRequest -= IncreaseUIVolume;
+        uiVolumeController.OnValueDecreaseRequest -= DecreaseUIVolume;
     }
 
     private void SetSliders()
@@ -74,6 +86,7 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         generalVolumeSlider.SetValueWithoutNotify(controller.GetModel().GeneralVolume);
         musicVolumeSlider.SetValueWithoutNotify(controller.GetModel().MusicVolume);
         effectsVolumeSlider.SetValueWithoutNotify(controller.GetModel().EffectsVolume);
+        uiVolumeSlider.SetValueWithoutNotify(controller.GetModel().UIVolume);
     }
 
     private void GeneralVolumeChanged(float volume)
@@ -91,6 +104,11 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         controller.UpdateEffectsVolume(volume);
     }
 
+    private void UIVolumeChanged(float volume)
+    {
+        controller.UpdateUIVolume(volume);
+    }
+
     public void UpdateGeneralVolumeText()
     {
         generalVolumeText.text = controller.VolumeToPercentage(controller.GetModel().GeneralVolume);
@@ -106,6 +124,11 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         effectsVolumeText.text = controller.VolumeToPercentage(controller.GetModel().EffectsVolume);
     }
 
+    public void UpdateUIVolumeText()
+    {
+        uiVolumeText.text = controller.VolumeToPercentage(controller.GetModel().UIVolume);
+    }
+
     private void ChangeSlider(Slider slider, float delta)
     {
         float newValue = Mathf.Clamp01(slider.value + delta);
@@ -118,4 +141,6 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
     private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -Constants.VOLUME_CONSTANT);
     private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, Constants.VOLUME_CONSTANT);
     private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -Constants.VOLUME_CONSTANT);
+    private void IncreaseUIVolume() => ChangeSlider(uiVolumeSlider, Constants.VOLUME_CONSTANT);
+    private void DecreaseUIVolume() => ChangeSlider(uiVolumeSlider, -Constants.VOLUME_CONSTANT);
 }

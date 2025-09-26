@@ -6,5 +6,6 @@ public interface IAudioSettingsController : IControllerBase, ISettingsSubmenuCon
     public void UpdateGeneralVolume(float volume);
     public void UpdateMusicVolume(float volume);
     public void UpdateEffectsVolume(float volume);
+    public void UpdateUIVolume(float volume);
     public string VolumeToPercentage(float volume);
 }

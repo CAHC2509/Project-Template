@@ -34,8 +34,9 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         float general = PlayerPrefs.GetFloat(Constants.GENERAL_VOLUME_KEY, 1f);
         float music = PlayerPrefs.GetFloat(Constants.MUSIC_VOLUME_KEY, 1f);
         float effects = PlayerPrefs.GetFloat(Constants.EFFECTS_VOLUME_KEY, 1f);
+        float ui = PlayerPrefs.GetFloat(Constants.UI_VOLUME_KEY, 1f);
 
-        audioSettings = new AudioSettingsEntity(general, music, effects);
+        audioSettings = new AudioSettingsEntity(general, music, effects, ui);
     }
 
     public void InitializeSettings()
@@ -43,6 +44,7 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
         mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
         mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
+        mixer.SetFloat(Constants.UI_VOLUME_KEY, ConvertToDecibels(audioSettings.UIVolume));
     }
 
     public void SaveSettings()
@@ -50,6 +52,7 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         PlayerPrefs.SetFloat(Constants.GENERAL_VOLUME_KEY, audioSettings.GeneralVolume);
         PlayerPrefs.SetFloat(Constants.MUSIC_VOLUME_KEY, audioSettings.MusicVolume);
         PlayerPrefs.SetFloat(Constants.EFFECTS_VOLUME_KEY, audioSettings.EffectsVolume);
+        PlayerPrefs.SetFloat(Constants.UI_VOLUME_KEY, audioSettings.UIVolume);
         PlayerPrefs.Save();
     }
 
@@ -84,6 +87,17 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         PlayerPrefs.Save();
 
         view.UpdateEffectsVolumeText();
+    }
+
+    public void UpdateUIVolume(float volume)
+    {
+        audioSettings.SetUIVolume(volume);
+
+        mixer.SetFloat(Constants.UI_VOLUME_KEY, ConvertToDecibels(volume));
+        PlayerPrefs.SetFloat(Constants.UI_VOLUME_KEY, volume);
+        PlayerPrefs.Save();
+
+        view.UpdateUIVolumeText();
     }
 
     private float ConvertToDecibels(float linearVolume)

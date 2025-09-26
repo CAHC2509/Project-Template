@@ -3632,6 +3632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainState
   controller: {fileID: 1394518525}
+  mainMenuMusic: {fileID: 8300000, guid: 26f7a2e50e4549c4e943bcaf90fd84f1, type: 3}
 --- !u!1 &1141319943
 GameObject:
   m_ObjectHideFlags: 0

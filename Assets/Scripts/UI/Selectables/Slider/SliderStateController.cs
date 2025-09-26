@@ -8,7 +8,7 @@ public class SliderStateController : SelectableStateController
     [SerializeField] private Image[] mainImages;
     [SerializeField] private Image[] secondaryImages;
     [SerializeField] private TextMeshProUGUI[] texts;
-    [SerializeField] private AudioClip sliderModifiedSFX;
+    [SerializeField] private AudioData sliderModifiedSFX;
 
     public event Action OnValueIncreaseRequest;
     public event Action OnValueDecreaseRequest;
@@ -49,14 +49,14 @@ public class SliderStateController : SelectableStateController
     {
         if (currentState != selectedState) return;
         OnValueIncreaseRequest?.Invoke();
-        AudioManager.Instance.PlaySFX(sliderModifiedSFX);
+        AudioManager.PlayUISFX(sliderModifiedSFX);
     }
 
     private void DecreaseSliderValue()
     {
         if (currentState != selectedState) return;
         OnValueDecreaseRequest?.Invoke();
-        AudioManager.Instance.PlaySFX(sliderModifiedSFX);
+        AudioManager.PlayUISFX(sliderModifiedSFX);
     }
 
     private void DisableSliderNavigation()

@@ -137,7 +137,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ListStateController
   selectableData: {fileID: 11400000, guid: c872f28251837f6489baf4f74e0854c1, type: 2}
   button: {fileID: 6203644318147513730}
-  selectionSFX: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+  selectionSFX:
+    AudioClip: {fileID: 8300000, guid: 21464e8ef79c0dc45af208e69416cacd, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
   mainImages:
   - {fileID: 5135668612825030974}
   - {fileID: 6138357137901549335}
@@ -148,7 +153,12 @@ MonoBehaviour:
   texts:
   - {fileID: 3446142937797229799}
   - {fileID: 8382899175720469259}
-  listModifiedSFX: {fileID: 8300000, guid: bb41dd818ac386e49a00b1e4d63f3071, type: 3}
+  listModifiedSFX:
+    AudioClip: {fileID: 8300000, guid: bb41dd818ac386e49a00b1e4d63f3071, type: 3}
+    MinVolume: 1
+    MaxVolume: 1
+    MinPitch: 1
+    MaxPitch: 1
 --- !u!1 &5573125374742565071
 GameObject:
   m_ObjectHideFlags: 0

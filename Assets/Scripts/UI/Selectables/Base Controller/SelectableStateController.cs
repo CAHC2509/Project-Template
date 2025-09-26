@@ -7,7 +7,7 @@ public abstract class SelectableStateController : StaticStateMachine, IPointerEn
 {
     [SerializeField] protected SelectableData selectableData;
     [SerializeField] protected Button button;
-    [SerializeField] protected AudioClip selectionSFX;
+    [SerializeField] protected AudioData selectionSFX;
 
     protected IStaticState normalState;
     protected IStaticState selectedState;
@@ -25,7 +25,7 @@ public abstract class SelectableStateController : StaticStateMachine, IPointerEn
     {
         OnSelect?.Invoke();
         ChangeState(selectedState);
-        AudioManager.Instance.PlaySFX(selectionSFX);
+        AudioManager.PlayUISFX(selectionSFX);
     }
 
     public virtual void Deselect()

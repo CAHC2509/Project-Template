@@ -3,6 +3,7 @@ using UnityEngine;
 public class MainState : GameStateBase, IMainState
 {
     [SerializeField] private MainController controller;
+    [SerializeField] private AudioClip mainMenuMusic;
 
     private SettingsManager settingsMenu;
 
@@ -19,6 +20,8 @@ public class MainState : GameStateBase, IMainState
 
         controller.Dependencies(this, settingsMenu);
         controller.Initialize();
+
+        AudioManager.SetBackgroundMusic(mainMenuMusic);
     }
 
     protected override void ExitState()

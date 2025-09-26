@@ -8,7 +8,7 @@ public class ListStateController : SelectableStateController
     [SerializeField] private Image[] mainImages;
     [SerializeField] private Image[] secondaryImages;
     [SerializeField] private TextMeshProUGUI[] texts;
-    [SerializeField] private AudioClip listModifiedSFX;
+    [SerializeField] private AudioData listModifiedSFX;
 
     public event Action OnPreviousItemRequested;
     public event Action OnNextItemRequested;
@@ -42,13 +42,13 @@ public class ListStateController : SelectableStateController
     {
         if (currentState != selectedState) return;
         OnPreviousItemRequested?.Invoke();
-        AudioManager.Instance.PlaySFX(listModifiedSFX);
+        AudioManager.PlayUISFX(listModifiedSFX);
     }
 
     private void RequestNextListItem()
     {
         if (currentState != selectedState) return;
         OnNextItemRequested?.Invoke();
-        AudioManager.Instance.PlaySFX(listModifiedSFX);
+        AudioManager.PlayUISFX(listModifiedSFX);
     }
 }
