@@ -191,6 +191,10 @@ MonoBehaviour:
     m_Key: settings.qualities.quality5
     m_Metadata:
       m_Items: []
+  - m_Id: 27656774473121792
+    m_Key: settings.userInterfaceVolume
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

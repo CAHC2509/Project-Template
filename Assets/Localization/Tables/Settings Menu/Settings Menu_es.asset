@@ -195,6 +195,10 @@ MonoBehaviour:
     m_Localized: Ultra
     m_Metadata:
       m_Items: []
+  - m_Id: 27656774473121792
+    m_Localized: Interfaz
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

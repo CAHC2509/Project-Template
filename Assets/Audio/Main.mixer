@@ -28,6 +28,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-2496905758423676345
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 66625941fc4713943aee14c96c5b7966
+  m_EffectName: Attenuation
+  m_MixLevel: f6ab84b73f31f584f89136b5f2d347c4
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -44,17 +58,20 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: 38a2c49c2ade3244ca6416ffe22440dd
+    name: EffectsVolume
   - guid: 41c9e2e90ba5c1e42a5de7f0207375f4
     name: GeneralVolume
   - guid: b96326cd4f22167408d885245a45edeb
     name: MusicVolume
-  - guid: 38a2c49c2ade3244ca6416ffe22440dd
-    name: EffectsVolume
+  - guid: 1eca7b0d5940d2841a6ff9d4a67d1a18
+    name: UIVolume
   m_AudioMixerGroupViews:
   - guids:
     - 42ea56d04196d544088643c47071f3ee
     - 6493bf3e5205bd448b8c1cd9e4a9914c
     - 8296bdc1dbd47d148bc4d4c50d488057
+    - 6e94351cff4c72942ae038ea137c85c1
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -70,6 +87,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 5305490644315107370}
   - {fileID: 9177999251571734303}
+  - {fileID: 2474228602140539935}
   m_Volume: 41c9e2e90ba5c1e42a5de7f0207375f4
   m_Pitch: a859103a709552e45830b3636786154e
   m_Send: 00000000000000000000000000000000
@@ -104,6 +122,25 @@ AudioMixerSnapshotController:
   m_SnapshotID: e615b2bd775d48d42bdc05a6869d93cd
   m_FloatValues: {}
   m_TransitionOverrides: {}
+--- !u!243 &2474228602140539935
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6e94351cff4c72942ae038ea137c85c1
+  m_Children: []
+  m_Volume: 1eca7b0d5940d2841a6ff9d4a67d1a18
+  m_Pitch: 62855c20690a3bc43972006db19a43fc
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -2496905758423676345}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &5305490644315107370
 AudioMixerGroupController:
   m_ObjectHideFlags: 0

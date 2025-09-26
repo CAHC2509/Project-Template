@@ -6,6 +6,7 @@ public static class Constants
     public const string GENERAL_VOLUME_KEY = "GeneralVolume";
     public const string MUSIC_VOLUME_KEY = "MusicVolume";
     public const string EFFECTS_VOLUME_KEY = "EffectsVolume";
+    public const string UI_VOLUME_KEY = "UIVolume";
     public const float VOLUME_CONSTANT = 0.01f;
 
     // Graphics settings
