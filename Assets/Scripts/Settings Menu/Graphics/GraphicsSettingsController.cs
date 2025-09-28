@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsController
 {
-    [SerializeField] private SaveGraphicsSettingsModalWindowView modalWindow;
-
     private ISaveSystem saveSystem;
     private IGraphicSettingsView view;
     private GraphicsSettingsEntity graphicsSettings;
@@ -17,7 +15,6 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void Dependencies(ISaveSystem saveSystem)
     {
         this.saveSystem = saveSystem;
-        modalWindow.Dependencies(this);
     }
 
     public override void Initialize()
@@ -26,7 +23,6 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
         LoadSettings();
         view.Initialize();
-        modalWindow.Initialize();
     }
 
     public override void Conclude()
@@ -34,43 +30,39 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         base.Conclude();
 
         view.Conclude();
-        modalWindow.Conclude();
     }
 
     public void LoadSettings()
     {
-        List<Resolution> resolutions = GetAvailiableResolutions();
-        List<string> qualityLevels = GetAvailiableQualityLevels();
-
         if (saveSystem.HasKey(Constants.GRAPHICS_SETTINGS_KEY))
         {
+            List<Resolution> resolutions = GetAvailiableResolutions();
+            List<string> qualityLevels = GetAvailiableQualityLevels();
+
             graphicsSettings = (GraphicsSettingsEntity)saveSystem.Load(Constants.GRAPHICS_SETTINGS_KEY, typeof(GraphicsSettingsEntity));
             graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
         }
         else
         {
-            graphicsSettings = new GraphicsSettingsEntity();
-            graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
-            graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
-            graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
-            graphicsSettings.SetFullscreenMode(true);
+            LoadAvailiableSettings();
+            SetDefaultSettings();
         }
     }
 
     public void SaveSettings()
     {
         saveSystem.Save(Constants.GRAPHICS_SETTINGS_KEY, graphicsSettings);
-        graphicsSettings.CleanPendingChanges();
+
+        Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
+        QualitySettings.SetQualityLevel(graphicsSettings.CurrentQualityLevelIndex);
+        Screen.fullScreenMode = graphicsSettings.CurrentFullScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
     }
 
     public void SetResolution(int index)
     {
         index = Mathf.Clamp(index, 0, graphicsSettings.AvailableResolutions.Count - 1);
         graphicsSettings.SetResolutionIndex(index);
-
-        Resolution selectedResolution = graphicsSettings.AvailableResolutions[index];
-        Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
-
         view.UpdateResolutionView();
     }
 
@@ -78,7 +70,6 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     {
         index = Mathf.Clamp(index, 0, graphicsSettings.AvailableQualityLevels.Count - 1);
         graphicsSettings.SetQualityLevelIndex(index);
-        QualitySettings.SetQualityLevel(index);
 
         view.UpdateQualityLevelView();
     }
@@ -86,7 +77,6 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void SetFullScreenMode(bool activeMode)
     {
         graphicsSettings.SetFullscreenMode(activeMode);
-        Screen.fullScreenMode = activeMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
 
         view.UpdateFullScreenModeView();
     }
@@ -103,6 +93,25 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         return filteredResolutions.Count > 0 ? filteredResolutions : new List<Resolution>(Screen.resolutions);
     }
 
+    private void LoadAvailiableSettings()
+    {
+        List<Resolution> resolutions = GetAvailiableResolutions();
+        List<string> qualityLevels = GetAvailiableQualityLevels();
+        graphicsSettings = new GraphicsSettingsEntity();
+        graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
+    }
+
+    public void SetDefaultSettings()
+    {
+        graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
+        graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
+        graphicsSettings.SetFullscreenMode(true);
+
+        view.UpdateResolutionView();
+        view.UpdateQualityLevelView();
+        view.UpdateFullScreenModeView();
+    }
+
     private List<string> GetAvailiableQualityLevels()
     {
         return new List<string>(QualitySettings.names);
@@ -116,14 +125,10 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void EnableView()
     {
         view.EnableView();
-        graphicsSettings.CleanPendingChanges();
     }
 
     public void DisableView()
     {
-        if (!graphicsSettings.PendingChanges)
-            view.DisableView();
-        else
-            modalWindow.EnableView();
+        view.DisableView();
     }
 }

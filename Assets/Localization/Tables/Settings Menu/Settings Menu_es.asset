@@ -199,22 +199,16 @@ MonoBehaviour:
     m_Localized: Interfaz
     m_Metadata:
       m_Items: []
-  - m_Id: 28611175656357888
-    m_Localized: Cancelar
+  - m_Id: 28689325362937856
+    m_Localized: Por defecto
     m_Metadata:
       m_Items: []
-  - m_Id: 28611306698997760
-    m_Localized: Confirmar
+  - m_Id: 28689428291158016
+    m_Localized: Aplicar
     m_Metadata:
       m_Items: []
-  - m_Id: 28612015989358592
-    m_Localized: "\xBFDesea guardar los cambios realizados en la configuraci\xF3n
-      de audio?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 28613041941282816
-    m_Localized: "\xBFDesea guardar los cambios realizados en la configuraci\xF3n
-      de gr\xE1ficos?"
+  - m_Id: 28721547168088064
+    m_Localized: Guardar
     m_Metadata:
       m_Items: []
   references:

@@ -6,4 +6,5 @@ public interface IGraphicsSettingsController : ISettingsSubmenuController
     public void SetResolution(int index);
     public void SetQualityLevel(int index);
     public void SetFullScreenMode(bool mode);
+    public void SetDefaultSettings();
 }

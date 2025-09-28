@@ -13,6 +13,10 @@ public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
     [Header("Full Screen")]
     [SerializeField] private FullScreenView fullScreenView;
 
+    [Header("Save and default")]
+    [SerializeField] private Button defaultButton;
+    [SerializeField] private Button saveButton;
+
     private IGraphicsSettingsController controller;
 
     private void Awake()
@@ -28,6 +32,20 @@ public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
         resolutionView.Initialize(controller);
         qualityView.Initialize(controller);
         fullScreenView.Initialize(controller);
+    }
+
+    protected override void AddPersistentListeners()
+    {
+        defaultButton.onClick.AddListener(controller.SetDefaultSettings);
+        defaultButton.onClick.AddListener(controller.SaveSettings);
+        saveButton.onClick.AddListener(controller.SaveSettings);
+    }
+
+    protected override void RemovePersistentListeners()
+    {
+        defaultButton.onClick.RemoveListener(controller.SetDefaultSettings);
+        defaultButton.onClick.RemoveListener(controller.SaveSettings);
+        saveButton.onClick.RemoveListener(controller.SaveSettings);
     }
 
     public override void Conclude()

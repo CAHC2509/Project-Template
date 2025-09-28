@@ -195,20 +195,16 @@ MonoBehaviour:
     m_Key: settings.userInterfaceVolume
     m_Metadata:
       m_Items: []
-  - m_Id: 28611175656357888
-    m_Key: settings.modalWindow.cancel
+  - m_Id: 28689325362937856
+    m_Key: settings.defaultOption
     m_Metadata:
       m_Items: []
-  - m_Id: 28611306698997760
-    m_Key: settings.modalWindow.confirm
+  - m_Id: 28689428291158016
+    m_Key: settings.applyOption
     m_Metadata:
       m_Items: []
-  - m_Id: 28612015989358592
-    m_Key: settings.audio.confirmSave
-    m_Metadata:
-      m_Items: []
-  - m_Id: 28613041941282816
-    m_Key: settings.graphics.confirmSave
+  - m_Id: 28721547168088064
+    m_Key: settings.saveOption
     m_Metadata:
       m_Items: []
   m_Metadata:

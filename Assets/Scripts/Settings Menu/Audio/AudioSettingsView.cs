@@ -22,6 +22,10 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
     [SerializeField] private TextMeshProUGUI effectsVolumeText;
     [SerializeField] private TextMeshProUGUI uiVolumeText;
 
+    [Space, Header("Buttons")]
+    [SerializeField] private Button saveButton;
+    [SerializeField] private Button defaultButton;
+
     private IAudioSettingsController controller;
 
     private void Awake()
@@ -59,6 +63,9 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
 
         uiVolumeController.OnValueIncreaseRequest += IncreaseUIVolume;
         uiVolumeController.OnValueDecreaseRequest += DecreaseUIVolume;
+
+        defaultButton.onClick.AddListener(controller.SetDefaultSettings);
+        saveButton.onClick.AddListener(controller.SaveSettings);
     }
 
     protected override void RemovePersistentListeners()
@@ -79,9 +86,12 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
 
         uiVolumeController.OnValueIncreaseRequest -= IncreaseUIVolume;
         uiVolumeController.OnValueDecreaseRequest -= DecreaseUIVolume;
+
+        defaultButton.onClick.RemoveListener(controller.SetDefaultSettings);
+        saveButton.onClick.RemoveListener(controller.SaveSettings);
     }
 
-    private void SetSliders()
+    public void SetSliders()
     {
         generalVolumeSlider.SetValueWithoutNotify(controller.GetModel().GeneralVolume);
         musicVolumeSlider.SetValueWithoutNotify(controller.GetModel().MusicVolume);

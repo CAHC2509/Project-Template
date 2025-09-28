@@ -3,7 +3,6 @@ using UnityEngine.Audio;
 
 public class AudioSettingsController : ControllerBase, IAudioSettingsController
 {
-    [SerializeField] private SaveAudioSettingsModalWindowView modalWindow;
     [SerializeField] private AudioMixer mixer;
 
     private ISaveSystem saveSystem;
@@ -18,7 +17,6 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void Dependencies(ISaveSystem saveSystem)
     {
         this.saveSystem = saveSystem;
-        modalWindow.Dependencies(this);
     }
 
     public override void Initialize()
@@ -29,7 +27,6 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         InitializeSettings();
 
         view.Initialize();
-        modalWindow.Initialize();
     }
 
     public override void Conclude()
@@ -37,7 +34,6 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         base.Conclude();
 
         view.Conclude();
-        modalWindow.Conclude();
     }
 
     public void LoadSettings()
@@ -60,6 +56,18 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     {
         saveSystem.Save(Constants.AUDIO_SETTINGS_KEY, audioSettings);
         audioSettings.CleanPendingChanges();
+    }
+
+    public void SetDefaultSettings()
+    {
+        audioSettings = new AudioSettingsEntity(1f, 1f, 1f, 1f);
+        UpdateGeneralVolume(audioSettings.GeneralVolume);
+        UpdateMusicVolume(audioSettings.MusicVolume);
+        UpdateEffectsVolume(audioSettings.EffectsVolume);
+        UpdateUIVolume(audioSettings.UIVolume);
+        view.SetSliders();
+
+        SaveSettings();
     }
 
     public void UpdateGeneralVolume(float volume)
@@ -111,14 +119,10 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void EnableView()
     {
         view.EnableView();
-        audioSettings.CleanPendingChanges();
     }
 
     public void DisableView()
     {
-        if (!audioSettings.PendingChanges)
-            view.DisableView();
-        else
-            modalWindow.EnableView();
+        view.DisableView();
     }
 }
