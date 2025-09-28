@@ -13,6 +13,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     private List<IndividualInputRebinder> inputRebindersKeyboard = new List<IndividualInputRebinder>();
     private List<IndividualInputRebinder> inputRebindersGamepad = new List<IndividualInputRebinder>();
 
+    private ISaveSystem saveSystem;
     private IInputSettingsView view;
     private InputSettingsEntity inputSettings;
 
@@ -20,6 +21,11 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     {
         view = GetComponentInChildren<IInputSettingsView>();
         inputSettings = new InputSettingsEntity();
+    }
+
+    public void Dependencies(ISaveSystem saveSystem)
+    {
+        this.saveSystem = saveSystem;
     }
 
     public override void Initialize()
@@ -91,6 +97,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
                 {
                     inputSettings.ClearReferences();
                     actionToRebind.RemoveBindingOverride(bindingIndex);
+                    view.ShowInvalidRebindWindow();
                 }
                 else
                 {
@@ -111,8 +118,8 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
                 rebindingOperation.Dispose();
                 rebindingOperation = null;
                 inputSettings.ClearReferences();
-                
-                view.ShowInvalidRebindWindow();
+
+                view.HideRebindWindow();
             })
             .Start();
     }
@@ -141,18 +148,17 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void ResetToDefaults()
     {
         inputActionAsset.RemoveAllBindingOverrides();
-        PlayerPrefs.DeleteKey(Constants.INPUT_ACTIONS_KEY);
-        PlayerPrefs.Save();
+        saveSystem.Delete(Constants.INPUT_ACTIONS_KEY);
         LoadSettings();
         InitializeInputRebinders();
     }
 
     public void LoadSettings()
     {
-        if (PlayerPrefs.HasKey(Constants.INPUT_ACTIONS_KEY))
+        if (saveSystem.HasKey(Constants.INPUT_ACTIONS_KEY))
         {
-            string rebinds = PlayerPrefs.GetString(Constants.INPUT_ACTIONS_KEY);
-            inputActionAsset.LoadBindingOverridesFromJson(rebinds);
+            StringWrapper rebinds = (StringWrapper)saveSystem.Load(Constants.INPUT_ACTIONS_KEY, typeof(StringWrapper));
+            inputActionAsset.LoadBindingOverridesFromJson(rebinds.value);
         }
         else
         {
@@ -163,13 +169,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void SaveSettings()
     {
         string rebinds = inputActionAsset.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString(Constants.INPUT_ACTIONS_KEY, rebinds);
-        PlayerPrefs.Save();
-    }
-
-    public InputSettingsEntity GetModel()
-    {
-        return inputSettings;
+        saveSystem.Save(Constants.INPUT_ACTIONS_KEY, new StringWrapper(rebinds));
     }
 
     public void CreateNewRebindRequest(RebindRequestData rebindRequestData)
@@ -177,6 +177,11 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
         inputSettings.CreateNewRebindRequest(rebindRequestData);
         view.ShowRebindWindow();
         PerformRebind();
+    }
+
+    public InputSettingsEntity GetModel()
+    {
+        return inputSettings;
     }
 
     public void EnableView()

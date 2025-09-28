@@ -210,6 +210,14 @@ MonoBehaviour:
     m_Localized: Save
     m_Metadata:
       m_Items: []
+  - m_Id: 28746617047384064
+    m_Localized: Save and apply the current configuration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28746848220643328
+    m_Localized: Restore and apply the default values
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

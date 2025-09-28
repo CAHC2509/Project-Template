@@ -211,6 +211,14 @@ MonoBehaviour:
     m_Localized: Guardar
     m_Metadata:
       m_Items: []
+  - m_Id: 28746617047384064
+    m_Localized: "Guardar y aplicar la configuraci\xF3n actual"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28746848220643328
+    m_Localized: Restaurar y aplicar los valores por defecto
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

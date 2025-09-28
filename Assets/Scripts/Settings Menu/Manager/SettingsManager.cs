@@ -24,6 +24,7 @@ public class SettingsManager : MonoBehaviour, ISettingsManager
 
         graphicsSettings.Dependencies(saveSystem);
         audioSettings.Dependencies(saveSystem);
+        inputSettings.Dependencies(saveSystem);
         localizationSettings.Dependencies(saveSystem);
 
         menuController.Dependencies(this);

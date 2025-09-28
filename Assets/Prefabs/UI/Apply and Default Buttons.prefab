@@ -203,14 +203,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1808394096543057354, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8227397490566456253}
   m_SourcePrefab: {fileID: 100100000, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
+--- !u!1 &2823917499794963813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1808394096543057354, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
+  m_PrefabInstance: {fileID: 4478872540186769583}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8227397490566456253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823917499794963813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e786965c67e10a40993294f9c76477a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DescriptionMessageSender
+  localizedDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
+    m_TableEntryReference:
+      m_KeyId: 28746848220643328
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &8116357596736763967 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5659686502466896016, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
   m_PrefabInstance: {fileID: 4478872540186769583}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2823917499794963813}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -356,7 +388,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1808394096543057354, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8827432210157184504}
   m_SourcePrefab: {fileID: 100100000, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
 --- !u!224 &4027550328561581015 stripped
 RectTransform:
@@ -368,9 +403,38 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5659686502466896016, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
   m_PrefabInstance: {fileID: 8257782078286053315}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7746540819268467209}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &7746540819268467209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1808394096543057354, guid: fdb73c93223e2604f9f084aefef9c64d, type: 3}
+  m_PrefabInstance: {fileID: 8257782078286053315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8827432210157184504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746540819268467209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e786965c67e10a40993294f9c76477a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DescriptionMessageSender
+  localizedDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:40f6f0d40e2cd3046850a061ee570da8
+    m_TableEntryReference:
+      m_KeyId: 28746617047384064
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

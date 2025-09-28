@@ -207,6 +207,14 @@ MonoBehaviour:
     m_Key: settings.saveOption
     m_Metadata:
       m_Items: []
+  - m_Id: 28746617047384064
+    m_Key: settings.description.save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28746848220643328
+    m_Key: settings.description.default
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
