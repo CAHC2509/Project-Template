@@ -3,6 +3,7 @@ public static class Constants
     #region Settings
 
     // Audio settings
+    public const string AUDIO_SETTINGS_KEY = "AudioSettings";
     public const string GENERAL_VOLUME_KEY = "GeneralVolume";
     public const string MUSIC_VOLUME_KEY = "MusicVolume";
     public const string EFFECTS_VOLUME_KEY = "EffectsVolume";
@@ -10,6 +11,7 @@ public static class Constants
     public const float VOLUME_CONSTANT = 0.01f;
 
     // Graphics settings
+    public const string GRAPHICS_SETTINGS_KEY = "GraphicsSettings";
     public const string RESOLUTIONS_KEY = "Resolution";
     public const string QUALITY_LEVELS_KEY = "QualityLevel";
     public const string FULL_SCREEN_KEY = "FullScreen";

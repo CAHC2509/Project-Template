@@ -1,17 +1,20 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class LocalizationSettingsEntity
 {
-    public string CurrentLanguageCode { get; private set; }
+    [SerializeField] private string currentLanguageCode;
+
+    public string CurrentLanguageCode => currentLanguageCode;
 
     public LocalizationSettingsEntity(string language)
     {
-        SetCurrentLanguage(language);
+        currentLanguageCode = language;
     }
 
     public void SetCurrentLanguage(string language)
     {
-        CurrentLanguageCode = language;
+        currentLanguageCode = language;
     }
 }

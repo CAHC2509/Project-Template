@@ -14,3 +14,9 @@ public enum SettingsSubmenuType
     Localization,
     Close
 }
+
+public enum SaveSystemType
+{
+    Local,
+    Cloud
+}

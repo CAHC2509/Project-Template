@@ -5,30 +5,47 @@ using UnityEngine;
 [Serializable]
 public class GraphicsSettingsEntity
 {
-    public List<Resolution> AvailableResolutions { get; private set; }
-    public List<string> AvailableQualityLevels { get; private set; }
-    public int CurrentResolutionIndex { get; private set; }
-    public int CurrentQualityLevelIndex { get; private set; }
-    public bool CurrentFullScreenMode { get; private set; }
+    [SerializeField] private int currentResolutionIndex;
+    [SerializeField] private int currentQualityLevelIndex;
+    [SerializeField] private bool currentFullScreenMode;
 
-    public GraphicsSettingsEntity(List<Resolution> resolutions, List<string> qualityLevels)
+    private List<Resolution> availableResolutions;
+    private List<string> availableQualityLevels;
+    private bool pendingChanges;
+
+    public List<Resolution> AvailableResolutions => availableResolutions;
+    public List<string> AvailableQualityLevels => availableQualityLevels;
+    public int CurrentResolutionIndex => currentResolutionIndex;
+    public int CurrentQualityLevelIndex => currentQualityLevelIndex;
+    public bool CurrentFullScreenMode => currentFullScreenMode;
+    public bool PendingChanges => pendingChanges;
+
+    public void SetAvailiableSettings(List<Resolution> resolutions, List<string> qualityLevels)
     {
-        AvailableResolutions = resolutions;
-        AvailableQualityLevels = qualityLevels;
+        availableResolutions = resolutions;
+        availableQualityLevels = qualityLevels;
     }
 
     public void SetResolutionIndex(int resolutionIndex)
     {
-        CurrentResolutionIndex = resolutionIndex;
+        currentResolutionIndex = resolutionIndex;
+        pendingChanges = true;
     }
 
     public void SetQualityLevelIndex(int qualityLevelIndex)
     {
-        CurrentQualityLevelIndex = qualityLevelIndex;
+        currentQualityLevelIndex = qualityLevelIndex;
+        pendingChanges = true;
     }
 
     public void SetFullscreenMode(bool activeMode)
     {
-        CurrentFullScreenMode = activeMode;
+        currentFullScreenMode = activeMode;
+        pendingChanges = true;
+    }
+
+    public void CleanPendingChanges()
+    {
+        pendingChanges = false;
     }
 }

@@ -109,25 +109,10 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         controller.UpdateUIVolume(volume);
     }
 
-    public void UpdateGeneralVolumeText()
-    {
-        generalVolumeText.text = controller.VolumeToPercentage(controller.GetModel().GeneralVolume);
-    }
-
-    public void UpdateMusicVolumeText()
-    {
-        musicVolumeText.text = controller.VolumeToPercentage(controller.GetModel().MusicVolume);
-    }
-
-    public void UpdateEffectsVolumeText()
-    {
-        effectsVolumeText.text = controller.VolumeToPercentage(controller.GetModel().EffectsVolume);
-    }
-
-    public void UpdateUIVolumeText()
-    {
-        uiVolumeText.text = controller.VolumeToPercentage(controller.GetModel().UIVolume);
-    }
+    public void UpdateGeneralVolumeText() => generalVolumeText.text = controller.VolumeToPercentage(controller.GetModel().GeneralVolume);
+    public void UpdateMusicVolumeText() => musicVolumeText.text = controller.VolumeToPercentage(controller.GetModel().MusicVolume);
+    public void UpdateEffectsVolumeText() => effectsVolumeText.text = controller.VolumeToPercentage(controller.GetModel().EffectsVolume);
+    public void UpdateUIVolumeText() => uiVolumeText.text = controller.VolumeToPercentage(controller.GetModel().UIVolume);
 
     private void ChangeSlider(Slider slider, float delta)
     {

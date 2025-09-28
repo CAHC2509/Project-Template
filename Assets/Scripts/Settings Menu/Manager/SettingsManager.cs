@@ -14,11 +14,18 @@ public class SettingsManager : MonoBehaviour, ISettingsManager
     [SerializeField] private LocalizationSettingsController localizationSettings;
 
     private ISettingsSubmenuController currentSubmenu;
+    private ISaveSystem saveSystem;
 
     public event Action OnSettingsClosed;
 
-    public void Dependencies()
+    public void Dependencies(ISaveSystem saveSystem)
     {
+        this.saveSystem = saveSystem;
+
+        graphicsSettings.Dependencies(saveSystem);
+        audioSettings.Dependencies(saveSystem);
+        localizationSettings.Dependencies(saveSystem);
+
         menuController.Dependencies(this);
     }
 

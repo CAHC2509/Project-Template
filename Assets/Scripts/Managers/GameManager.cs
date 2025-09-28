@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int targetFPS = 60;
 
     private GameStateBase currentGameState;
+    private ISaveSystem saveSystem;
 
     private void Awake()
     {
@@ -32,11 +33,13 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        saveSystem = new SaveSystemFactory(SaveSystemType.Local).GetProduct();
+
         audioManager.Initialize();
 
         selectionManager.Initialize();
 
-        settingsManager.Dependencies();
+        settingsManager.Dependencies(saveSystem);
         settingsManager.Initialize();
 
         sceneLoader.Dependencies();

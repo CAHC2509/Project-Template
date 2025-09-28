@@ -4,36 +4,55 @@ using UnityEngine;
 [Serializable]
 public class AudioSettingsEntity
 {
-    public float GeneralVolume { get; private set; }
-    public float MusicVolume { get; private set; }
-    public float EffectsVolume { get; private set; }
-    public float UIVolume { get; private set; }
+    [SerializeField] private float generalVolume;
+    [SerializeField] private float musicVolume;
+    [SerializeField] private float effectsVolume;
+    [SerializeField] private float uiVolume;
+
+    private bool pendingChanges;
+
+    public float GeneralVolume => generalVolume;
+    public float MusicVolume => musicVolume;
+    public float EffectsVolume => effectsVolume;
+    public float UIVolume => uiVolume;
+    public bool PendingChanges => pendingChanges;
 
     public AudioSettingsEntity(float generalVolume, float musicVolume, float effectsVolume, float uiVolume)
     {
-        GeneralVolume = Mathf.Clamp01(generalVolume);
-        MusicVolume = Mathf.Clamp01(musicVolume);
-        EffectsVolume = Mathf.Clamp01(effectsVolume);
-        UIVolume = Mathf.Clamp01(uiVolume);
+        this.generalVolume = Mathf.Clamp01(generalVolume);
+        this.musicVolume = Mathf.Clamp01(musicVolume);
+        this.effectsVolume = Mathf.Clamp01(effectsVolume);
+        this.uiVolume = Mathf.Clamp01(uiVolume);
+
+        pendingChanges = false;
     }
 
     public void SetGeneralVolume(float newVolume)
     {
-        GeneralVolume = Mathf.Clamp01(newVolume);
+        generalVolume = Mathf.Clamp01(newVolume);
+        pendingChanges = true;
     }
 
     public void SetMusicVolume(float newVolume)
     {
-        MusicVolume = Mathf.Clamp01(newVolume);
+        musicVolume = Mathf.Clamp01(newVolume);
+        pendingChanges = true;
     }
 
     public void SetEffectsVolume(float newVolume)
     {
-        EffectsVolume = Mathf.Clamp01(newVolume);
+        effectsVolume = Mathf.Clamp01(newVolume);
+        pendingChanges = true;
     }
 
     public void SetUIVolume(float newVolume)
     {
-        UIVolume = Mathf.Clamp01(newVolume);
+        uiVolume = Mathf.Clamp01(newVolume);
+        pendingChanges = true;
+    }
+
+    public void CleanPendingChanges()
+    {
+        pendingChanges = false;
     }
 }

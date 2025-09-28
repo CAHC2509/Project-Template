@@ -5,18 +5,19 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
 {
     [SerializeField] private LocalizationSettingsView view;
 
+    private ISaveSystem saveSystem;
     private LocalizationSettingsEntity localizationSettings;
 
-    private void Awake()
+    public void Dependencies(ISaveSystem saveSystem)
     {
-        LoadSettings();
+        this.saveSystem = saveSystem;
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        ChangeLocaleByCode(localizationSettings.CurrentLanguageCode);
+        LoadSettings();
         view.Initialize();
     }
 
@@ -45,14 +46,17 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetString(Constants.LANGUAGE_KEY, localizationSettings.CurrentLanguageCode);
-        PlayerPrefs.Save();
+        saveSystem.Save(Constants.LANGUAGE_KEY, localizationSettings);
     }
 
     public void LoadSettings()
     {
-        string savedLocale = PlayerPrefs.GetString(Constants.LANGUAGE_KEY, "en");
-        localizationSettings = new LocalizationSettingsEntity(savedLocale);
+        if (saveSystem.HasKey(Constants.LANGUAGE_KEY))
+            localizationSettings = (LocalizationSettingsEntity)saveSystem.Load(Constants.LANGUAGE_KEY, typeof(LocalizationSettingsEntity));
+        else
+            localizationSettings = new LocalizationSettingsEntity("en");
+
+        ChangeLocaleByCode(localizationSettings.CurrentLanguageCode);
     }
 
     public void EnableView()

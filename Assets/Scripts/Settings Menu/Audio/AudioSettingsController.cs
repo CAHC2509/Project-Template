@@ -3,23 +3,33 @@ using UnityEngine.Audio;
 
 public class AudioSettingsController : ControllerBase, IAudioSettingsController
 {
+    [SerializeField] private SaveAudioSettingsModalWindowView modalWindow;
     [SerializeField] private AudioMixer mixer;
 
+    private ISaveSystem saveSystem;
     private IAudioSettingsView view;
     private AudioSettingsEntity audioSettings;
 
     private void Awake()
     {
         view = GetComponentInChildren<IAudioSettingsView>();
-        LoadSettings();
+    }
+
+    public void Dependencies(ISaveSystem saveSystem)
+    {
+        this.saveSystem = saveSystem;
+        modalWindow.Dependencies(this);
     }
 
     public override void Initialize()
     {
         base.Initialize();
 
+        LoadSettings();
         InitializeSettings();
+
         view.Initialize();
+        modalWindow.Initialize();
     }
 
     public override void Conclude()
@@ -27,16 +37,15 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
         base.Conclude();
 
         view.Conclude();
+        modalWindow.Conclude();
     }
 
     public void LoadSettings()
     {
-        float general = PlayerPrefs.GetFloat(Constants.GENERAL_VOLUME_KEY, 1f);
-        float music = PlayerPrefs.GetFloat(Constants.MUSIC_VOLUME_KEY, 1f);
-        float effects = PlayerPrefs.GetFloat(Constants.EFFECTS_VOLUME_KEY, 1f);
-        float ui = PlayerPrefs.GetFloat(Constants.UI_VOLUME_KEY, 1f);
-
-        audioSettings = new AudioSettingsEntity(general, music, effects, ui);
+        if (saveSystem.HasKey(Constants.AUDIO_SETTINGS_KEY))
+            audioSettings = (AudioSettingsEntity)saveSystem.Load(Constants.AUDIO_SETTINGS_KEY, typeof(AudioSettingsEntity));
+        else
+            audioSettings = new AudioSettingsEntity(1f, 1f, 1f, 1f);
     }
 
     public void InitializeSettings()
@@ -49,54 +58,35 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetFloat(Constants.GENERAL_VOLUME_KEY, audioSettings.GeneralVolume);
-        PlayerPrefs.SetFloat(Constants.MUSIC_VOLUME_KEY, audioSettings.MusicVolume);
-        PlayerPrefs.SetFloat(Constants.EFFECTS_VOLUME_KEY, audioSettings.EffectsVolume);
-        PlayerPrefs.SetFloat(Constants.UI_VOLUME_KEY, audioSettings.UIVolume);
-        PlayerPrefs.Save();
+        saveSystem.Save(Constants.AUDIO_SETTINGS_KEY, audioSettings);
+        audioSettings.CleanPendingChanges();
     }
 
     public void UpdateGeneralVolume(float volume)
     {
         audioSettings.SetGeneralVolume(volume);
-
         mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(Constants.GENERAL_VOLUME_KEY, volume);
-        PlayerPrefs.Save();
-
         view.UpdateGeneralVolumeText();
     }
 
     public void UpdateMusicVolume(float volume)
     {
         audioSettings.SetMusicVolume(volume);
-
         mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(Constants.MUSIC_VOLUME_KEY, volume);
-        PlayerPrefs.Save();
-
         view.UpdateMusicVolumeText();
     }
 
     public void UpdateEffectsVolume(float volume)
     {
         audioSettings.SetEffectsVolume(volume);
-
         mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(Constants.EFFECTS_VOLUME_KEY, volume);
-        PlayerPrefs.Save();
-
         view.UpdateEffectsVolumeText();
     }
 
     public void UpdateUIVolume(float volume)
     {
         audioSettings.SetUIVolume(volume);
-
         mixer.SetFloat(Constants.UI_VOLUME_KEY, ConvertToDecibels(volume));
-        PlayerPrefs.SetFloat(Constants.UI_VOLUME_KEY, volume);
-        PlayerPrefs.Save();
-
         view.UpdateUIVolumeText();
     }
 
@@ -121,10 +111,14 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void EnableView()
     {
         view.EnableView();
+        audioSettings.CleanPendingChanges();
     }
 
     public void DisableView()
     {
-        view.DisableView();
+        if (!audioSettings.PendingChanges)
+            view.DisableView();
+        else
+            modalWindow.EnableView();
     }
 }

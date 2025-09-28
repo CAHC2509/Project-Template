@@ -198,6 +198,22 @@ MonoBehaviour:
     m_Localized: User interface
     m_Metadata:
       m_Items: []
+  - m_Id: 28611175656357888
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28611306698997760
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28612015989358592
+    m_Localized: Would you like to save your audio settings changes?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28613041941282816
+    m_Localized: Would you like to save your graphics settings changes?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

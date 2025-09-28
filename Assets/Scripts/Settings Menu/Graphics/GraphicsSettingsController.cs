@@ -3,13 +3,21 @@ using UnityEngine;
 
 public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsController
 {
+    [SerializeField] private SaveGraphicsSettingsModalWindowView modalWindow;
+
+    private ISaveSystem saveSystem;
     private IGraphicSettingsView view;
     private GraphicsSettingsEntity graphicsSettings;
 
     private void Awake()
     {
         view = GetComponentInChildren<IGraphicSettingsView>();
-        LoadAvailiableSettings();
+    }
+
+    public void Dependencies(ISaveSystem saveSystem)
+    {
+        this.saveSystem = saveSystem;
+        modalWindow.Dependencies(this);
     }
 
     public override void Initialize()
@@ -18,6 +26,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
         LoadSettings();
         view.Initialize();
+        modalWindow.Initialize();
     }
 
     public override void Conclude()
@@ -25,28 +34,33 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         base.Conclude();
 
         view.Conclude();
-    }
-
-    private void LoadAvailiableSettings()
-    {
-        List<Resolution> resolutions = GetAvailiableResolutions();
-        List<string> qualityLevels = GetAvailiableQualityLevels();
-        graphicsSettings = new GraphicsSettingsEntity(resolutions, qualityLevels);
+        modalWindow.Conclude();
     }
 
     public void LoadSettings()
     {
-        graphicsSettings.SetResolutionIndex(PlayerPrefs.GetInt(Constants.RESOLUTIONS_KEY, graphicsSettings.AvailableResolutions.Count - 1));
-        graphicsSettings.SetQualityLevelIndex(PlayerPrefs.GetInt(Constants.QUALITY_LEVELS_KEY, graphicsSettings.AvailableQualityLevels.Count - 1));
-        graphicsSettings.SetFullscreenMode(PlayerPrefs.GetInt(Constants.FULL_SCREEN_KEY, 1) == 1 ? true : false);
+        List<Resolution> resolutions = GetAvailiableResolutions();
+        List<string> qualityLevels = GetAvailiableQualityLevels();
+
+        if (saveSystem.HasKey(Constants.GRAPHICS_SETTINGS_KEY))
+        {
+            graphicsSettings = (GraphicsSettingsEntity)saveSystem.Load(Constants.GRAPHICS_SETTINGS_KEY, typeof(GraphicsSettingsEntity));
+            graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
+        }
+        else
+        {
+            graphicsSettings = new GraphicsSettingsEntity();
+            graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
+            graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
+            graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
+            graphicsSettings.SetFullscreenMode(true);
+        }
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt(Constants.RESOLUTIONS_KEY, graphicsSettings.CurrentResolutionIndex);
-        PlayerPrefs.SetInt(Constants.QUALITY_LEVELS_KEY, graphicsSettings.CurrentQualityLevelIndex);
-        PlayerPrefs.SetInt(Constants.FULL_SCREEN_KEY, graphicsSettings.CurrentFullScreenMode ? 1 : 0);
-        PlayerPrefs.Save();
+        saveSystem.Save(Constants.GRAPHICS_SETTINGS_KEY, graphicsSettings);
+        graphicsSettings.CleanPendingChanges();
     }
 
     public void SetResolution(int index)
@@ -56,7 +70,6 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
         Resolution selectedResolution = graphicsSettings.AvailableResolutions[index];
         Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
-        SaveSettings();
 
         view.UpdateResolutionView();
     }
@@ -65,9 +78,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     {
         index = Mathf.Clamp(index, 0, graphicsSettings.AvailableQualityLevels.Count - 1);
         graphicsSettings.SetQualityLevelIndex(index);
-
         QualitySettings.SetQualityLevel(index);
-        SaveSettings();
 
         view.UpdateQualityLevelView();
     }
@@ -75,9 +86,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void SetFullScreenMode(bool activeMode)
     {
         graphicsSettings.SetFullscreenMode(activeMode);
-
         Screen.fullScreenMode = activeMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-        SaveSettings();
 
         view.UpdateFullScreenModeView();
     }
@@ -107,10 +116,14 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void EnableView()
     {
         view.EnableView();
+        graphicsSettings.CleanPendingChanges();
     }
 
     public void DisableView()
     {
-        view.DisableView();
+        if (!graphicsSettings.PendingChanges)
+            view.DisableView();
+        else
+            modalWindow.EnableView();
     }
 }
