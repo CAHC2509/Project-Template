@@ -59,10 +59,11 @@ public abstract class ViewBase : MonoBehaviour, IViewBase
 
     private IEnumerator<float> SelectionWithDelay(SelectableStateController newSelectable)
     {
-        while (!defaultSelection.gameObject.activeSelf)
+        yield return Timing.WaitForOneFrame;
+
+        while (!newSelectable.gameObject.activeInHierarchy)
             yield return Timing.WaitForOneFrame;
 
-        if (newSelectable != null)
-            SelectionManager.SetNewSelectable?.Invoke(newSelectable);
+        SelectionManager.SetNewSelectable?.Invoke(newSelectable);
     }
 }
