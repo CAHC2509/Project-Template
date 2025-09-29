@@ -34,15 +34,12 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         defaultSelection = generalVolumeController.Button;
     }
 
-    public override void Initialize()
+    public override void EnableView()
     {
-        base.Initialize();
+        base.EnableView();
 
         SetSliders();
-        UpdateGeneralVolumeText();
-        UpdateMusicVolumeText();
-        UpdateEffectsVolumeText();
-        UpdateUIVolumeText();
+        SetTexts();
     }
 
     protected override void AddPersistentListeners()
@@ -97,6 +94,14 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         musicVolumeSlider.SetValueWithoutNotify(controller.GetModel().MusicVolume);
         effectsVolumeSlider.SetValueWithoutNotify(controller.GetModel().EffectsVolume);
         uiVolumeSlider.SetValueWithoutNotify(controller.GetModel().UIVolume);
+    }
+
+    public void SetTexts()
+    {
+        UpdateEffectsVolumeText();
+        UpdateMusicVolumeText();
+        UpdateEffectsVolumeText();
+        UpdateUIVolumeText();
     }
 
     private void GeneralVolumeChanged(float volume)

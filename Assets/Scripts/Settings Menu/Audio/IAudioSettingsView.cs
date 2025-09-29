@@ -7,4 +7,5 @@ public interface IAudioSettingsView : IViewBase
     public void UpdateEffectsVolumeText();
     public void UpdateUIVolumeText();
     public void SetSliders();
+    public void SetTexts();
 }

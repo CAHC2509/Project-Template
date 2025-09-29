@@ -34,6 +34,15 @@ public class GraphicsSettingsView : ViewBase, IGraphicSettingsView
         fullScreenView.Initialize(controller);
     }
 
+    public override void EnableView()
+    {
+        base.EnableView();
+
+        UpdateResolutionView();
+        UpdateQualityLevelView();
+        UpdateFullScreenModeView();
+    }
+
     protected override void AddPersistentListeners()
     {
         defaultButton.onClick.AddListener(controller.SetDefaultSettings);

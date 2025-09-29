@@ -6,6 +6,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     private ISaveSystem saveSystem;
     private IGraphicSettingsView view;
     private GraphicsSettingsEntity graphicsSettings;
+    private GraphicsSettingsEntity previousSettings;
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
     public void SaveSettings()
     {
         saveSystem.Save(Constants.GRAPHICS_SETTINGS_KEY, graphicsSettings);
+        graphicsSettings.CleanPendingChanges();
 
         Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
         Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
@@ -106,10 +108,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
         graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
         graphicsSettings.SetFullscreenMode(true);
-
-        view.UpdateResolutionView();
-        view.UpdateQualityLevelView();
-        view.UpdateFullScreenModeView();
+        UpdateView();
     }
 
     private List<string> GetAvailiableQualityLevels()
@@ -122,13 +121,29 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         return graphicsSettings;
     }
 
+    private void UpdateView()
+    {
+        view.UpdateResolutionView();
+        view.UpdateQualityLevelView();
+        view.UpdateFullScreenModeView();
+    }
+
     public void EnableView()
     {
         view.EnableView();
+        graphicsSettings.CleanPendingChanges();
+        previousSettings = new GraphicsSettingsEntity();
+        previousSettings.SetAvailiableSettings(graphicsSettings.AvailableResolutions, graphicsSettings.AvailableQualityLevels);
+        previousSettings.SetResolutionIndex(graphicsSettings.CurrentResolutionIndex);
+        previousSettings.SetQualityLevelIndex(graphicsSettings.CurrentQualityLevelIndex);
+        previousSettings.SetFullscreenMode(graphicsSettings.CurrentFullScreenMode);
     }
 
     public void DisableView()
     {
         view.DisableView();
+
+        if (graphicsSettings.PendingChanges)
+            graphicsSettings = previousSettings;
     }
 }

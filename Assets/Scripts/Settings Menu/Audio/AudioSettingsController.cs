@@ -8,6 +8,7 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     private ISaveSystem saveSystem;
     private IAudioSettingsView view;
     private AudioSettingsEntity audioSettings;
+    private AudioSettingsEntity previousSettings;
 
     private void Awake()
     {
@@ -61,13 +62,18 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void SetDefaultSettings()
     {
         audioSettings = new AudioSettingsEntity(1f, 1f, 1f, 1f);
-        UpdateGeneralVolume(audioSettings.GeneralVolume);
-        UpdateMusicVolume(audioSettings.MusicVolume);
-        UpdateEffectsVolume(audioSettings.EffectsVolume);
-        UpdateUIVolume(audioSettings.UIVolume);
+        UpdateCurrentSettings(audioSettings);
         view.SetSliders();
 
         SaveSettings();
+    }
+
+    private void UpdateCurrentSettings(AudioSettingsEntity settings)
+    {
+        UpdateGeneralVolume(settings.GeneralVolume);
+        UpdateMusicVolume(settings.MusicVolume);
+        UpdateEffectsVolume(settings.EffectsVolume);
+        UpdateUIVolume(settings.UIVolume);
     }
 
     public void UpdateGeneralVolume(float volume)
@@ -119,10 +125,17 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void EnableView()
     {
         view.EnableView();
+        audioSettings.CleanPendingChanges();
+
+        previousSettings = new AudioSettingsEntity(audioSettings.GeneralVolume, audioSettings.MusicVolume,
+                                                   audioSettings.EffectsVolume, audioSettings.UIVolume);
     }
 
     public void DisableView()
     {
         view.DisableView();
+
+        if (audioSettings.PendingChanges)
+            UpdateCurrentSettings(previousSettings);
     }
 }
