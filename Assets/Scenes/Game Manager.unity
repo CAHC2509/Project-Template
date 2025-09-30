@@ -1177,7 +1177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   objectToPool: {fileID: 5852257648112765022, guid: 73f6965a6165f11488b7f946b0e02108, type: 3}
-  initialPoolSize: 15
+  initialPoolSize: 5
+  maxPoolSize: 10
 --- !u!4 &806269204
 Transform:
   m_ObjectHideFlags: 0
@@ -2308,7 +2309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   objectToPool: {fileID: 5852257648112765022, guid: e63d5ee272061164587a0a5af781863b, type: 3}
-  initialPoolSize: 15
+  initialPoolSize: 5
+  maxPoolSize: 10
 --- !u!1 &1937222310
 GameObject:
   m_ObjectHideFlags: 0

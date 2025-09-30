@@ -5,8 +5,10 @@ public class ObjectPool : MonoBehaviour
 {
     [SerializeField] protected PooledObject objectToPool;
     [SerializeField] protected int initialPoolSize = 10;
-    
-    protected Stack<PooledObject> stack;
+    [SerializeField] protected int maxPoolSize = 20;
+
+    protected Stack<PooledObject> freeStack;
+    protected Queue<PooledObject> allQueue;
 
     public void Initialize()
     {
@@ -20,43 +22,54 @@ public class ObjectPool : MonoBehaviour
 
     private void SetupPool()
     {
-        stack = new Stack<PooledObject>();
-        PooledObject instance = null;
+        freeStack = new Stack<PooledObject>();
+        allQueue = new Queue<PooledObject>();
 
         for (int i = 0; i < initialPoolSize; i++)
         {
-            instance = Instantiate(objectToPool, transform);
+            PooledObject instance = Instantiate(objectToPool, transform);
             instance.Pool = this;
             instance.gameObject.SetActive(false);
-            stack.Push(instance);
+            freeStack.Push(instance);
+            allQueue.Enqueue(instance);
         }
     }
 
     private void CleanPool()
     {
-        foreach (PooledObject pooledObject in stack)
+        foreach (PooledObject pooledObject in allQueue)
             Destroy(pooledObject.gameObject);
 
-        stack.Clear();
+        freeStack.Clear();
+        allQueue.Clear();
     }
 
     public PooledObject GetPooledObject()
     {
-        if (stack.Count <= 0)
+        if (freeStack.Count > 0)
+        {
+            PooledObject next = freeStack.Pop();
+            next.gameObject.SetActive(true);
+            return next;
+        }
+
+        if (allQueue.Count < maxPoolSize)
         {
             PooledObject newInstance = Instantiate(objectToPool, transform);
             newInstance.Pool = this;
+            allQueue.Enqueue(newInstance);
             return newInstance;
         }
 
-        PooledObject nextInstance = stack.Pop();
-        nextInstance.gameObject.SetActive(true);
-        return nextInstance;
+        PooledObject reused = allQueue.Dequeue();
+        allQueue.Enqueue(reused);
+        reused.gameObject.SetActive(true);
+        return reused;
     }
 
     public void ReturnToPool(PooledObject pooledObject)
     {
         pooledObject.gameObject.SetActive(false);
-        stack.Push(pooledObject);
+        freeStack.Push(pooledObject);
     }
 }
