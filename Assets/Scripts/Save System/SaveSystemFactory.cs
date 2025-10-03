@@ -13,10 +13,12 @@ public class SaveSystemFactory
     {
         switch (saveSystemType)
         {
-            case SaveSystemType.Local:
-                return new LocalSaveSystem();
+            case SaveSystemType.PlayerPrefs:
+                return new PlayerPrefsSaveSystem();
+            case SaveSystemType.JSON:
+                return new JSONSaveSystem();
             default:
-                return new LocalSaveSystem();
+                return new JSONSaveSystem();
         }
     }
 }

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        saveSystem = new SaveSystemFactory(SaveSystemType.Local).GetProduct();
+        saveSystem = new SaveSystemFactory(SaveSystemType.PlayerPrefs).GetProduct();
 
         audioManager.Initialize();
 

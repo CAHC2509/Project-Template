@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class LocalSaveSystem : ISaveSystem
+public class JSONSaveSystem : ISaveSystem
 {
     private string savePath;
 
-    public LocalSaveSystem()
+    public JSONSaveSystem()
     {
         savePath = Application.persistentDataPath + "/";
     }

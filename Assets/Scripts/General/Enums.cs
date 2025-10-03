@@ -17,6 +17,6 @@ public enum SettingsSubmenuType
 
 public enum SaveSystemType
 {
-    Local,
-    Cloud
+    PlayerPrefs,
+    JSON
 }
