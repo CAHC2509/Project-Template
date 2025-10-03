@@ -46,19 +46,18 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         else
         {
             LoadAvailiableSettings();
-            SetDefaultSettings();
+            graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
+            graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
+            graphicsSettings.SetFullscreenMode(true);
         }
+
+        ApplyCurrentSettings();
     }
 
     public void SaveSettings()
     {
         saveSystem.Save(Constants.GRAPHICS_SETTINGS_KEY, graphicsSettings);
         graphicsSettings.CleanPendingChanges();
-
-        Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
-        Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
-        QualitySettings.SetQualityLevel(graphicsSettings.CurrentQualityLevelIndex);
-        Screen.fullScreenMode = graphicsSettings.CurrentFullScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
     }
 
     public void SetResolution(int index)
@@ -66,21 +65,24 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         index = Mathf.Clamp(index, 0, graphicsSettings.AvailableResolutions.Count - 1);
         graphicsSettings.SetResolutionIndex(index);
         view.UpdateResolutionView();
+
+        Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
     }
 
     public void SetQualityLevel(int index)
     {
         index = Mathf.Clamp(index, 0, graphicsSettings.AvailableQualityLevels.Count - 1);
         graphicsSettings.SetQualityLevelIndex(index);
-
         view.UpdateQualityLevelView();
+        QualitySettings.SetQualityLevel(graphicsSettings.CurrentQualityLevelIndex);
     }
 
     public void SetFullScreenMode(bool activeMode)
     {
         graphicsSettings.SetFullscreenMode(activeMode);
-
         view.UpdateFullScreenModeView();
+        Screen.fullScreenMode = graphicsSettings.CurrentFullScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
     }
 
     private List<Resolution> GetAvailiableResolutions()
@@ -92,6 +94,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
             if (aspectRatio >= 1.77f && aspectRatio <= 1.78f)
                 filteredResolutions.Add(resolution);
         }
+
         return filteredResolutions.Count > 0 ? filteredResolutions : new List<Resolution>(Screen.resolutions);
     }
 
@@ -103,11 +106,20 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
         graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
     }
 
+    private void ApplyCurrentSettings()
+    {
+        Resolution selectedResolution = graphicsSettings.AvailableResolutions[graphicsSettings.CurrentResolutionIndex];
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, graphicsSettings.CurrentFullScreenMode);
+        QualitySettings.SetQualityLevel(graphicsSettings.CurrentQualityLevelIndex);
+        Screen.fullScreenMode = graphicsSettings.CurrentFullScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+    }
+
     public void SetDefaultSettings()
     {
         graphicsSettings.SetResolutionIndex(graphicsSettings.AvailableResolutions.Count - 1);
         graphicsSettings.SetQualityLevelIndex(graphicsSettings.AvailableQualityLevels.Count - 1);
         graphicsSettings.SetFullscreenMode(true);
+        ApplyCurrentSettings();
         UpdateView();
     }
 
