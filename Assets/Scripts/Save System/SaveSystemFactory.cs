@@ -17,6 +17,8 @@ public class SaveSystemFactory
                 return new PlayerPrefsSaveSystem();
             case SaveSystemType.JSON:
                 return new JSONSaveSystem();
+            case SaveSystemType.CSV:
+                return new CSVSaveSystem();
             default:
                 return new JSONSaveSystem();
         }

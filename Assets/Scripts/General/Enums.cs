@@ -18,5 +18,6 @@ public enum SettingsSubmenuType
 public enum SaveSystemType
 {
     PlayerPrefs,
-    JSON
+    JSON,
+    CSV
 }
