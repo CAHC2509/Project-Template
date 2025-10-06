@@ -11,7 +11,7 @@ public class ObjectPoolsManager : MonoBehaviour
         objectPools = objectPoolsParent.GetComponentsInChildren<ObjectPool>();
     }
 
-    public void Initilize()
+    public void Initialize()
     {
         foreach (ObjectPool pool in objectPools)
             pool.Initialize();
