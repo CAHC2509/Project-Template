@@ -18,18 +18,12 @@ public class AudioManager : MonoBehaviour
 
     public void Initialize()
     {
-        uiSFXFactory.Initialize();
-        flatSFXFactory.Initialize();
-
         backgroundMusicSource.playOnAwake = true;
         backgroundMusicSource.loop = true;
     }
 
     public void Conclude()
     {
-        uiSFXFactory.Conclude();
-        flatSFXFactory.Conclude();
-
         StopBackgroundMusic();
     }
 

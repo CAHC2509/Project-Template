@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SelectionManager selectionManager;
     [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private SceneLoaderController sceneLoader;
+    [SerializeField] private ObjectPoolsManager objectPoolsManager;
     [SerializeField] private States currentState;
     [SerializeField] private int targetFPS = 60;
 
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
         sceneLoader.Initialize();
         sceneLoader.LoadScene(currentState.ToString());
 
+        objectPoolsManager.Initilize();
+
         AddListeners();
     }
 
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
         selectionManager.Conclude();
         settingsManager.Conclude();
         sceneLoader.Conclude();
+        objectPoolsManager.Conclude();
 
         RemoveListeners();
     }
