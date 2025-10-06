@@ -736,6 +736,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &425087941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425087942}
+  - component: {fileID: 425087943}
+  m_Layer: 0
+  m_Name: Object Pools Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &425087942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425087941}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 983931430}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &425087943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425087941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3c18ee187c8924ab8edfdfdec0e4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolManager
+  objectPoolsParent: {fileID: 1305825741}
 --- !u!114 &448763248 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6341158108388534710, guid: f97f428ad4c1daa418e05a2291106278, type: 3}
@@ -1324,6 +1369,7 @@ Transform:
   - {fileID: 2456399035920695138}
   - {fileID: 6386891441084628866}
   - {fileID: 369888334}
+  - {fileID: 425087942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &995222428 stripped
@@ -1839,6 +1885,7 @@ MonoBehaviour:
   selectionManager: {fileID: 7506333284828152377}
   settingsManager: {fileID: 369888335}
   sceneLoader: {fileID: 668576716}
+  objectPoolsManager: {fileID: 425087943}
   currentState: 0
   targetFPS: 60
 --- !u!4 &1727931308
