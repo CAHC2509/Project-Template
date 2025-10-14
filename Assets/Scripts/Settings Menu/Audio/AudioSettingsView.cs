@@ -135,12 +135,12 @@ public class AudioSettingsView : ViewBase, IAudioSettingsView
         slider.value = newValue;
     }
 
-    private void IncreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, Constants.VOLUME_CONSTANT);
-    private void DecreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, -Constants.VOLUME_CONSTANT);
-    private void IncreaseMusicVolume() => ChangeSlider(musicVolumeSlider, Constants.VOLUME_CONSTANT);
-    private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -Constants.VOLUME_CONSTANT);
-    private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, Constants.VOLUME_CONSTANT);
-    private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -Constants.VOLUME_CONSTANT);
-    private void IncreaseUIVolume() => ChangeSlider(uiVolumeSlider, Constants.VOLUME_CONSTANT);
-    private void DecreaseUIVolume() => ChangeSlider(uiVolumeSlider, -Constants.VOLUME_CONSTANT);
+    private void IncreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, Constants.Settings.VOLUME_CONSTANT);
+    private void DecreaseGeneralVolume() => ChangeSlider(generalVolumeSlider, -Constants.Settings.VOLUME_CONSTANT);
+    private void IncreaseMusicVolume() => ChangeSlider(musicVolumeSlider, Constants.Settings.VOLUME_CONSTANT);
+    private void DecreaseMusicVolume() => ChangeSlider(musicVolumeSlider, -Constants.Settings.VOLUME_CONSTANT);
+    private void IncreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, Constants.Settings.VOLUME_CONSTANT);
+    private void DecreaseEffectsVolume() => ChangeSlider(effectsVolumeSlider, -Constants.Settings.VOLUME_CONSTANT);
+    private void IncreaseUIVolume() => ChangeSlider(uiVolumeSlider, Constants.Settings.VOLUME_CONSTANT);
+    private void DecreaseUIVolume() => ChangeSlider(uiVolumeSlider, -Constants.Settings.VOLUME_CONSTANT);
 }

@@ -72,8 +72,8 @@ public class FullScreenView
 
         fullScreenModeName = new LocalizedString
         {
-            TableReference = Constants.SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{Constants.FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
+            TableReference = Constants.Settings.SETTINGS_TABLE_REFERENCE,
+            TableEntryReference = $"{Constants.Settings.FULLSCREEN_MODES_ENTRY_REFERENCE}{currentFullScreenMode}"
         };
 
         fullScreenModeName.StringChanged += OnFullScreenModeChanged;

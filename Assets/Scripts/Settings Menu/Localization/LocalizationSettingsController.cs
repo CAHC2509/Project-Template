@@ -46,13 +46,13 @@ public class LocalizationSettingsController : ControllerBase, ILocalizationSetti
 
     public void SaveSettings()
     {
-        saveSystem.Save(Constants.LANGUAGE_KEY, localizationSettings);
+        saveSystem.Save(Constants.Settings.LANGUAGE_KEY, localizationSettings);
     }
 
     public void LoadSettings()
     {
-        if (saveSystem.HasKey(Constants.LANGUAGE_KEY))
-            localizationSettings = (LocalizationSettingsEntity)saveSystem.Load(Constants.LANGUAGE_KEY, typeof(LocalizationSettingsEntity));
+        if (saveSystem.HasKey(Constants.Settings.LANGUAGE_KEY))
+            localizationSettings = (LocalizationSettingsEntity)saveSystem.Load(Constants.Settings.LANGUAGE_KEY, typeof(LocalizationSettingsEntity));
         else
             localizationSettings = new LocalizationSettingsEntity("en");
 

@@ -39,23 +39,23 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
 
     public void LoadSettings()
     {
-        if (saveSystem.HasKey(Constants.AUDIO_SETTINGS_KEY))
-            audioSettings = (AudioSettingsEntity)saveSystem.Load(Constants.AUDIO_SETTINGS_KEY, typeof(AudioSettingsEntity));
+        if (saveSystem.HasKey(Constants.Settings.AUDIO_SETTINGS_KEY))
+            audioSettings = (AudioSettingsEntity)saveSystem.Load(Constants.Settings.AUDIO_SETTINGS_KEY, typeof(AudioSettingsEntity));
         else
             audioSettings = new AudioSettingsEntity(1f, 1f, 1f, 1f);
     }
 
     public void InitializeSettings()
     {
-        mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
-        mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
-        mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
-        mixer.SetFloat(Constants.UI_VOLUME_KEY, ConvertToDecibels(audioSettings.UIVolume));
+        mixer.SetFloat(Constants.Settings.GENERAL_VOLUME_KEY, ConvertToDecibels(audioSettings.GeneralVolume));
+        mixer.SetFloat(Constants.Settings.MUSIC_VOLUME_KEY, ConvertToDecibels(audioSettings.MusicVolume));
+        mixer.SetFloat(Constants.Settings.EFFECTS_VOLUME_KEY, ConvertToDecibels(audioSettings.EffectsVolume));
+        mixer.SetFloat(Constants.Settings.UI_VOLUME_KEY, ConvertToDecibels(audioSettings.UIVolume));
     }
 
     public void SaveSettings()
     {
-        saveSystem.Save(Constants.AUDIO_SETTINGS_KEY, audioSettings);
+        saveSystem.Save(Constants.Settings.AUDIO_SETTINGS_KEY, audioSettings);
         audioSettings.CleanPendingChanges();
     }
 
@@ -79,28 +79,28 @@ public class AudioSettingsController : ControllerBase, IAudioSettingsController
     public void UpdateGeneralVolume(float volume)
     {
         audioSettings.SetGeneralVolume(volume);
-        mixer.SetFloat(Constants.GENERAL_VOLUME_KEY, ConvertToDecibels(volume));
+        mixer.SetFloat(Constants.Settings.GENERAL_VOLUME_KEY, ConvertToDecibels(volume));
         view.UpdateGeneralVolumeText();
     }
 
     public void UpdateMusicVolume(float volume)
     {
         audioSettings.SetMusicVolume(volume);
-        mixer.SetFloat(Constants.MUSIC_VOLUME_KEY, ConvertToDecibels(volume));
+        mixer.SetFloat(Constants.Settings.MUSIC_VOLUME_KEY, ConvertToDecibels(volume));
         view.UpdateMusicVolumeText();
     }
 
     public void UpdateEffectsVolume(float volume)
     {
         audioSettings.SetEffectsVolume(volume);
-        mixer.SetFloat(Constants.EFFECTS_VOLUME_KEY, ConvertToDecibels(volume));
+        mixer.SetFloat(Constants.Settings.EFFECTS_VOLUME_KEY, ConvertToDecibels(volume));
         view.UpdateEffectsVolumeText();
     }
 
     public void UpdateUIVolume(float volume)
     {
         audioSettings.SetUIVolume(volume);
-        mixer.SetFloat(Constants.UI_VOLUME_KEY, ConvertToDecibels(volume));
+        mixer.SetFloat(Constants.Settings.UI_VOLUME_KEY, ConvertToDecibels(volume));
         view.UpdateUIVolumeText();
     }
 

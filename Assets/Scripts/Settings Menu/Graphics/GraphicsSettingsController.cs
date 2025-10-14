@@ -35,12 +35,12 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
     public void LoadSettings()
     {
-        if (saveSystem.HasKey(Constants.GRAPHICS_SETTINGS_KEY))
+        if (saveSystem.HasKey(Constants.Settings.GRAPHICS_SETTINGS_KEY))
         {
             List<Resolution> resolutions = GetAvailiableResolutions();
             List<string> qualityLevels = GetAvailiableQualityLevels();
 
-            graphicsSettings = (GraphicsSettingsEntity)saveSystem.Load(Constants.GRAPHICS_SETTINGS_KEY, typeof(GraphicsSettingsEntity));
+            graphicsSettings = (GraphicsSettingsEntity)saveSystem.Load(Constants.Settings.GRAPHICS_SETTINGS_KEY, typeof(GraphicsSettingsEntity));
             graphicsSettings.SetAvailiableSettings(resolutions, qualityLevels);
         }
         else
@@ -56,7 +56,7 @@ public class GraphicsSettingsController : ControllerBase, IGraphicsSettingsContr
 
     public void SaveSettings()
     {
-        saveSystem.Save(Constants.GRAPHICS_SETTINGS_KEY, graphicsSettings);
+        saveSystem.Save(Constants.Settings.GRAPHICS_SETTINGS_KEY, graphicsSettings);
         graphicsSettings.CleanPendingChanges();
     }
 

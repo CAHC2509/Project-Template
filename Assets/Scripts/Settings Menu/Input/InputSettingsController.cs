@@ -148,16 +148,16 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void ResetToDefaults()
     {
         inputActionAsset.RemoveAllBindingOverrides();
-        saveSystem.Delete(Constants.INPUT_ACTIONS_KEY);
+        saveSystem.Delete(Constants.Settings.INPUT_ACTIONS_KEY);
         LoadSettings();
         InitializeInputRebinders();
     }
 
     public void LoadSettings()
     {
-        if (saveSystem.HasKey(Constants.INPUT_ACTIONS_KEY))
+        if (saveSystem.HasKey(Constants.Settings.INPUT_ACTIONS_KEY))
         {
-            StringWrapper rebinds = (StringWrapper)saveSystem.Load(Constants.INPUT_ACTIONS_KEY, typeof(StringWrapper));
+            StringWrapper rebinds = (StringWrapper)saveSystem.Load(Constants.Settings.INPUT_ACTIONS_KEY, typeof(StringWrapper));
             inputActionAsset.LoadBindingOverridesFromJson(rebinds.value);
         }
         else
@@ -169,7 +169,7 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     public void SaveSettings()
     {
         string rebinds = inputActionAsset.SaveBindingOverridesAsJson();
-        saveSystem.Save(Constants.INPUT_ACTIONS_KEY, new StringWrapper(rebinds));
+        saveSystem.Save(Constants.Settings.INPUT_ACTIONS_KEY, new StringWrapper(rebinds));
     }
 
     public void CreateNewRebindRequest(RebindRequestData rebindRequestData)

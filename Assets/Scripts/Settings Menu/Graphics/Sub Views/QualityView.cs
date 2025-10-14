@@ -74,8 +74,8 @@ public class QualityView
 
         qualityLevelName = new LocalizedString
         {
-            TableReference = Constants.SETTINGS_TABLE_REFERENCE,
-            TableEntryReference = $"{Constants.QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
+            TableReference = Constants.Settings.SETTINGS_TABLE_REFERENCE,
+            TableEntryReference = $"{Constants.Settings.QUALITIES_ENTRY_REFERENCE}{currentQualityLevel}"
         };
 
         qualityLevelName.StringChanged += OnQualityLevelChanged;
