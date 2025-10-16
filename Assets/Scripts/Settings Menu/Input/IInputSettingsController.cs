@@ -1,6 +1,11 @@
+using System;
+
+
 public interface IInputSettingsController : IControllerBase, ISettingsSubmenuController
 {
     public InputSettingsEntity GetModel();
     public void ResetToDefaults();
     public void CreateNewRebindRequest(RebindRequestData rebindRequestData);
+
+    public static event Action OnInputsRebinded;
 }

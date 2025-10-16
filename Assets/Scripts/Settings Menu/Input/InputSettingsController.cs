@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     private ISaveSystem saveSystem;
     private IInputSettingsView view;
     private InputSettingsEntity inputSettings;
+
+    public static event Action OnInputsRebinded;
 
     private void Awake()
     {
@@ -104,6 +107,8 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
                     inputSettings.CurrentRebinder.UpdateText();
                     SaveSettings();
                     inputSettings.ClearReferences();
+
+                    OnInputsRebinded?.Invoke();
                 }
 
                 actionMap.Enable();
@@ -151,6 +156,8 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
         saveSystem.Delete(Constants.Settings.INPUT_ACTIONS_KEY);
         LoadSettings();
         InitializeInputRebinders();
+        
+        OnInputsRebinded?.Invoke();
     }
 
     public void LoadSettings()

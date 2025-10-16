@@ -64,6 +64,8 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
 
         dashInput.action.performed += HandleDashInput;
         dashInput.action.canceled += HandleDashInput;
+
+        IInputSettingsController.OnInputsRebinded += UpdateMovementBindings;
     }
 
     protected override void RemoveListeners()
@@ -79,6 +81,8 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
 
         dashInput.action.performed -= HandleDashInput;
         dashInput.action.canceled -= HandleDashInput;
+
+        IInputSettingsController.OnInputsRebinded -= UpdateMovementBindings;
     }
 
     private void HandleHorizontalInput(InputAction.CallbackContext context)
