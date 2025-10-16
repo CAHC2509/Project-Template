@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameplayController : ControllerBase, IGameplayController
 {
-    SettingsManager settingsManager;
+    private SettingsManager settingsManager;
     private IGameplayState gameplayState;
     private IGameplayView gameplayView;
     private IPauseMenuView pauseView;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : ControllerBase
 {
     private PlayerInputController inputController;
     private PlayerMovementController movementController;
@@ -11,14 +11,18 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<PlayerMovementController>();
     }
 
-    private void Start()
+    public override void Initialize()
     {
+        base.Initialize();
+
         inputController.Initialize();
         movementController.Initialize();
     }
 
-    private void OnApplicationQuit()
+    public override void Conclude()
     {
+        base.Conclude();
+
         inputController.Conclude();
         movementController.Conclude();
     }

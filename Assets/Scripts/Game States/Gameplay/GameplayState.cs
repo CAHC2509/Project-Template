@@ -1,10 +1,20 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class GameplayState : GameStateBase, IGameplayState
 {
+    [Header("Player settings")]
+    [SerializeField] private PlayerController playerPrefab;
+    [SerializeField] private Transform playerSpawn;
+
+    [Header("Camera settings")]
+    [SerializeField] private CinemachineCamera cinemachineCamera;
+
+    [Header("Gameplay settings")]
     [SerializeField] private GameplayController controller;
 
     private SettingsManager settingsManager;
+    private PlayerController player;
 
     public void Dependencies(SettingsManager settingsManager)
     {
@@ -18,6 +28,11 @@ public class GameplayState : GameStateBase, IGameplayState
     {
         base.EnterState();
 
+        player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+        player.Initialize();
+
+        cinemachineCamera.Follow = player.transform;
+
         controller.Initialize();
     }
 
@@ -26,6 +41,8 @@ public class GameplayState : GameStateBase, IGameplayState
         base.ExitState();
 
         controller.Conclude();
+        player.Conclude();
+        Destroy(player.gameObject);
     }
 
     public void LoadMainMenu()
