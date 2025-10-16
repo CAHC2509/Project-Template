@@ -29,7 +29,7 @@ public class SprintStrategy : GroundedStrategy
             return;
         }
 
-        if (player.IsTouchingWall)
+        if (player.IsTouchingHardSurface)
         {
             player.SetStrategy(player.Strategies.StunFromSprint);
             return;

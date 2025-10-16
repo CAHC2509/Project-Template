@@ -15,6 +15,7 @@ public interface IPlayerMovementController
     public bool IsFacingRight { get; }
     public bool IsGrounded { get; }
     public bool IsTouchingWall { get; }
+    public bool IsTouchingHardSurface { get; }
     public bool CanGrabLedge { get; }
 
     public void AddForce(Vector2 force, ForceMode2D forceMode);

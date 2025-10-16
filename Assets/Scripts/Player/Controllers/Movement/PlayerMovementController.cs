@@ -16,12 +16,13 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     public bool IsFacingRight { get; private set; }
     public bool IsGrounded => groundChecker.IsGrounded;
     public bool IsTouchingWall => wallChecker.IsTouchingWall;
+    public bool IsTouchingHardSurface => hardSurfaceChecker.IsTouchingHardSurface;
     public bool CanGrabLedge => ledgeChecker.CanGrabLedge;
-
 
     private IGroundChecker groundChecker;
     private IWallChecker wallChecker;
     private ILedgeChecker ledgeChecker;
+    private IHardSurfaceChecker hardSurfaceChecker;
     private IMovementStrategy currentStrategy;
     private Rigidbody2D rb;
 
@@ -31,6 +32,7 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
         groundChecker = GetComponent<IGroundChecker>();
         wallChecker = GetComponent<IWallChecker>();
         ledgeChecker = GetComponent<ILedgeChecker>();
+        hardSurfaceChecker = GetComponent<IHardSurfaceChecker>();
         View = GetComponentInChildren<IPlayerView>();
         Input = GetComponent<IPlayerInputController>();
     }
