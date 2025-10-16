@@ -19,6 +19,18 @@ public class CSVSaveSystem : ISaveSystem
     {
         string file = $"{savePath}{key}.csv";
 
+        if (data is string str)
+        {
+            File.WriteAllText(file, str);
+            return;
+        }
+
+        if (data is StringWrapper wrapper)
+        {
+            File.WriteAllText(file, wrapper.value);
+            return;
+        }
+
         if (data is IEnumerable enumerable && !(data is string))
         {
             var enumerator = enumerable.GetEnumerator();
@@ -60,6 +72,15 @@ public class CSVSaveSystem : ISaveSystem
     {
         string file = $"{savePath}{key}.csv";
         if (!File.Exists(file)) return null;
+
+        if (type == typeof(string))
+            return File.ReadAllText(file);
+
+        if (type == typeof(StringWrapper))
+        {
+            string value = File.ReadAllText(file);
+            return new StringWrapper(value);
+        }
 
         string[] lines = File.ReadAllLines(file);
         if (lines.Length < 2) return null;
