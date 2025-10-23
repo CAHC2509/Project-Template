@@ -65,7 +65,8 @@ public class PlayerDataEntity
 
     [Header("Dash")]
     public float DashSpeed = 12.5f;
-    public float DashDuration = 0.75f;
+    public float DashDuration = 0.35f;
+    public float MinDashDuration = 0.15f;
 
     [Header("Umbrella")]
     public float UmbrellaMaxFallSpeed = 2.5f;

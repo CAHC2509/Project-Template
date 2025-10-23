@@ -66,8 +66,18 @@ public abstract class WallContactStrategy : MovementStrategyBase
 
     private void OnDashInputPressed()
     {
+        if (player.IsTouchingWall &&  player.Input.HorizontalInput == -enterFacingDirection)
+        {
+            player.Flip(-enterFacingDirection);
+            player.SetStrategy(player.Strategies.Dash);
+            return;
+        }
+
         if (player.IsTouchingWall && !player.IsGrounded)
+        {
             player.SetStrategy(player.Strategies.WallRun);
+            return;
+        }
     }
 
     private void HandleWallReleaseBuffer()

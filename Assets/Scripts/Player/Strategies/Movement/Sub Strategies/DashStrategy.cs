@@ -18,6 +18,12 @@ public class DashStrategy : MovementStrategyBase
         base.Update();
         dashTimer += Time.deltaTime;
 
+        if (player.IsTouchingWall && dashTimer >= player.Data.MinDashDuration)
+        {
+            player.SetStrategy(player.Strategies.WallGrab);
+            return;
+        }
+
         if (dashTimer > player.Data.DashDuration)
         {
             if (player.Input.DashPressed)

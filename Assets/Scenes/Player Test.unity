@@ -34307,6 +34307,7 @@ MonoBehaviour:
     WallJumpAirControlDelay: 0.2
     DashSpeed: 15
     DashDuration: 0.25
+    MinDashDuration: 0.15
     UmbrellaMaxFallSpeed: 2.5
     UmbrellaCollissionForce: 2
     UmbrellaCollisionStunDuration: 0.25
