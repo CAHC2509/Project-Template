@@ -8,6 +8,7 @@ public class JumpStrategy : InAirStrategy
     private float gravityScaleDefault;
     private float jumpForce;
     private float jumpHoldTimer;
+    private float jumpStartY;
     private bool jumpCutApplied;
     private bool isHoldingJump;
 
@@ -18,8 +19,9 @@ public class JumpStrategy : InAirStrategy
 
         rb = player.Rigidbody;
         rb.gravityScale = player.Data.InAirGravityScale;
+        
         gravityScaleDefault = player.Data.DefaultGravityScale;
-
+        jumpStartY = player.transform.position.y;
         jumpHoldTimer = 0f;
         jumpCutApplied = false;
         isHoldingJump = true;
@@ -46,6 +48,7 @@ public class JumpStrategy : InAirStrategy
         base.FixedUpdate();
 
         ApplyJumpHoldForce();
+        ClampMaxJumpHeight();
     }
 
     private void HandleJumpHoldRelease()
@@ -109,6 +112,13 @@ public class JumpStrategy : InAirStrategy
         float fallMultiplier = shortJump ? player.Data.ShortFallMultiplier : player.Data.FallMultiplier;
         player.SetStrategy(player.Strategies.Fall);
         (player.Strategies.Fall as FallStrategy).SetFallMultiplier(fallMultiplier);
+    }
+
+    private void ClampMaxJumpHeight()
+    {
+        float currentHeight = player.transform.position.y - jumpStartY;
+        if (currentHeight >= player.Data.MaxJumpHeight && rb.linearVelocity.y > 0f)
+            player.SetVelocityY(0f);
     }
 
     protected override void AddListeners()
