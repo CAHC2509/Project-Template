@@ -2,23 +2,33 @@ using UnityEngine;
 
 public class JumpStrategy : InAirStrategy
 {
-    protected float initialJumpForceToUse;
-    protected float maxJumpForceToUse;
+    protected bool shortJump;
 
-    private float coyoteTimer;
+    private Rigidbody2D rb;
+    private float gravityScaleDefault;
+    private float jumpForce;
     private float jumpHoldTimer;
+    private bool jumpCutApplied;
+    private bool isHoldingJump;
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.JUMP_ANIMATION;
+        animationName = Constants.PlayerAnimations.JUMP;
         base.Enter(player);
 
-        ApplyInitialJumpSettings();
-        coyoteTimer = 0f;
-        jumpHoldTimer = 0f;
+        rb = player.Rigidbody;
+        rb.gravityScale = player.Data.InAirGravityScale;
+        gravityScaleDefault = player.Data.DefaultGravityScale;
 
-        player.SetVelocityY(0f);
-        player.AddForce(Vector2.up * initialJumpForceToUse, ForceMode2D.Impulse);
+        jumpHoldTimer = 0f;
+        jumpCutApplied = false;
+        isHoldingJump = true;
+        shortJump = false;
+
+        float gravity = Mathf.Abs(Physics2D.gravity.y * gravityScaleDefault);
+        jumpForce = Mathf.Sqrt(2f * gravity * player.Data.MaxJumpHeight);
+
+        player.SetVelocityY(jumpForce);
         player.ConsumeJump();
     }
 
@@ -26,48 +36,95 @@ public class JumpStrategy : InAirStrategy
     {
         base.Update();
 
-        coyoteTimer += Time.deltaTime;
-
-        if (player.Input.JumpPressed)
-            jumpHoldTimer += Time.deltaTime;
-
-        if (player.CurrentVelocity.y < Constants.Player.MIN_FALL_VELOCITY)
-        {
-            TransitionToFall();
-            return;
-        }
-
-        if (player.Input.HorizontalInput != 0f && player.CanGrabLedge)
-        {
-            player.SetStrategy(player.Strategies.LedgeClimb);
-            return;
-        }
-
-        if (player.IsGrounded && coyoteTimer > player.Data.CoyoteTime)
-        {
-            player.SetStrategy(player.Strategies.Idle);
-            return;
-        }
+        HandleJumpHoldRelease();
+        HandleJumpCut();
+        HandleFallOrLanding();
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
 
-        if (player.Input.JumpPressed)
-            ApplyCurveJumpForce();
+        ApplyJumpHoldForce();
+    }
+
+    private void HandleJumpHoldRelease()
+    {
+        if (!player.Input.JumpPressed)
+            isHoldingJump = false;
+    }
+
+    private void HandleJumpCut()
+    {
+        bool isRising = rb.linearVelocity.y > 0f;
+
+        if (isRising && !isHoldingJump && !jumpCutApplied)
+        {
+            float newVelocityY = rb.linearVelocity.y * player.Data.JumpCutMultiplier;
+            player.SetVelocityY(newVelocityY);
+
+            shortJump = true;
+            jumpCutApplied = true;
+        }
+    }
+
+    private void HandleFallOrLanding()
+    {
+        bool isDescending = rb.linearVelocity.y <= 0f;
+
+        if (!isDescending)
+            return;
+
+        if (player.IsGrounded)
+            player.SetStrategy(player.Strategies.Idle);
         else
-            ReduceRisingForce();
+            TransitionToFall();
+    }
+
+    private void ApplyJumpHoldForce()
+    {
+        bool isRising = rb.linearVelocity.y > 0f;
+        if (!isRising || !isHoldingJump || jumpCutApplied)
+            return;
+
+        jumpHoldTimer += Time.fixedDeltaTime;
+
+        if (jumpHoldTimer >= player.Data.JumpHoldTime)
+        {
+            isHoldingJump = false;
+            return;
+        }
+
+        float progress = jumpHoldTimer / player.Data.JumpHoldTime;
+        float currentMultiplier = (progress > 0.5f)
+            ? player.Data.JumpMultiplier * (1 - progress)
+            : player.Data.JumpMultiplier;
+
+        float newVelocityY = rb.linearVelocity.y + currentMultiplier * Time.fixedDeltaTime;
+        player.SetVelocityY(newVelocityY);
+    }
+
+    protected virtual void TransitionToFall()
+    {
+        float fallMultiplier = shortJump ? player.Data.ShortFallMultiplier : player.Data.FallMultiplier;
+        player.SetStrategy(player.Strategies.Fall);
+        (player.Strategies.Fall as FallStrategy).SetFallMultiplier(fallMultiplier);
     }
 
     protected override void AddListeners()
     {
+        base.AddListeners();
+        
         player.Input.OnJumplnputPressed += OnJumpInputPressed;
+        player.Input.OnDashlnputPressed += OnDashInputPressed;
     }
 
     protected override void RemoveListeners()
     {
+        base.RemoveListeners();
+
         player.Input.OnJumplnputPressed -= OnJumpInputPressed;
+        player.Input.OnDashlnputPressed -= OnDashInputPressed;
     }
 
     private void OnJumpInputPressed()
@@ -76,29 +133,9 @@ public class JumpStrategy : InAirStrategy
             player.SetStrategy(player.Strategies.ExtraJump);
     }
 
-    protected virtual void ApplyInitialJumpSettings()
+    private void OnDashInputPressed()
     {
-        initialJumpForceToUse = player.Data.InitialJumpForce;
-        maxJumpForceToUse = player.Data.MaxJumpForce;
-        airSpeedToUse = player.Data.AirSpeed;
+        if (player.CanDash)
+            player.SetStrategy(player.Strategies.Dash);
     }
-
-    protected virtual void TransitionToFall()
-    {
-        player.SetStrategy(player.Strategies.Fall);
-    }
-
-    private void ApplyCurveJumpForce()
-    {
-        float time = jumpHoldTimer / player.Data.MaxJumpHoldTime;
-        float curveValue = player.Data.JumpForceCurve.Evaluate(time);
-
-        if (time <= 1f)
-        {
-            float force = curveValue * maxJumpForceToUse;
-            player.AddForce(Vector2.up * force, ForceMode2D.Force);
-        }
-    }
-
-    private void ReduceRisingForce() => player.AddForce(Vector2.down * player.Data.FallAcceleration, ForceMode2D.Force);
 }

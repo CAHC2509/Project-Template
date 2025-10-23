@@ -7,6 +7,7 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     public IPlayerInputController Input { get; private set; }
     public IPlayerView View { get; private set; }
     public PlayerMovementStrategies Strategies { get; private set; }
+    public Rigidbody2D Rigidbody => rb;
     public Vector2 CurrentVelocity { get; private set; }
     public Vector2 LedgePosition => ledgeChecker.LedgePosition;
     public float FacingDirection { get; private set; }
@@ -46,8 +47,9 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
 
         ResetJump();
         ResetDash();
-        IsFacingRight = true;
-        FacingDirection = 1f;
+        ResetExtraJump();
+        FacingDirection = Mathf.Sign(transform.localScale.x);
+        IsFacingRight = FacingDirection == 1f;
     }
 
     public override void Conclude()
@@ -80,7 +82,7 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
 
     public void Flip(float direction)
     {
-        if (direction == 0f) return;
+        if (direction == 0f || direction == FacingDirection) return;
 
         bool shouldFaceRight = direction > 0f;
 

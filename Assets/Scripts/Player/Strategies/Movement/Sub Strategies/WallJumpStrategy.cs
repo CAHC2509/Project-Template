@@ -2,29 +2,83 @@ using UnityEngine;
 
 public class WallJumpStrategy : MovementStrategyBase
 {
+    private float defaultGravityScale;
     private float elapsedTime;
+    private bool allowMovement;
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.JUMP_ANIMATION;
+        animationName = Constants.PlayerAnimations.JUMP;
         base.Enter(player);
 
-        player.SetVelocity(Vector2.zero);
+        defaultGravityScale = player.Rigidbody.gravityScale;
         Vector2 force = new Vector2(player.Data.WallJumpForce.x * -player.FacingDirection, player.Data.WallJumpForce.y);
+
+        player.Rigidbody.gravityScale = player.Data.InAirGravityScale;
+        player.SetVelocity(Vector2.zero);
         player.AddForce(force, ForceMode2D.Impulse);
         player.Flip(-player.FacingDirection);
+
         elapsedTime = 0f;
+        allowMovement = false;
     }
+
     public override void Update()
     {
         base.Update();
 
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime >= player.Data.WallJumpDuration)
+        if (elapsedTime >= player.Data.WallJumpAirControlDelay && !allowMovement)
+            allowMovement = true;
+
+        if (player.CurrentVelocity.y <= Constants.Physics.MIN_FALL_VELOCITY)
+            player.SetStrategy(player.Strategies.Fall);
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (allowMovement && player.Input.HorizontalInput != 0f)
         {
-            player.SetStrategy(player.Strategies.Jump);
-            return;
+            player.SetVelocityX(player.Input.HorizontalInput * player.Data.AirSpeed);
+            player.Flip(player.Input.HorizontalInput);
         }
+    }
+
+    protected override void AddListeners()
+    {
+        base.AddListeners();
+
+        player.Input.OnDashlnputPressed += OnDashInputPressed;
+        player.Input.OnJumplnputPressed += OnJumpInputPressed;
+    }
+
+    protected override void RemoveListeners()
+    {
+        base.RemoveListeners();
+
+        player.Input.OnDashlnputPressed -= OnDashInputPressed;
+        player.Input.OnJumplnputPressed -= OnJumpInputPressed;
+    }
+
+    private void OnDashInputPressed()
+    {
+        if (player.CanDash)
+            player.SetStrategy(player.Strategies.Dash);
+    }
+
+    private void OnJumpInputPressed()
+    {
+        if (player.CanUseExtraJump)
+            player.SetStrategy(player.Strategies.ExtraJump);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.Rigidbody.gravityScale = defaultGravityScale;
     }
 }

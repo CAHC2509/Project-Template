@@ -4,8 +4,7 @@ public class IdleStrategy : GroundedStrategy
 {
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.IDLE_ANIMATION;
-
+        animationName = Constants.PlayerAnimations.IDLE;
         base.Enter(player);
     }
 
@@ -14,7 +13,17 @@ public class IdleStrategy : GroundedStrategy
         base.Update();
 
         if (player.Input.HorizontalInput != 0f)
+        {
+            (player.Strategies.Run as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.IDLE_TO_RUN);
             player.SetStrategy(player.Strategies.Run);
+        }
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        player.SetVelocityX(0f);
     }
 
     protected override void AddListeners()
@@ -35,12 +44,5 @@ public class IdleStrategy : GroundedStrategy
     {
         if (player.CanJump)
             player.SetStrategy(player.Strategies.Jump);
-    }
-
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        player.SetVelocityX(0f);
     }
 }

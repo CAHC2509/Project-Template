@@ -6,6 +6,7 @@ public interface IPlayerMovementController
     public IPlayerView View { get; }
     public PlayerDataEntity Data { get; }
     public PlayerMovementStrategies Strategies { get; }
+    public Rigidbody2D Rigidbody { get; }
     public Vector2 CurrentVelocity { get; }
     public Vector2 LedgePosition { get; }
     public float FacingDirection { get; }

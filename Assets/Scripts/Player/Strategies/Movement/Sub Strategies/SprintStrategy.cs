@@ -3,61 +3,82 @@ using UnityEngine;
 public class SprintStrategy : GroundedStrategy
 {
     private float accelerationTimer;
-    private int lastDirection;
-    private float idleBufferTimer;
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.SPRINT_ANIMATION;
+        animationName = Constants.PlayerAnimations.SPRINT;
         base.Enter(player);
 
         accelerationTimer = 1f;
-        lastDirection = Mathf.RoundToInt(Mathf.Sign(player.Input.HorizontalInput));
-        idleBufferTimer = 0f;
     }
 
     public override void Update()
     {
-        if (player.Input.HorizontalInput == 0f)
-            idleBufferTimer += Time.deltaTime;
-        else
-            idleBufferTimer = 0f;
-
-        if (idleBufferTimer >= player.Data.ChangeSprintDirectionTimer)
-        {
-            player.SetStrategy(player.Strategies.Idle);
-            return;
-        }
-
-        if (player.IsTouchingHardSurface)
-        {
-            player.SetStrategy(player.Strategies.StunFromSprint);
-            return;
-        }
-
-        if (!player.IsGrounded && player.Input.DashPressed)
-        {
-            player.SetStrategy(player.Strategies.FallFromLongJump);
-            return;
-        }
-
-        player.Flip(player.Input.HorizontalInput);
-
         base.Update();
+
+        HandleCollisions();
+        HandleMidAirTransition();
+        HandleDirectionChange();
+
+        if (!player.Input.DashPressed)
+        {
+            (player.Strategies.Run as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.DASH_TO_RUN);
+            player.SetStrategy(player.Strategies.Run);
+            return;
+        }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        ApplySprintMovement();
+    }
 
-        int currentDirection = Mathf.RoundToInt(Mathf.Sign(player.Input.HorizontalInput));
+    protected override void AddListeners()
+    {
+        base.AddListeners();
+        player.Input.OnJumplnputPressed += OnJumpInputPressed;
+    }
 
-        if (currentDirection != 0 && currentDirection != lastDirection)
+    protected override void RemoveListeners()
+    {
+        base.RemoveListeners();
+        player.Input.OnJumplnputPressed -= OnJumpInputPressed;
+    }
+
+    private void HandleCollisions()
+    {
+        if (player.IsTouchingHardSurface)
+            player.SetStrategy(player.Strategies.StunFromSprint);
+    }
+
+    private void HandleMidAirTransition()
+    {
+        if (!player.IsGrounded)
         {
-            accelerationTimer = 0f;
-            lastDirection = currentDirection;
+            float finalVelocity = player.Data.AirSpeed * player.Data.LongFallAirSpeedMultiplier * player.FacingDirection;
+            (player.Strategies.FallFromLongJump as FallFromLongJumpStrategy).SetEntryVelocityX(finalVelocity);
+            player.SetStrategy(player.Strategies.FallFromLongJump);
         }
+    }
 
+    private void HandleDirectionChange()
+    {
+        float input = player.Input.HorizontalInput;
+        if (input == 0f) return;
+
+        int inputDirection = Mathf.RoundToInt(Mathf.Sign(input));
+
+        if (inputDirection != player.FacingDirection)
+        {
+            player.View.SetAnimation(Constants.PlayerAnimations.SPRINTING_TURN);
+            player.Flip(input);
+            accelerationTimer = 0f;
+        }
+    }
+
+    private void ApplySprintMovement()
+    {
         if (accelerationTimer < 1f)
         {
             accelerationTimer += Time.fixedDeltaTime / player.Data.RunAccelerationTime;
@@ -65,31 +86,12 @@ public class SprintStrategy : GroundedStrategy
         }
 
         float curveValue = player.Data.SprintAccelerationCurve.Evaluate(accelerationTimer);
-        float velocityX = curveValue * player.Data.SprintSpeed * player.Input.HorizontalInput;
+        float velocityX = curveValue * player.Data.SprintSpeed * player.FacingDirection;
+
         player.SetVelocityX(velocityX);
     }
 
-    protected override void AddListeners()
-    {
-        base.AddListeners();
-        player.Input.OnDashlnputCanceled += OnDashInputCanceled;
-        player.Input.OnJumplnputPressed += OnJumplnputPressed;
-    }
-
-    protected override void RemoveListeners()
-    {
-        base.RemoveListeners();
-        player.Input.OnDashlnputCanceled -= OnDashInputCanceled;
-        player.Input.OnJumplnputPressed -= OnJumplnputPressed;
-    }
-
-    private void OnDashInputCanceled()
-    {
-        if (player.Input.HorizontalInput != 0f)
-            player.SetStrategy(player.Strategies.Run);
-    }
-
-    private void OnJumplnputPressed()
+    private void OnJumpInputPressed()
     {
         player.SetStrategy(player.Strategies.LongJump);
     }

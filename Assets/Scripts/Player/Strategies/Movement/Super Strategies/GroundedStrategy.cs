@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GroundedStrategy : MovementStrategyBase
+public abstract class GroundedStrategy : MovementStrategyBase
 {
     public override void Enter(PlayerMovementController player)
     {
@@ -15,7 +15,7 @@ public class GroundedStrategy : MovementStrategyBase
     {
         base.Update();
 
-        if (player.CurrentVelocity.y < Constants.Player.MIN_FALL_VELOCITY && !player.IsGrounded)
+        if (player.CurrentVelocity.y < Constants.Physics.MIN_FALL_VELOCITY && !player.IsGrounded)
         {
             player.SetStrategy(player.Strategies.Fall);
             return;
@@ -24,12 +24,23 @@ public class GroundedStrategy : MovementStrategyBase
 
     protected override void AddListeners()
     {
+        base.AddListeners();
+
         player.Input.OnDashlnputPressed += OnDashInputPressed;
     }
 
     protected override void RemoveListeners()
     {
+        base.RemoveListeners();
+
         player.Input.OnDashlnputPressed -= OnDashInputPressed;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        RemoveListeners();
     }
 
     protected virtual void OnDashInputPressed()

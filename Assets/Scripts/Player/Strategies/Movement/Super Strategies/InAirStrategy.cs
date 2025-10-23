@@ -1,14 +1,22 @@
 using UnityEngine;
 
-public class InAirStrategy : MovementStrategyBase
+public abstract class InAirStrategy : MovementStrategyBase
 {
-    protected float airSpeedToUse;
+    protected float airSpeed;
+    protected bool airMovementEnabled = true;
+
+    public override void Enter(PlayerMovementController player)
+    {
+        base.Enter(player);
+
+        airSpeed = player.Data.AirSpeed;
+    }
 
     public override void Update()
     {
         base.Update();
 
-        player.Flip(player.Input.HorizontalInput);
+        HandleLedgeClimb();
     }
 
     public override void FixedUpdate()
@@ -18,9 +26,31 @@ public class InAirStrategy : MovementStrategyBase
         MoveInAir();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        airMovementEnabled = true;
+        RemoveListeners();
+    }
+
     protected void MoveInAir()
     {
-        float targetSpeed = player.Input.HorizontalInput * airSpeedToUse;
-        player.SetVelocityX(Mathf.Lerp(player.CurrentVelocity.x, targetSpeed, player.Data.AirAccelerationSpeed));
+        if (!airMovementEnabled) return;
+
+        float input = player.Input.HorizontalInput;
+        float targetSpeed = input * airSpeed;
+        player.SetVelocityX(targetSpeed);
+
+        if (input != 0f && input != player.FacingDirection)
+            player.Flip(input);
+    }
+
+    protected void HandleLedgeClimb()
+    {
+        if (!player.CanGrabLedge) return;
+        if (player.Input.HorizontalInput == 0f && !player.Input.DashPressed) return;
+
+        player.SetStrategy(player.Strategies.LedgeClimb);
     }
 }

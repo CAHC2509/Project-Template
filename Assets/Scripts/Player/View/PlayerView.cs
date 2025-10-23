@@ -10,8 +10,9 @@ public class PlayerView : ViewBase, IPlayerView
         animator = GetComponent<Animator>();
     }
 
-    public void UpdateAnimation(string animationName)
+    public void SetAnimation(string animationName)
     {
+        animator.StopPlayback();
         animator.Play(animationName);
     }
 }

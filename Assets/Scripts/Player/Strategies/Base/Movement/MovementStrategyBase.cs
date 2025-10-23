@@ -4,16 +4,23 @@ public abstract class MovementStrategyBase : IMovementStrategy
 {
     protected PlayerMovementController player;
     protected string animationName = string.Empty;
+    protected string entryAnimationName = string.Empty;
 
     public virtual void Enter(PlayerMovementController player)
     {
         this.player = player;
-        player.View.UpdateAnimation(animationName);
+        
+        if (entryAnimationName != string.Empty)
+            player.View.SetAnimation(entryAnimationName);
+        else
+            player.View.SetAnimation(animationName);
+
         AddListeners();
     }
 
     public virtual void Exit()
     {
+        entryAnimationName = string.Empty;
         RemoveListeners();
     }
 
@@ -22,4 +29,9 @@ public abstract class MovementStrategyBase : IMovementStrategy
 
     protected virtual void AddListeners() { }
     protected virtual void RemoveListeners() { }
+
+    public void SetEntryAnimation(string entryAnimationName)
+    {
+        this.entryAnimationName = entryAnimationName;
+    }
 }

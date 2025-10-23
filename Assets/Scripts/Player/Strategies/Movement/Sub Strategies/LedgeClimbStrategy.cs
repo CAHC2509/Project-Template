@@ -9,7 +9,7 @@ public class LedgeClimbStrategy : MovementStrategyBase
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.LEDGE_CLIMB_ANIMATION;
+        animationName = Constants.PlayerAnimations.LEDGE_CLIMB;
         base.Enter(player);
 
         if (!player.CanGrabLedge)
@@ -26,7 +26,7 @@ public class LedgeClimbStrategy : MovementStrategyBase
         targetPositionVertical = new Vector2(startPosition.x, targetPosition.y);
 
         player.SetVelocity(Vector2.zero);
-        player.View.UpdateAnimation(animationName);
+        player.View.SetAnimation(animationName);
         isClimbing = true;
         verticalPhase = true;
     }
@@ -61,6 +61,17 @@ public class LedgeClimbStrategy : MovementStrategyBase
     private void EndClimb()
     {
         isClimbing = false;
-        player.SetStrategy(player.Strategies.Idle);
+        player.transform.position = targetPosition;
+
+        if (player.Input.HorizontalInput != 0f)
+        {
+            (player.Strategies.Run as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.MANTLE_TO_RUN);
+            player.SetStrategy(player.Strategies.Run);
+        }
+        else
+        {
+            (player.Strategies.Idle as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.MANTLE_TO_IDLE);
+            player.SetStrategy(player.Strategies.Idle);
+        }
     }
 }

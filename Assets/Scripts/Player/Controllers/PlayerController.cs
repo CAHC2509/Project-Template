@@ -11,6 +11,16 @@ public class PlayerController : ControllerBase
         movementController = GetComponent<PlayerMovementController>();
     }
 
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Conclude();
+    }
+
     public override void Initialize()
     {
         base.Initialize();

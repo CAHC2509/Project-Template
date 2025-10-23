@@ -9,12 +9,15 @@ public class PlayerMovementStrategies
     public IMovementStrategy LongJump { get; private set; }
     public IMovementStrategy FallFromLongJump { get; private set; }
     public IMovementStrategy ExtraJump { get; private set; }
+    public IMovementStrategy WallGrab { get; private set; }
     public IMovementStrategy WallSlide { get; private set; }
+    public IMovementStrategy WallRun { get; private set; }
     public IMovementStrategy WallJump { get; private set; }
     public IMovementStrategy Dash { get; private set; }
     public IMovementStrategy Sprint { get; private set; }
     public IMovementStrategy StunFromSprint { get; private set; }
     public IMovementStrategy LedgeClimb { get; private set; }
+    public IMovementStrategy Umbrella { get; private set; }
 
     public PlayerMovementStrategies()
     {
@@ -25,11 +28,14 @@ public class PlayerMovementStrategies
         LongJump = new LongJumpStrategy();
         FallFromLongJump = new FallFromLongJumpStrategy();
         ExtraJump = new ExtraJumpStrategy();
+        WallGrab = new WallGrabStrategy();
         WallSlide = new WallSlideStrategy();
+        WallRun = new WallRunStrategy();
         WallJump = new WallJumpStrategy();
         Dash = new DashStrategy();
         Sprint = new SprintStrategy();
         StunFromSprint = new StunFromSprintStrategy();
         LedgeClimb = new LedgeClimbStrategy();
+        Umbrella = new UmbrellaStrategy();
     }
 }

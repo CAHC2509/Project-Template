@@ -1,28 +1,39 @@
 using UnityEngine;
 
-public class ExtraJumpStrategy : MovementStrategyBase
+public class ExtraJumpStrategy : InAirStrategy
 {
-    private float elapsedTime;
+    private float defaultGravityScale;
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.LEDGE_CLIMB_ANIMATION;
+        animationName = Constants.PlayerAnimations.EXTRA_JUMP;
         base.Enter(player);
 
-        player.SetVelocity(Vector2.zero);
-        Vector2 force = new Vector2(player.Data.ExtraJumpForce.x * player.Input.HorizontalInput, player.Data.ExtraJumpForce.y);
+        defaultGravityScale = player.Rigidbody.gravityScale;
+        player.Rigidbody.gravityScale = player.Data.InAirGravityScale;
+
+        player.SetVelocityY(0f);
+        Vector2 force = new Vector2(player.CurrentVelocity.x, player.Data.ExtraJumpForce);
         player.AddForce(force, ForceMode2D.Impulse);
         player.ConsumeExtraJump();
-        elapsedTime = 0f;
     }
 
     public override void Update()
     {
         base.Update();
 
-        elapsedTime += Time.deltaTime;
-
-        if (elapsedTime >= player.Data.ExtraJumpDuration)
+        if (player.CurrentVelocity.y <= Constants.Physics.MIN_FALL_VELOCITY)
+        {
+            (player.Strategies.Fall as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.ROLLING_FALL);
             player.SetStrategy(player.Strategies.Fall);
+            return;
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.Rigidbody.gravityScale = defaultGravityScale;
     }
 }

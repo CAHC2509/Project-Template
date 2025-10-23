@@ -3,21 +3,30 @@ using UnityEngine;
 public class RunStrategy : GroundedStrategy
 {
     private float accelerationTimer;
-    private float direction;
 
     public override void Enter(PlayerMovementController player)
     {
-        animationName = Constants.Player.RUN_ANIMATION;
+        animationName = Constants.PlayerAnimations.RUN;
         base.Enter(player);
+
         accelerationTimer = 0f;
-        direction = Mathf.Sign(player.Input.HorizontalInput);
     }
 
     public override void Update()
     {
         base.Update();
 
-        player.Flip(player.Input.HorizontalInput);
+        if (player.Input.HorizontalInput == 0f)
+        {
+            (player.Strategies.Idle as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.RUN_TO_IDLE);
+            player.SetStrategy(player.Strategies.Idle);
+        }
+
+        if (player.Input.HorizontalInput != 0f && player.Input.HorizontalInput != player.FacingDirection)
+        {
+            player.View.SetAnimation(Constants.PlayerAnimations.RUNNING_TURN);
+            player.Flip(player.Input.HorizontalInput);
+        }
     }
 
     public override void FixedUpdate()
@@ -26,7 +35,6 @@ public class RunStrategy : GroundedStrategy
 
         if (player.Input.HorizontalInput != 0)
         {
-            direction = Mathf.Sign(player.Input.HorizontalInput);
             accelerationTimer += Time.fixedDeltaTime / player.Data.RunAccelerationTime;
             accelerationTimer = Mathf.Clamp01(accelerationTimer);
         }
@@ -43,17 +51,16 @@ public class RunStrategy : GroundedStrategy
     protected override void AddListeners()
     {
         base.AddListeners();
-        player.Input.OnHorizontalInputCanceled += OnHorizontalInputCanceled;
+
         player.Input.OnJumplnputPressed += OnJumplnputPressed;
     }
 
     protected override void RemoveListeners()
     {
         base.RemoveListeners();
-        player.Input.OnHorizontalInputCanceled -= OnHorizontalInputCanceled;
+
         player.Input.OnJumplnputPressed -= OnJumplnputPressed;
     }
 
-    private void OnHorizontalInputCanceled() => player.SetStrategy(player.Strategies.Idle);
     private void OnJumplnputPressed() => player.SetStrategy(player.Strategies.Jump);
 }
