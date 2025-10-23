@@ -33606,19 +33606,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4684970348567999849, guid: fcc33d93b25fda44d86f658a6ca70a64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.95
+      value: -0.00000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 4684970348567999849, guid: fcc33d93b25fda44d86f658a6ca70a64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.29
+      value: -3.5900002
       objectReference: {fileID: 0}
     - target: {fileID: 5917642500389650631, guid: fcc33d93b25fda44d86f658a6ca70a64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.95
+      value: -0.00000023841858
       objectReference: {fileID: 0}
     - target: {fileID: 5917642500389650631, guid: fcc33d93b25fda44d86f658a6ca70a64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.29
+      value: -3.5900002
       objectReference: {fileID: 0}
     - target: {fileID: 6817982119123766864, guid: fcc33d93b25fda44d86f658a6ca70a64, type: 3}
       propertyPath: orthographic size
@@ -34288,7 +34288,7 @@ MonoBehaviour:
     CoyoteTime: 0.15
     JumpBuffer: 0.15
     HasExtraJump: 1
-    ExtraJumpForce: 15
+    ExtraJumpForce: 12.5
     AirSpeed: 5
     DefaultGravityScale: 1
     InAirGravityScale: 3
@@ -34301,16 +34301,16 @@ MonoBehaviour:
     WallGrabDuration: 0.25
     WallReleaseBuffer: 0.15
     WallSlideMaxSpeed: 8.9
-    WallRunSpeed: 8
-    WallRunDuration: 0.45
+    WallRunSpeed: 8.5
+    WallRunDuration: 0.325
     WallJumpForce: {x: 10, y: 12.5}
     WallJumpAirControlDelay: 0.2
-    DashSpeed: 14
+    DashSpeed: 15
     DashDuration: 0.25
     UmbrellaMaxFallSpeed: 2.5
     UmbrellaCollissionForce: 2
     UmbrellaCollisionStunDuration: 0.25
-    LedgeClimbDuration: 0.2
+    LedgeClimbSpeed: 10
     LedgeClimbOffset: {x: 0.5, y: 1}
 --- !u!114 &3401051765663360752
 MonoBehaviour:
@@ -34410,8 +34410,8 @@ Transform:
   m_GameObject: {fileID: 6734219944920314344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.95, y: 10.29, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -3.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6045211677865551546}
@@ -34564,15 +34564,15 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 300
+  m_SortingLayerID: 259657779
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 591ad4b6402034c4c900ceaccaaee68b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.48, y: 2.46}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

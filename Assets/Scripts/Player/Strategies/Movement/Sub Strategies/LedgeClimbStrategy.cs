@@ -58,6 +58,26 @@ public class LedgeClimbStrategy : MovementStrategyBase
         }
     }
 
+    protected override void AddListeners()
+    {
+        base.AddListeners();
+
+        player.Input.OnJumplnputPressed += OnJumpInputPressed;
+    }
+
+    protected override void RemoveListeners()
+    {
+        base.RemoveListeners();
+
+        player.Input.OnJumplnputPressed -= OnJumpInputPressed;
+    }
+
+    private void OnJumpInputPressed()
+    {
+        (player.Strategies.Jump as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.MANTLE_TO_JUMP);
+        player.SetStrategy(player.Strategies.Jump);
+    }
+
     private void EndClimb()
     {
         isClimbing = false;

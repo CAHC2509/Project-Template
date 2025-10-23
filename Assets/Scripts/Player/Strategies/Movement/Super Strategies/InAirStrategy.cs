@@ -49,7 +49,8 @@ public abstract class InAirStrategy : MovementStrategyBase
     protected void HandleLedgeClimb()
     {
         if (!player.CanGrabLedge) return;
-        if (player.Input.HorizontalInput == 0f && !player.Input.DashPressed) return;
+        if (player.Input.HorizontalInput == 0f) return;
+        if (player.Input.JumpPressed && !player.Input.DashPressed) return;
 
         player.SetStrategy(player.Strategies.LedgeClimb);
     }

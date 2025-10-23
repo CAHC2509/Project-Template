@@ -33,6 +33,7 @@ public static class Constants
         public const string DASH_TO_RUN = "Dash To Run";
         public const string MANTLE_TO_IDLE = "Mantle To Idle";
         public const string MANTLE_TO_RUN = "Mantle To Run";
+        public const string MANTLE_TO_JUMP = "Mantle To Jump";
         public const string RUNNING_TURN = "Running Turn";
         public const string SPRINTING_TURN = "Sprinting Turn";
         public const string UMBRELLA_INFLATE = "Umbrella Inflate";
