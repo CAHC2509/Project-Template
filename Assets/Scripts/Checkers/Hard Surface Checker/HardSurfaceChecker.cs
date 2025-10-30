@@ -6,13 +6,13 @@ public class HardSurfaceChecker : MonoBehaviour, IHardSurfaceChecker
     [SerializeField] private Transform hardSurfaceCheckOrigin;
     [SerializeField] private float checkDistance = 0.55f;
 
-    public bool IsTouchingHardSurface { get; private set; }
+    public bool IsTouchingHardSurface => CheckHardSurface();
 
-    private void Update()
+    private bool CheckHardSurface()
     {
         Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
         RaycastHit2D hit = Physics2D.Raycast(hardSurfaceCheckOrigin.position, direction, checkDistance, hardSurfaceLayer);
-        IsTouchingHardSurface = hit.collider != null;
+        return hit.collider != null;
     }
 
     private void OnDrawGizmosSelected()

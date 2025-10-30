@@ -6,13 +6,13 @@ public class WallChecker : MonoBehaviour, IWallChecker
     [SerializeField] private Transform wallCheckOrigin;
     [SerializeField] private float checkDistance = 0.2f;
 
-    public bool IsTouchingWall { get; private set; }
+    public bool IsTouchingWall => CheckWalls();
 
-    private void Update()
+    private bool CheckWalls()
     {
         Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
         RaycastHit2D hit = Physics2D.Raycast(wallCheckOrigin.position, direction, checkDistance, wallsLayer);
-        IsTouchingWall = hit.collider != null;
+        return hit.collider != null;
     }
 
     private void OnDrawGizmosSelected()

@@ -9,21 +9,11 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
     [SerializeField] private float forwardCheckDistance = 0.55f;
     [SerializeField] private float downwardCheckDistance = 0.25f;
 
-    public bool CanGrabLedge { get; private set; }
+    public bool CanGrabLedge => CheckForLedge();
     public Vector2 LedgePosition { get; private set; }
 
-    private void Update()
+    private bool CheckForLedge()
     {
-        CanGrabLedge = CheckForLedge(out Vector2 ledgePos);
-
-        if (CanGrabLedge)
-            LedgePosition = ledgePos;
-    }
-
-    private bool CheckForLedge(out Vector2 ledgePos)
-    {
-        ledgePos = Vector2.zero;
-
         if (ledgeCheckOrigin == null) return false;
 
         float direction = Mathf.Sign(transform.localScale.x);
@@ -38,7 +28,7 @@ public class LedgeChecker : MonoBehaviour, ILedgeChecker
         RaycastHit2D downHit = Physics2D.Raycast(endPoint, Vector2.down, downwardCheckDistance, groundLayer);
         if (!downHit) return false;
 
-        ledgePos = downHit.point;
+        LedgePosition = downHit.point;
         return true;
     }
 
