@@ -8,15 +8,10 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
     [SerializeField] private InputActionAsset inputActions;
 
     [Space, Header("Movement input")]
-    [SerializeField] private InputActionReference upInput;
-    [SerializeField] private InputActionReference downInput;
-    [SerializeField] private InputActionReference leftInput;
-    [SerializeField] private InputActionReference rightInput;
+    [SerializeField] private InputActionReference horizontalInput;
+    [SerializeField] private InputActionReference verticalInput;
     [SerializeField] private InputActionReference jumpInput;
     [SerializeField] private InputActionReference dashInput;
-
-    private InputAction horizontalInput;
-    private InputAction verticalInput;
 
     public event Action<float> OnHorizontalInput;
     public event Action<float> OnVerticalnput;
@@ -34,10 +29,7 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
 
     public override void Initialize()
     {
-        UpdateMovementBindings();
         inputActions.Enable();
-        horizontalInput.Enable();
-        verticalInput.Enable();
 
         base.Initialize();
     }
@@ -47,47 +39,42 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
         base.Conclude();
 
         inputActions.Disable();
-        horizontalInput.Disable();
-        verticalInput.Disable();
     }
 
     protected override void AddListeners()
     {
-        horizontalInput.performed += HandleHorizontalInput;
-        horizontalInput.canceled += HandleHorizontalInput;
+        horizontalInput.action.performed += HandleHorizontalInput;
+        horizontalInput.action.canceled += HandleHorizontalInput;
 
-        verticalInput.performed += HandleVerticalInput;
-        verticalInput.canceled += HandleVerticalInput;
+        verticalInput.action.performed += HandleVerticalInput;
+        verticalInput.action.canceled += HandleVerticalInput;
 
         jumpInput.action.performed += HandleJumpInput;
         jumpInput.action.canceled += HandleJumpInput;
 
         dashInput.action.performed += HandleDashInput;
         dashInput.action.canceled += HandleDashInput;
-
-        IInputSettingsController.OnInputsRebinded += UpdateMovementBindings;
     }
 
     protected override void RemoveListeners()
     {
-        horizontalInput.performed -= HandleHorizontalInput;
-        horizontalInput.canceled -= HandleHorizontalInput;
+        horizontalInput.action.performed -= HandleHorizontalInput;
+        horizontalInput.action.canceled -= HandleHorizontalInput;
 
-        verticalInput.performed -= HandleVerticalInput;
-        verticalInput.canceled -= HandleVerticalInput;
+        verticalInput.action.performed -= HandleVerticalInput;
+        verticalInput.action.canceled -= HandleVerticalInput;
 
         jumpInput.action.performed -= HandleJumpInput;
         jumpInput.action.canceled -= HandleJumpInput;
 
         dashInput.action.performed -= HandleDashInput;
         dashInput.action.canceled -= HandleDashInput;
-
-        IInputSettingsController.OnInputsRebinded -= UpdateMovementBindings;
     }
 
     private void HandleHorizontalInput(InputAction.CallbackContext context)
     {
         HorizontalInput = context.action.ReadValue<float>();
+        HorizontalInput = SnapAxisInput(HorizontalInput);
 
         if (HorizontalInput != 0f)
             OnHorizontalInput?.Invoke(HorizontalInput);
@@ -98,6 +85,7 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
     private void HandleVerticalInput(InputAction.CallbackContext context)
     {
         VerticalInput = context.action.ReadValue<float>();
+        VerticalInput = SnapAxisInput(VerticalInput);
 
         if (VerticalInput != 0f)
             OnVerticalnput?.Invoke(VerticalInput);
@@ -129,16 +117,11 @@ public class PlayerInputController : ControllerBase, IPlayerInputController
         DashPressed = inputValue != 0f;
     }
 
-    public void UpdateMovementBindings()
+    private float SnapAxisInput(float input)
     {
-        horizontalInput = new InputAction("Horizontal", InputActionType.Value, expectedControlType: "Axis");
-        horizontalInput.AddCompositeBinding("1DAxis")
-            .With("Negative", leftInput.action.bindings[0].effectivePath)
-            .With("Positive", rightInput.action.bindings[0].effectivePath);
+        if (input == 0f) return 0f;
 
-        verticalInput = new InputAction("Vertical", InputActionType.Value, expectedControlType: "Axis");
-        verticalInput.AddCompositeBinding("1DAxis")
-            .With("Negative", downInput.action.bindings[0].effectivePath)
-            .With("Positive", upInput.action.bindings[0].effectivePath);
+        if (input > 0) return 1f;
+        else return -1f;
     }
 }

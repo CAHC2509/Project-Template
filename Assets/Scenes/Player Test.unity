@@ -34326,10 +34326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
   inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  upInput: {fileID: 3954144229068466679, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  downInput: {fileID: 8109268849577451957, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  leftInput: {fileID: 8922457405056986130, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  rightInput: {fileID: -5085177069363790400, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  horizontalInput: {fileID: -5085177069363790400, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  verticalInput: {fileID: 981685638622716465, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpInput: {fileID: 1550698672747815455, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   dashInput: {fileID: -2226302591882892252, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &3515153398919057296

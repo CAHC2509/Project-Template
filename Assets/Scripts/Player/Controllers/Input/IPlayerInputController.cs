@@ -15,6 +15,4 @@ public interface IPlayerInputController
     public float VerticalInput { get; }
     public bool JumpPressed { get; }
     public bool DashPressed { get; }
-
-    public void UpdateMovementBindings();
 }

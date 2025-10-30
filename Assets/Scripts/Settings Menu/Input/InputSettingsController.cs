@@ -18,8 +18,6 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
     private IInputSettingsView view;
     private InputSettingsEntity inputSettings;
 
-    public static event Action OnInputsRebinded;
-
     private void Awake()
     {
         view = GetComponentInChildren<IInputSettingsView>();
@@ -107,8 +105,6 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
                     inputSettings.CurrentRebinder.UpdateText();
                     SaveSettings();
                     inputSettings.ClearReferences();
-
-                    OnInputsRebinded?.Invoke();
                 }
 
                 actionMap.Enable();
@@ -156,8 +152,6 @@ public class InputSettingsController : ControllerBase, IInputSettingsController
         saveSystem.Delete(Constants.Settings.INPUT_ACTIONS_KEY);
         LoadSettings();
         InitializeInputRebinders();
-        
-        OnInputsRebinded?.Invoke();
     }
 
     public void LoadSettings()
