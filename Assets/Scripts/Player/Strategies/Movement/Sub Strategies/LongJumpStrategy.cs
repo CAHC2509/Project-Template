@@ -7,7 +7,7 @@ public class LongJumpStrategy : JumpStrategy
         base.Enter(player);
         airMovementEnabled = false;
 
-        airSpeed *= player.Data.LongJumpAirSpeedMultiplier;
+        airSpeed *= movementData.LongJumpAirSpeedMultiplier;
     }
 
     protected override void AddListeners()
@@ -31,7 +31,7 @@ public class LongJumpStrategy : JumpStrategy
 
     protected override void TransitionToFall()
     {
-        float fallMultiplier = shortJump ? player.Data.ShortFallMultiplier : player.Data.FallMultiplier;
+        float fallMultiplier = shortJump ? movementData.ShortFallMultiplier : movementData.FallMultiplier;
         (player.Strategies.FallFromLongJump as FallStrategy).SetEntryVelocityX(player.CurrentVelocity.x);
         player.SetStrategy(player.Strategies.FallFromLongJump);
         (player.Strategies.FallFromLongJump as FallStrategy).SetFallMultiplier(fallMultiplier);

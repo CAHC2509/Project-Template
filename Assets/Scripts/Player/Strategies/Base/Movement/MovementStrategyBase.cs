@@ -3,12 +3,14 @@ using UnityEngine;
 public abstract class MovementStrategyBase : IMovementStrategy
 {
     protected PlayerMovementController player;
+    protected PlayerMovementData movementData;
     protected string animationName = string.Empty;
     protected string entryAnimationName = string.Empty;
 
     public virtual void Enter(PlayerMovementController player)
     {
         this.player = player;
+        movementData = player.MovementData;
         
         if (entryAnimationName != string.Empty)
             player.View.SetAnimation(entryAnimationName);

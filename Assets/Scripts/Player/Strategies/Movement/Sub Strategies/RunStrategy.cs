@@ -35,7 +35,7 @@ public class RunStrategy : GroundedStrategy
 
         if (player.Input.HorizontalInput != 0)
         {
-            accelerationTimer += Time.fixedDeltaTime / player.Data.RunAccelerationTime;
+            accelerationTimer += Time.fixedDeltaTime / movementData.RunAccelerationTime;
             accelerationTimer = Mathf.Clamp01(accelerationTimer);
         }
         else
@@ -43,8 +43,8 @@ public class RunStrategy : GroundedStrategy
             accelerationTimer = 0f;
         }
 
-        float curveValue = player.Data.RunAccelerationCurve.Evaluate(accelerationTimer);
-        float velocityX = curveValue * player.Data.RunMaxSpeed * player.Input.HorizontalInput;
+        float curveValue = movementData.RunAccelerationCurve.Evaluate(accelerationTimer);
+        float velocityX = curveValue * movementData.RunMaxSpeed * player.Input.HorizontalInput;
         player.SetVelocityX(velocityX);
     }
 

@@ -10,10 +10,10 @@ public class ExtraJumpStrategy : InAirStrategy
         base.Enter(player);
 
         defaultGravityScale = player.Rigidbody.gravityScale;
-        player.Rigidbody.gravityScale = player.Data.InAirGravityScale;
+        player.Rigidbody.gravityScale = movementData.InAirGravityScale;
 
         player.SetVelocityY(0f);
-        Vector2 force = new Vector2(player.CurrentVelocity.x, player.Data.ExtraJumpForce);
+        Vector2 force = new Vector2(player.CurrentVelocity.x, movementData.ExtraJumpForce);
         player.AddForce(force, ForceMode2D.Impulse);
         player.ConsumeExtraJump();
     }

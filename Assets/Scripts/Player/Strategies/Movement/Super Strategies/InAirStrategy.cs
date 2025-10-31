@@ -9,7 +9,7 @@ public abstract class InAirStrategy : MovementStrategyBase
     {
         base.Enter(player);
 
-        airSpeed = player.Data.AirSpeed;
+        airSpeed = movementData.AirSpeed;
     }
 
     public override void Update()

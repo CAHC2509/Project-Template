@@ -6,20 +6,7 @@ public class FallFromLongJumpStrategy : FallStrategy
     {
         base.Enter(player);
 
-        airSpeed *= player.Data.LongFallAirSpeedMultiplier;
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (player.IsGrounded)
-        {
-            if (player.Input.DashPressed)
-                player.SetStrategy(player.Strategies.Sprint);
-            else
-                player.SetStrategy(player.Strategies.Idle);
-        }
+        airSpeed *= movementData.LongFallAirSpeedMultiplier;
     }
 
     protected override void AddListeners()
@@ -39,5 +26,18 @@ public class FallFromLongJumpStrategy : FallStrategy
     private void OnDashInputCanceled()
     {
         player.SetStrategy(player.Strategies.Fall);
+    }
+
+    protected override void HandleGroundTransitions()
+    {
+        if (!player.IsGrounded) return;
+
+        if (player.Input.DashPressed)
+        {
+            player.SetStrategy(player.Strategies.Sprint);
+            return;
+        }
+
+        base.HandleGroundTransitions();
     }
 }

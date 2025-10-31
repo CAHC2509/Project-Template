@@ -20,7 +20,7 @@ public class WallRunStrategy : WallContactStrategy
 
         currentDuration += Time.deltaTime;
 
-        if (currentDuration >= player.Data.WallRunDuration)
+        if (currentDuration >= movementData.WallRunDuration)
             player.SetStrategy(player.Strategies.WallGrab);
     }
 
@@ -28,6 +28,6 @@ public class WallRunStrategy : WallContactStrategy
     {
         base.FixedUpdate();
 
-        player.SetVelocityY(player.Data.WallRunSpeed);
+        player.SetVelocityY(movementData.WallRunSpeed);
     }
 }

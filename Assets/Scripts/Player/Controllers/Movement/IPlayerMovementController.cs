@@ -4,10 +4,12 @@ public interface IPlayerMovementController
 {
     public IPlayerInputController Input { get; }
     public IPlayerView View { get; }
-    public PlayerDataEntity Data { get; }
+    public PlayerMovementData MovementData { get; }
     public PlayerMovementStrategies Strategies { get; }
     public Rigidbody2D Rigidbody { get; }
     public Vector2 CurrentVelocity { get; }
+    public Vector2 GroundPosition { get; }
+    public Vector2 WallPosition { get; }
     public Vector2 LedgePosition { get; }
     public float FacingDirection { get; }
     public bool CanJump { get; }

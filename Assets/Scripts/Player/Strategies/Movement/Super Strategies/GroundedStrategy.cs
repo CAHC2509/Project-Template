@@ -6,7 +6,6 @@ public abstract class GroundedStrategy : MovementStrategyBase
     {
         base.Enter(player);
 
-
         player.SetVelocityY(0f);
         player.ResetJump();
         player.ResetExtraJump();

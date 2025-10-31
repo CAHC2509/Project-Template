@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class PlayerMovementController : PlayerComponentBase, IPlayerMovementController
 {
-    [field: SerializeField] public PlayerDataEntity Data { get; private set; }
+    [field: SerializeField] public PlayerMovementData MovementData { get; private set; }
 
     public IPlayerInputController Input { get; private set; }
     public IPlayerView View { get; private set; }
     public PlayerMovementStrategies Strategies { get; private set; }
+    public PlayerCollissionAdjuster CollissionAdjuster => collissionAdjuster;
     public Rigidbody2D Rigidbody => rb;
     public Vector2 CurrentVelocity { get; private set; }
+    public Vector2 GroundPosition => groundChecker.GroundPosition;
+    public Vector2 WallPosition => wallChecker.WallPosition;
     public Vector2 LedgePosition => ledgeChecker.LedgePosition;
     public float FacingDirection { get; private set; }
     public bool CanDash { get; private set; }
@@ -25,10 +28,13 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     private ILedgeChecker ledgeChecker;
     private IHardSurfaceChecker hardSurfaceChecker;
     private IMovementStrategy currentStrategy;
+    private PlayerCollissionAdjuster collissionAdjuster;
     private Rigidbody2D rb;
+
 
     private void Awake()
     {
+        collissionAdjuster = GetComponent<PlayerCollissionAdjuster>();
         rb = GetComponent<Rigidbody2D>();
         groundChecker = GetComponent<IGroundChecker>();
         wallChecker = GetComponent<IWallChecker>();
@@ -42,7 +48,7 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     {
         Strategies = new PlayerMovementStrategies();
 
-        SetStrategy(Strategies.Idle);
+        SetStrategy(Strategies.Fall);
         currentStrategy.Enter(this);
 
         ResetJump();
@@ -119,6 +125,6 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     public void ConsumeExtraJump() => CanUseExtraJump = false;
     public void ConsumeDash() => CanDash = false;
     public void ResetJump() => CanJump = true;
-    public void ResetExtraJump() => CanUseExtraJump = Data.HasExtraJump;
+    public void ResetExtraJump() => CanUseExtraJump = MovementData.HasExtraJump;
     public void ResetDash() => CanDash = true;
 }

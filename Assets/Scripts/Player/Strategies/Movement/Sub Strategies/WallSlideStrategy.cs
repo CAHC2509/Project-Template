@@ -16,7 +16,7 @@ public class WallSlideStrategy : WallContactStrategy
 
         player.SetVelocityX(0f);
         
-        if (player.CurrentVelocity.y <= -player.Data.WallSlideMaxSpeed)
-            player.SetVelocityY(-player.Data.WallSlideMaxSpeed);
+        if (player.CurrentVelocity.y <= -movementData.WallSlideMaxSpeed)
+            player.SetVelocityY(-movementData.WallSlideMaxSpeed);
     }
 }

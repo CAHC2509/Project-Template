@@ -7,6 +7,7 @@ public class DashStrategy : MovementStrategyBase
     public override void Enter(PlayerMovementController player)
     {
         animationName = player.IsGrounded ? Constants.PlayerAnimations.DASH : Constants.PlayerAnimations.AIR_DASH;
+        Debug.Log(player.IsGrounded);
         base.Enter(player);
 
         dashTimer = 0f;
@@ -18,13 +19,13 @@ public class DashStrategy : MovementStrategyBase
         base.Update();
         dashTimer += Time.deltaTime;
 
-        if (player.IsTouchingWall && dashTimer >= player.Data.MinDashDuration)
+        if (player.IsTouchingWall && dashTimer >= movementData.MinDashDuration)
         {
             player.SetStrategy(player.Strategies.WallGrab);
             return;
         }
 
-        if (dashTimer > player.Data.DashDuration)
+        if (dashTimer > movementData.DashDuration)
         {
             if (player.Input.DashPressed)
                 HandleDashContinuation();
@@ -37,8 +38,8 @@ public class DashStrategy : MovementStrategyBase
     {
         base.FixedUpdate();
 
-        if (dashTimer <= player.Data.DashDuration)
-            player.SetVelocity(new Vector2(player.Data.DashSpeed * player.FacingDirection, 0f));
+        if (dashTimer <= movementData.DashDuration)
+            player.SetVelocity(new Vector2(movementData.DashSpeed * player.FacingDirection, 0f));
     }
 
     private void HandleDashContinuation()
@@ -57,7 +58,7 @@ public class DashStrategy : MovementStrategyBase
         }
         else
         {
-            float finalVelocity = player.Data.AirSpeed * player.Data.LongFallAirSpeedMultiplier * player.FacingDirection;
+            float finalVelocity = movementData.AirSpeed * movementData.LongFallAirSpeedMultiplier * player.FacingDirection;
             (player.Strategies.FallFromLongJump as FallFromLongJumpStrategy).SetEntryVelocityX(finalVelocity);
             (player.Strategies.FallFromLongJump as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.ROLLING_FALL);
             player.SetStrategy(player.Strategies.FallFromLongJump);
@@ -73,7 +74,7 @@ public class DashStrategy : MovementStrategyBase
         }
         else
         {
-            float finalVelocity = player.Data.AirSpeed * player.Data.LongFallAirSpeedMultiplier * player.FacingDirection;
+            float finalVelocity = movementData.AirSpeed * movementData.LongFallAirSpeedMultiplier * player.FacingDirection;
             (player.Strategies.Fall as FallStrategy).SetEntryVelocityX(finalVelocity);
             (player.Strategies.Fall as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.ROLLING_FALL);
             player.SetStrategy(player.Strategies.Fall);

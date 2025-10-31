@@ -23,7 +23,7 @@ public class WallGrabStrategy : WallContactStrategy
 
         currentDuration += Time.deltaTime;
 
-        if (currentDuration >= player.Data.WallGrabDuration)
+        if (currentDuration >= movementData.WallGrabDuration)
         {
             player.SetStrategy(player.Strategies.WallSlide);
             return;

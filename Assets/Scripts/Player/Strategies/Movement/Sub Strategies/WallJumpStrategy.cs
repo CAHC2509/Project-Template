@@ -12,9 +12,9 @@ public class WallJumpStrategy : MovementStrategyBase
         base.Enter(player);
 
         defaultGravityScale = player.Rigidbody.gravityScale;
-        Vector2 force = new Vector2(player.Data.WallJumpForce.x * -player.FacingDirection, player.Data.WallJumpForce.y);
+        Vector2 force = new Vector2(movementData.WallJumpForce.x * -player.FacingDirection, movementData.WallJumpForce.y);
 
-        player.Rigidbody.gravityScale = player.Data.InAirGravityScale;
+        player.Rigidbody.gravityScale = movementData.InAirGravityScale;
         player.SetVelocity(Vector2.zero);
         player.AddForce(force, ForceMode2D.Impulse);
         player.Flip(-player.FacingDirection);
@@ -29,7 +29,7 @@ public class WallJumpStrategy : MovementStrategyBase
 
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime >= player.Data.WallJumpAirControlDelay && !allowMovement)
+        if (elapsedTime >= movementData.WallJumpAirControlDelay && !allowMovement)
             allowMovement = true;
 
         if (player.CurrentVelocity.y <= Constants.Physics.MIN_FALL_VELOCITY)
@@ -42,7 +42,7 @@ public class WallJumpStrategy : MovementStrategyBase
 
         if (allowMovement && player.Input.HorizontalInput != 0f)
         {
-            player.SetVelocityX(player.Input.HorizontalInput * player.Data.AirSpeed);
+            player.SetVelocityX(player.Input.HorizontalInput * movementData.AirSpeed);
             player.Flip(player.Input.HorizontalInput);
         }
     }

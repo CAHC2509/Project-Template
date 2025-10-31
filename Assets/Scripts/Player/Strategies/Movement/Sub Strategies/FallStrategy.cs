@@ -46,7 +46,7 @@ public class FallStrategy : InAirStrategy
     {
         base.Exit();
 
-        player.Rigidbody.gravityScale = player.Data.DefaultGravityScale;
+        player.Rigidbody.gravityScale = movementData.DefaultGravityScale;
         currentFallMultiplier = 0f;
         entryVelocityX = 0f;
     }
@@ -67,7 +67,7 @@ public class FallStrategy : InAirStrategy
 
     private void HandleBufferedJump()
     {
-        bool bufferedJump = Time.time - lastTimeJumpPressed <= player.Data.JumpBuffer;
+        bool bufferedJump = Time.time - lastTimeJumpPressed <= movementData.JumpBuffer;
 
         if (player.IsGrounded && bufferedJump)
         {
@@ -87,12 +87,12 @@ public class FallStrategy : InAirStrategy
         player.SetStrategy(player.Strategies.WallGrab);
     }
 
-    private void HandleGroundTransitions()
+    protected virtual void HandleGroundTransitions()
     {
         if (!player.IsGrounded) return;
 
         bool movingHorizontally = player.Input.HorizontalInput != 0f;
-        bool isShortJump = currentFallMultiplier == player.Data.ShortFallMultiplier;
+        bool isShortJump = currentFallMultiplier == movementData.ShortFallMultiplier;
 
         if (movingHorizontally)
         {
@@ -111,7 +111,7 @@ public class FallStrategy : InAirStrategy
     {
         if (jumpByFallConsumed) return;
 
-        coyoteTimeExpired = Time.time - startTime > player.Data.CoyoteTime;
+        coyoteTimeExpired = Time.time - startTime > movementData.CoyoteTime;
         if (coyoteTimeExpired)
         {
             player.ConsumeJump();
@@ -121,12 +121,12 @@ public class FallStrategy : InAirStrategy
 
     protected virtual void ApplyFallSettings()
     {
-        airSpeed = player.Data.AirSpeed;
+        airSpeed = movementData.AirSpeed;
 
         if (currentFallMultiplier == 0f)
-            currentFallMultiplier = player.Data.FallMultiplier;
+            currentFallMultiplier = movementData.FallMultiplier;
 
-        player.Rigidbody.gravityScale = player.Data.InAirGravityScale * currentFallMultiplier;
+        player.Rigidbody.gravityScale = movementData.InAirGravityScale * currentFallMultiplier;
     }
 
     private void OnHorizontalInput(float input)
@@ -165,13 +165,13 @@ public class FallStrategy : InAirStrategy
 
     private void ApplyFallAcceleration()
     {
-        player.AddForce(Vector2.down * player.Data.FallAcceleration, ForceMode2D.Force);
+        player.AddForce(Vector2.down * movementData.FallAcceleration, ForceMode2D.Force);
     }
 
     private void LimitFallVelocity()
     {
-        if (player.CurrentVelocity.y < -player.Data.MaxFallSpeed)
-            player.SetVelocityY(-player.Data.MaxFallSpeed);
+        if (player.CurrentVelocity.y < -movementData.MaxFallSpeed)
+            player.SetVelocityY(-movementData.MaxFallSpeed);
     }
 
     public void SetFallMultiplier(float multiplier)

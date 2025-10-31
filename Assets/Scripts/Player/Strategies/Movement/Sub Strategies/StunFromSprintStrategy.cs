@@ -10,7 +10,7 @@ public class StunFromSprintStrategy : MovementStrategyBase
         base.Enter(player);
 
         player.SetVelocity(Vector2.zero);
-        Vector2 force = new Vector2(player.Data.SprintStunForce.x * -player.FacingDirection, player.Data.SprintStunForce.y);
+        Vector2 force = new Vector2(movementData.SprintStunForce.x * -player.FacingDirection, movementData.SprintStunForce.y);
         player.AddForce(force, ForceMode2D.Impulse);
 
         stunTimer = 0f;
@@ -22,7 +22,7 @@ public class StunFromSprintStrategy : MovementStrategyBase
 
         stunTimer += Time.deltaTime;
 
-        if (stunTimer >= player.Data.SprintStunDuration)
+        if (stunTimer >= movementData.SprintStunDuration)
             player.SetStrategy(player.Strategies.Idle);
     }
 }

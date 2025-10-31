@@ -20,8 +20,8 @@ public class LedgeClimbStrategy : MovementStrategyBase
 
         startPosition = player.transform.position;
         targetPosition = player.LedgePosition
-                         + Vector2.up * player.Data.LedgeClimbOffset.y
-                         + Vector2.right * player.FacingDirection * player.Data.LedgeClimbOffset.x;
+                         + Vector2.up * movementData.LedgeClimbOffset.y
+                         + Vector2.right * player.FacingDirection * movementData.LedgeClimbOffset.x;
 
         targetPositionVertical = new Vector2(startPosition.x, targetPosition.y);
 
@@ -43,7 +43,7 @@ public class LedgeClimbStrategy : MovementStrategyBase
 
         if (verticalPhase)
         {
-            player.transform.position = Vector2.MoveTowards(player.transform.position, targetPositionVertical, player.Data.LedgeClimbSpeed * Time.deltaTime);
+            player.transform.position = Vector2.MoveTowards(player.transform.position, targetPositionVertical, movementData.LedgeClimbSpeed * Time.deltaTime);
 
             if (Vector2.Distance(player.transform.position, targetPositionVertical) < 0.01f)
                 verticalPhase = false;
@@ -51,7 +51,7 @@ public class LedgeClimbStrategy : MovementStrategyBase
         else
         {
             Vector2 horizontalTarget = new Vector2(targetPosition.x, player.transform.position.y);
-            player.transform.position = Vector2.MoveTowards(player.transform.position, horizontalTarget, player.Data.LedgeClimbSpeed * Time.deltaTime);
+            player.transform.position = Vector2.MoveTowards(player.transform.position, horizontalTarget, movementData.LedgeClimbSpeed * Time.deltaTime);
 
             if (Vector2.Distance(player.transform.position, horizontalTarget) < 0.01f)
                 EndClimb();

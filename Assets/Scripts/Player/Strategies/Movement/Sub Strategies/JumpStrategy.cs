@@ -18,9 +18,9 @@ public class JumpStrategy : InAirStrategy
         base.Enter(player);
 
         rb = player.Rigidbody;
-        rb.gravityScale = player.Data.InAirGravityScale;
+        rb.gravityScale = movementData.InAirGravityScale;
         
-        gravityScaleDefault = player.Data.DefaultGravityScale;
+        gravityScaleDefault = movementData.DefaultGravityScale;
         jumpStartY = player.transform.position.y;
         jumpHoldTimer = 0f;
         jumpCutApplied = false;
@@ -28,7 +28,7 @@ public class JumpStrategy : InAirStrategy
         shortJump = false;
 
         float gravity = Mathf.Abs(Physics2D.gravity.y * gravityScaleDefault);
-        jumpForce = Mathf.Sqrt(2f * gravity * player.Data.MaxJumpHeight);
+        jumpForce = Mathf.Sqrt(2f * gravity * movementData.MaxJumpHeight);
 
         player.SetVelocityY(jumpForce);
         player.ConsumeJump();
@@ -63,7 +63,7 @@ public class JumpStrategy : InAirStrategy
 
         if (isRising && !isHoldingJump && !jumpCutApplied)
         {
-            float newVelocityY = rb.linearVelocity.y * player.Data.JumpCutMultiplier;
+            float newVelocityY = rb.linearVelocity.y * movementData.JumpCutMultiplier;
             player.SetVelocityY(newVelocityY);
 
             shortJump = true;
@@ -92,16 +92,16 @@ public class JumpStrategy : InAirStrategy
 
         jumpHoldTimer += Time.fixedDeltaTime;
 
-        if (jumpHoldTimer >= player.Data.JumpHoldTime)
+        if (jumpHoldTimer >= movementData.JumpHoldTime)
         {
             isHoldingJump = false;
             return;
         }
 
-        float progress = jumpHoldTimer / player.Data.JumpHoldTime;
+        float progress = jumpHoldTimer / movementData.JumpHoldTime;
         float currentMultiplier = (progress > 0.5f)
-            ? player.Data.JumpMultiplier * (1 - progress)
-            : player.Data.JumpMultiplier;
+            ? movementData.JumpMultiplier * (1 - progress)
+            : movementData.JumpMultiplier;
 
         float newVelocityY = rb.linearVelocity.y + currentMultiplier * Time.fixedDeltaTime;
         player.SetVelocityY(newVelocityY);
@@ -109,7 +109,7 @@ public class JumpStrategy : InAirStrategy
 
     protected virtual void TransitionToFall()
     {
-        float fallMultiplier = shortJump ? player.Data.ShortFallMultiplier : player.Data.FallMultiplier;
+        float fallMultiplier = shortJump ? movementData.ShortFallMultiplier : movementData.FallMultiplier;
         player.SetStrategy(player.Strategies.Fall);
         (player.Strategies.Fall as FallStrategy).SetFallMultiplier(fallMultiplier);
     }
@@ -117,7 +117,7 @@ public class JumpStrategy : InAirStrategy
     private void ClampMaxJumpHeight()
     {
         float currentHeight = player.transform.position.y - jumpStartY;
-        if (currentHeight >= player.Data.MaxJumpHeight && rb.linearVelocity.y > 0f)
+        if (currentHeight >= movementData.MaxJumpHeight && rb.linearVelocity.y > 0f)
             player.SetVelocityY(0f);
     }
 

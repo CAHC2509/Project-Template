@@ -92,16 +92,16 @@ public class UmbrellaStrategy : InAirStrategy
     private void ApplyForceInOppositeDirection()
     {
         player.SetVelocityX(0f);
-        Vector2 force = new Vector2(player.Data.UmbrellaCollissionForce * -player.FacingDirection, 0f);
+        Vector2 force = new Vector2(movementData.UmbrellaCollissionForce * -player.FacingDirection, 0f);
         player.AddForce(force, ForceMode2D.Impulse);
 
         airMovementEnabled = false;
-        stunTimer = player.Data.UmbrellaCollisionStunDuration;
+        stunTimer = movementData.UmbrellaCollisionStunDuration;
     }
 
     private void LimitFallSpeed()
     {
-        if (player.CurrentVelocity.y <= player.Data.UmbrellaMaxFallSpeed)
-            player.SetVelocityY(-player.Data.UmbrellaMaxFallSpeed);
+        if (player.CurrentVelocity.y <= movementData.UmbrellaMaxFallSpeed)
+            player.SetVelocityY(-movementData.UmbrellaMaxFallSpeed);
     }
 }

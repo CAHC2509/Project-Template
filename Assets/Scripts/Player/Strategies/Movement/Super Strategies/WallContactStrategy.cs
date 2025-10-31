@@ -45,7 +45,7 @@ public abstract class WallContactStrategy : MovementStrategyBase
 
     private void HandleJumpBuffer()
     {
-        bool hasBufferedJump = Time.time - lastJumpInputTime <= player.Data.JumpBuffer;
+        bool hasBufferedJump = Time.time - lastJumpInputTime <= movementData.JumpBuffer;
         if (hasBufferedJump && player.IsTouchingWall)
             player.SetStrategy(player.Strategies.WallJump);
     }
@@ -110,7 +110,7 @@ public abstract class WallContactStrategy : MovementStrategyBase
             return;
         }
 
-        if (releaseBufferTimer >= player.Data.WallReleaseBuffer)
+        if (releaseBufferTimer >= movementData.WallReleaseBuffer)
         {
             ResetReleaseBuffer();
             LeftWallAndFall();

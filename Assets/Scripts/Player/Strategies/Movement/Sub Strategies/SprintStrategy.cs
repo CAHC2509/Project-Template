@@ -56,7 +56,7 @@ public class SprintStrategy : GroundedStrategy
     {
         if (!player.IsGrounded)
         {
-            float finalVelocity = player.Data.AirSpeed * player.Data.LongFallAirSpeedMultiplier * player.FacingDirection;
+            float finalVelocity = movementData.AirSpeed * movementData.LongFallAirSpeedMultiplier * player.FacingDirection;
             (player.Strategies.FallFromLongJump as FallFromLongJumpStrategy).SetEntryVelocityX(finalVelocity);
             player.SetStrategy(player.Strategies.FallFromLongJump);
         }
@@ -81,12 +81,12 @@ public class SprintStrategy : GroundedStrategy
     {
         if (accelerationTimer < 1f)
         {
-            accelerationTimer += Time.fixedDeltaTime / player.Data.RunAccelerationTime;
+            accelerationTimer += Time.fixedDeltaTime / movementData.RunAccelerationTime;
             accelerationTimer = Mathf.Clamp01(accelerationTimer);
         }
 
-        float curveValue = player.Data.SprintAccelerationCurve.Evaluate(accelerationTimer);
-        float velocityX = curveValue * player.Data.SprintSpeed * player.FacingDirection;
+        float curveValue = movementData.SprintAccelerationCurve.Evaluate(accelerationTimer);
+        float velocityX = curveValue * movementData.SprintSpeed * player.FacingDirection;
 
         player.SetVelocityX(velocityX);
     }
