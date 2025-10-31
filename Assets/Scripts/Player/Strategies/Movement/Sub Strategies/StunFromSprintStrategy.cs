@@ -7,6 +7,7 @@ public class StunFromSprintStrategy : MovementStrategyBase
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.STUN_FROM_SPRINT;
+        collissionData = player.CollissionProfiles.StunFromSprint;
         base.Enter(player);
 
         player.SetVelocity(Vector2.zero);

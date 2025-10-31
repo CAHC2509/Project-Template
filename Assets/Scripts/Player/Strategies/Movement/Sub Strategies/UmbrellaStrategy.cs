@@ -7,6 +7,7 @@ public class UmbrellaStrategy : InAirStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.UMBRELLA_INFLATE;
+        collissionData = player.CollissionProfiles.Umbrella;
         base.Enter(player);
 
         player.SetVelocityY(0f);
@@ -60,7 +61,12 @@ public class UmbrellaStrategy : InAirStrategy
     private void OnDashInputPressed()
     {
         if (player.CanDash)
-            player.SetStrategy(player.Strategies.Dash);
+        {
+            if (player.IsGrounded)
+                player.SetStrategy(player.Strategies.GroundDash);
+            else
+                player.SetStrategy(player.Strategies.AirDash);
+        }
     }
 
     private void OnJumpInputCancelled()

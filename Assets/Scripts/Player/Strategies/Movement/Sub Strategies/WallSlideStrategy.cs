@@ -5,6 +5,7 @@ public class WallSlideStrategy : WallContactStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.WALL_SLIDE;
+        collissionData = player.CollissionProfiles.WallSlide;
         base.Enter(player);
 
         player.SetVelocity(Vector2.zero);

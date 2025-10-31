@@ -13,7 +13,8 @@ public class PlayerMovementStrategies
     public IMovementStrategy WallSlide { get; private set; }
     public IMovementStrategy WallRun { get; private set; }
     public IMovementStrategy WallJump { get; private set; }
-    public IMovementStrategy Dash { get; private set; }
+    public IMovementStrategy GroundDash { get; private set; }
+    public IMovementStrategy AirDash { get; private set; }
     public IMovementStrategy Sprint { get; private set; }
     public IMovementStrategy StunFromSprint { get; private set; }
     public IMovementStrategy LedgeClimb { get; private set; }
@@ -32,7 +33,8 @@ public class PlayerMovementStrategies
         WallSlide = new WallSlideStrategy();
         WallRun = new WallRunStrategy();
         WallJump = new WallJumpStrategy();
-        Dash = new DashStrategy();
+        AirDash = new AirDashStrategy();
+        GroundDash = new GroundDashStrategy();
         Sprint = new SprintStrategy();
         StunFromSprint = new StunFromSprintStrategy();
         LedgeClimb = new LedgeClimbStrategy();

@@ -8,10 +8,12 @@ public class WallGrabStrategy : WallContactStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.WALL_GRAB;
+        collissionData = player.CollissionProfiles.WallGrab;
         base.Enter(player);
 
         currentDuration = 0f;
-
+        
+        //SnapPlayerToWall();
         player.SetVelocity(Vector2.zero);
         player.ResetExtraJump();
         player.ResetDash();

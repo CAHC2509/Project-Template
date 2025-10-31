@@ -12,6 +12,7 @@ public class FallStrategy : InAirStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.FALL_ENTRY;
+        collissionData = player.CollissionProfiles.Fall;
         base.Enter(player);
 
         ApplyFallSettings();
@@ -29,7 +30,7 @@ public class FallStrategy : InAirStrategy
         base.Update();
 
         HandleBufferedJump();
-        HandleWallSlide();
+        HandleWallTransition();
         HandleGroundTransitions();
         HandleCoyoteTime();
     }
@@ -78,7 +79,7 @@ public class FallStrategy : InAirStrategy
         }
     }
 
-    private void HandleWallSlide()
+    private void HandleWallTransition()
     {
         if (player.Input.HorizontalInput == 0f) return;
         if (player.IsGrounded) return;
@@ -91,18 +92,17 @@ public class FallStrategy : InAirStrategy
     {
         if (!player.IsGrounded) return;
 
-        bool movingHorizontally = player.Input.HorizontalInput != 0f;
         bool isShortJump = currentFallMultiplier == movementData.ShortFallMultiplier;
 
-        if (movingHorizontally)
+        if (player.Input.HorizontalInput != 0f)
         {
             (player.Strategies.Run as MovementStrategyBase).SetEntryAnimation(Constants.PlayerAnimations.LAND_TO_RUN);
             player.SetStrategy(player.Strategies.Run);
         }
         else
         {
-            string landAnim = isShortJump ? Constants.PlayerAnimations.HOP_LAND : Constants.PlayerAnimations.LAND;
-            (player.Strategies.Idle as MovementStrategyBase).SetEntryAnimation(landAnim);
+            string landAnimation = isShortJump ? Constants.PlayerAnimations.HOP_LAND : Constants.PlayerAnimations.LAND;
+            (player.Strategies.Idle as MovementStrategyBase).SetEntryAnimation(landAnimation);
             player.SetStrategy(player.Strategies.Idle);
         }
     }
@@ -160,7 +160,12 @@ public class FallStrategy : InAirStrategy
     private void OnDashInputPressed()
     {
         if (player.CanDash)
-            player.SetStrategy(player.Strategies.Dash);
+        {
+            if (player.IsGrounded)
+                player.SetStrategy(player.Strategies.GroundDash);
+            else
+                player.SetStrategy(player.Strategies.AirDash);
+        }
     }
 
     private void ApplyFallAcceleration()

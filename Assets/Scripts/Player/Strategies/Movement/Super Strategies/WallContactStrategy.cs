@@ -10,7 +10,7 @@ public abstract class WallContactStrategy : MovementStrategyBase
     public override void Enter(PlayerMovementController player)
     {
         base.Enter(player);
-
+        
         enterFacingDirection = player.FacingDirection;
         releaseBufferTimer = 0f;
         lastJumpInputTime = -Mathf.Infinity;
@@ -69,7 +69,12 @@ public abstract class WallContactStrategy : MovementStrategyBase
         if (player.IsTouchingWall &&  player.Input.HorizontalInput == -enterFacingDirection)
         {
             player.Flip(-enterFacingDirection);
-            player.SetStrategy(player.Strategies.Dash);
+
+            if (player.IsGrounded)
+                player.SetStrategy(player.Strategies.GroundDash);
+            else
+                player.SetStrategy(player.Strategies.AirDash);
+
             return;
         }
 

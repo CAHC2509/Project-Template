@@ -6,6 +6,7 @@ public abstract class GroundedStrategy : MovementStrategyBase
     {
         base.Enter(player);
 
+        SnapPlayerToGround();
         player.SetVelocityY(0f);
         player.ResetJump();
         player.ResetExtraJump();
@@ -47,6 +48,11 @@ public abstract class GroundedStrategy : MovementStrategyBase
     protected virtual void OnDashInputPressed()
     {
         if (player.CanDash)
-            player.SetStrategy(player.Strategies.Dash);
+        {
+            if (player.IsGrounded)
+                player.SetStrategy(player.Strategies.GroundDash);
+            else
+                player.SetStrategy(player.Strategies.AirDash);
+        }
     }
 }

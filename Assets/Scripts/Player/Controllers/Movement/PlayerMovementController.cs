@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerMovementController : PlayerComponentBase, IPlayerMovementController
 {
     [field: SerializeField] public PlayerMovementData MovementData { get; private set; }
+    [field: SerializeField] public PlayerCollissionProfiles CollissionProfiles { get; private set; }
 
     public IPlayerInputController Input { get; private set; }
     public IPlayerView View { get; private set; }
@@ -11,7 +12,6 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     public Rigidbody2D Rigidbody => rb;
     public Vector2 CurrentVelocity { get; private set; }
     public Vector2 GroundPosition => groundChecker.GroundPosition;
-    public Vector2 WallPosition => wallChecker.WallPosition;
     public Vector2 LedgePosition => ledgeChecker.LedgePosition;
     public float FacingDirection { get; private set; }
     public bool CanDash { get; private set; }
@@ -30,7 +30,6 @@ public class PlayerMovementController : PlayerComponentBase, IPlayerMovementCont
     private IMovementStrategy currentStrategy;
     private PlayerCollissionAdjuster collissionAdjuster;
     private Rigidbody2D rb;
-
 
     private void Awake()
     {

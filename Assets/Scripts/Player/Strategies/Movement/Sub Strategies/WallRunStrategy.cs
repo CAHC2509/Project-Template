@@ -7,6 +7,7 @@ public class WallRunStrategy : WallContactStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.WALL_RUN;
+        collissionData = player.CollissionProfiles.WallRun;
         base.Enter(player);
 
         currentDuration = 0f;

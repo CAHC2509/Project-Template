@@ -7,6 +7,7 @@ public class RunStrategy : GroundedStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.RUN;
+        collissionData = player.CollissionProfiles.Run;
         base.Enter(player);
 
         accelerationTimer = 0f;

@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 3515153398140485467}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0.325, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -232,9 +232,9 @@ Transform:
   m_Children:
   - {fileID: 6045211676494550641}
   - {fileID: 2673208921816416148}
-  - {fileID: 6337803318936722175}
   - {fileID: 8723898577597950583}
   - {fileID: 1023950459173806831}
+  - {fileID: 6337803318936722175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5038680596579310545
@@ -281,7 +281,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.65, y: 2}
+  m_Size: {x: 0.85, y: 2}
   m_EdgeRadius: 0
 --- !u!50 &1475155919368064487
 Rigidbody2D:
@@ -415,7 +415,7 @@ MonoBehaviour:
     CoyoteTime: 0.15
     JumpBuffer: 0.15
     HasExtraJump: 1
-    ExtraJumpForce: 12.5
+    ExtraJumpForce: 13.5
     AirSpeed: 5.41
     DefaultGravityScale: 1
     InAirGravityScale: 3
@@ -434,132 +434,58 @@ MonoBehaviour:
     WallJumpAirControlDelay: 0.2
     DashSpeed: 15
     DashDuration: 0.25
-    MinDashDuration: 0.15
+    MinDashDuration: 0.1
     UmbrellaMaxFallSpeed: 2.5
     UmbrellaCollissionForce: 2
     UmbrellaCollisionStunDuration: 0.25
     LedgeClimbSpeed: 10
     LedgeClimbOffset: {x: 0.5, y: 1}
-  <CollisionProfiles>k__BackingField:
+  <CollissionProfiles>k__BackingField:
     Idle:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 2}
-      groundCheckPosition: -1
-      wallCheckPosition: -0.25
-      hardSurfaceCheckPosition: -0.25
-      ledgeCheckPosition: 0.3
+      colliderSize: {x: 0.85, y: 2}
     Run:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 2}
-      groundCheckPosition: -1
-      wallCheckPosition: -0.25
-      hardSurfaceCheckPosition: -0.25
-      ledgeCheckPosition: 0.3
+      colliderSize: {x: 0.85, y: 2}
     Jump:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.7}
-      groundCheckPosition: -0.85
-      wallCheckPosition: -0.2
-      hardSurfaceCheckPosition: -0.2
-      ledgeCheckPosition: 0.325
+      colliderSize: {x: 0.85, y: 1.5}
     Fall:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.5}
-      groundCheckPosition: -0.75
-      wallCheckPosition: -0.1
-      hardSurfaceCheckPosition: -0.1
-      ledgeCheckPosition: 0.35
-    LongJump:
-      colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.7}
-      groundCheckPosition: -0.85
-      wallCheckPosition: -0.2
-      hardSurfaceCheckPosition: -0.2
-      ledgeCheckPosition: 0.325
-    FallFromLongJump:
-      colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.5}
-      groundCheckPosition: -0.75
-      wallCheckPosition: -0.1
-      hardSurfaceCheckPosition: -0.1
-      ledgeCheckPosition: 0.35
+      colliderSize: {x: 0.85, y: 1.5}
     ExtraJump:
-      colliderOffset: {x: 0, y: -0.15}
-      colliderSize: {x: 0.65, y: 1.5}
-      groundCheckPosition: -0.9
-      wallCheckPosition: -0.25
-      hardSurfaceCheckPosition: -0.25
-      ledgeCheckPosition: 0.5
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.85, y: 2}
     WallGrab:
-      colliderOffset: {x: 0.3, y: 0}
-      colliderSize: {x: 0.65, y: 1.75}
-      groundCheckPosition: -0.875
-      wallCheckPosition: -0.65
-      hardSurfaceCheckPosition: -0.65
-      ledgeCheckPosition: 0.85
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.85, y: 1.5}
     WallSlide:
-      colliderOffset: {x: 0.3, y: 0}
-      colliderSize: {x: 0.65, y: 1.75}
-      groundCheckPosition: -0.875
-      wallCheckPosition: -0.65
-      hardSurfaceCheckPosition: -0.65
-      ledgeCheckPosition: 0.85
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.85, y: 1.5}
     WallRun:
-      colliderOffset: {x: 0.3, y: 0}
-      colliderSize: {x: 0.65, y: 1.75}
-      groundCheckPosition: -0.875
-      wallCheckPosition: -0.65
-      hardSurfaceCheckPosition: -0.65
-      ledgeCheckPosition: 0.85
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.85, y: 1.5}
     WallJump:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.7}
-      groundCheckPosition: -0.85
-      wallCheckPosition: -0.2
-      hardSurfaceCheckPosition: -0.2
-      ledgeCheckPosition: 0.325
-    Dash:
-      colliderOffset: {x: 0, y: -0.25}
-      colliderSize: {x: 0.65, y: 1.5}
-      groundCheckPosition: -0.5
-      wallCheckPosition: 0
-      hardSurfaceCheckPosition: 0
-      ledgeCheckPosition: 0.5
+      colliderSize: {x: 0.85, y: 2}
+    GroundDash:
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.65, y: 2}
     AirDash:
       colliderOffset: {x: 0, y: 0}
       colliderSize: {x: 0.85, y: 1}
-      groundCheckPosition: -0.5
-      wallCheckPosition: 0
-      hardSurfaceCheckPosition: 0
-      ledgeCheckPosition: 0.5
     Sprint:
-      colliderOffset: {x: 0, y: -0.25}
-      colliderSize: {x: 0.85, y: 1.5}
-      groundCheckPosition: -0.5
-      wallCheckPosition: 0
-      hardSurfaceCheckPosition: 0
-      ledgeCheckPosition: 0.5
+      colliderOffset: {x: 0, y: 0}
+      colliderSize: {x: 0.65, y: 1.5}
     StunFromSprint:
       colliderOffset: {x: 0, y: 0}
       colliderSize: {x: 0.65, y: 2}
-      groundCheckPosition: -1
-      wallCheckPosition: -0.25
-      hardSurfaceCheckPosition: -0.25
-      ledgeCheckPosition: 0.3
     LedgeClimb:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.65, y: 1.5}
-      groundCheckPosition: -0.75
-      wallCheckPosition: -0.25
-      hardSurfaceCheckPosition: -0.25
-      ledgeCheckPosition: 0.65
+      colliderSize: {x: 0.85, y: 2}
     Umbrella:
       colliderOffset: {x: 0, y: 0}
-      colliderSize: {x: 0.75, y: 1.5}
-      groundCheckPosition: -0.75
-      wallCheckPosition: 0
-      hardSurfaceCheckPosition: 0
-      ledgeCheckPosition: 0.75
+      colliderSize: {x: 0.8, y: 2}
 --- !u!114 &3632666224383825687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +502,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   groundCheckOrigin: {fileID: 2673208921816416148}
-  checkWidth: 0.65
   checkHeight: 0.075
   rayCount: 3
 --- !u!114 &8796546838354194659
@@ -598,7 +523,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   ledgeCheckOrigin: {fileID: 6337803318936722175}
-  forwardCheckDistance: 0.6
+  forwardCheckDistance: 0.1
   downwardCheckDistance: 0.1
 --- !u!114 &3616301591364721630
 MonoBehaviour:
@@ -616,7 +541,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   wallCheckOrigin: {fileID: 8723898577597950583}
-  checkDistance: 0.55
+  checkDistance: 0.1
 --- !u!114 &5722320527002996181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +558,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   hardSurfaceCheckOrigin: {fileID: 1023950459173806831}
-  checkDistance: 0.55
+  checkDistance: 0.1
 --- !u!114 &4640881948144567441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,7 +626,7 @@ Transform:
   m_GameObject: {fileID: 7715457666405196928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0.325, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -732,7 +657,7 @@ Transform:
   m_GameObject: {fileID: 8771785398902453289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0.325, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

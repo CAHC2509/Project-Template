@@ -10,6 +10,7 @@ public class LedgeClimbStrategy : MovementStrategyBase
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.LEDGE_CLIMB;
+        collissionData = player.CollissionProfiles.LedgeClimb;
         base.Enter(player);
 
         if (!player.CanGrabLedge)

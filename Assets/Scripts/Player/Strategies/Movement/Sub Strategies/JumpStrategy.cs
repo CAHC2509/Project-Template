@@ -15,6 +15,7 @@ public class JumpStrategy : InAirStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.JUMP;
+        collissionData = player.CollissionProfiles.Jump;
         base.Enter(player);
 
         rb = player.Rigidbody;
@@ -146,6 +147,11 @@ public class JumpStrategy : InAirStrategy
     private void OnDashInputPressed()
     {
         if (player.CanDash)
-            player.SetStrategy(player.Strategies.Dash);
+        {
+            if (player.IsGrounded)
+                player.SetStrategy(player.Strategies.GroundDash);
+            else
+                player.SetStrategy(player.Strategies.AirDash);
+        }
     }
 }

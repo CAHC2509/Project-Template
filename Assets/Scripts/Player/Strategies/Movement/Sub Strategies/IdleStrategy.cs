@@ -5,6 +5,7 @@ public class IdleStrategy : GroundedStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.IDLE;
+        collissionData = player.CollissionProfiles.Idle;
         base.Enter(player);
     }
 

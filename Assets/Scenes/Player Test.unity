@@ -127,82 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1023950459173806831, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.325
-      objectReference: {fileID: 0}
-    - target: {fileID: 2673208921816416148, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.Fall.wallCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallRun.colliderSize.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallGrab.colliderSize.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.Dash.groundCheckPosition
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallRun.colliderOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallSlide.colliderSize.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallGrab.colliderOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.Sprint.groundCheckPosition
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallGrab.wallCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallSlide.colliderOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallSlide.wallCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.Fall.hardSurfaceCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallGrab.hardSurfaceCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.FallFromLongJump.wallCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.WallSlide.hardSurfaceCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2989275750468148196, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: <CollisionProfiles>k__BackingField.FallFromLongJump.hardSurfaceCheckPosition
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3616301591364721630, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: checkDistance
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 4566388433878072209, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
       propertyPath: m_LocalPosition.x
       value: 41.5
@@ -243,29 +167,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5722320527002996181, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: checkDistance
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6337803318936722175, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.325
-      objectReference: {fileID: 0}
     - target: {fileID: 6734219944158495011, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8723898577597950583, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.325
-      objectReference: {fileID: 0}
-    - target: {fileID: 8796546838354194659, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: forwardCheckDistance
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8796546838354194659, guid: faa9b19f99ce4834bb3b6d2f733d1dda, type: 3}
-      propertyPath: downwardCheckDistance
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -7,6 +7,7 @@ public class SprintStrategy : GroundedStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.SPRINT;
+        collissionData = player.CollissionProfiles.Sprint;
         base.Enter(player);
 
         accelerationTimer = 1f;

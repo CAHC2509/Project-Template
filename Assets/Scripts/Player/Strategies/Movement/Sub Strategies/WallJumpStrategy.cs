@@ -9,6 +9,7 @@ public class WallJumpStrategy : MovementStrategyBase
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.JUMP;
+        collissionData = player.CollissionProfiles.WallJump;
         base.Enter(player);
 
         defaultGravityScale = player.Rigidbody.gravityScale;
@@ -65,8 +66,10 @@ public class WallJumpStrategy : MovementStrategyBase
 
     private void OnDashInputPressed()
     {
-        if (player.CanDash)
-            player.SetStrategy(player.Strategies.Dash);
+        if (player.IsGrounded)
+            player.SetStrategy(player.Strategies.GroundDash);
+        else
+            player.SetStrategy(player.Strategies.AirDash);
     }
 
     private void OnJumpInputPressed()

@@ -7,6 +7,7 @@ public class ExtraJumpStrategy : InAirStrategy
     public override void Enter(PlayerMovementController player)
     {
         animationName = Constants.PlayerAnimations.EXTRA_JUMP;
+        collissionData = player.CollissionProfiles.ExtraJump;
         base.Enter(player);
 
         defaultGravityScale = player.Rigidbody.gravityScale;
