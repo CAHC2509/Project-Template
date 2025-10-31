@@ -1,19 +1,29 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class GroundChecker : MonoBehaviour, IGroundChecker
 {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheckOrigin;
-    [SerializeField] private float checkWidth = 0.65f;
     [SerializeField] private float checkHeight = 0.075f;
     [SerializeField, Range(1, 10)] private int rayCount = 3;
 
+    private BoxCollider2D boxCollider;
+    private float checkWidth = 0.65f;
+
+    public Vector2 GroundPosition => groundCheckOrigin.position;
     public bool IsGrounded => CheckGround();
+
+    private void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
 
     private bool CheckGround()
     {
         if (groundCheckOrigin == null) return false;
 
+        checkWidth = boxCollider.bounds.size.x;
         float halfWidth = checkWidth / 2f;
         float spacing = rayCount > 1 ? checkWidth / (rayCount - 1) : 0f;
         bool grounded = false;
@@ -36,7 +46,8 @@ public class GroundChecker : MonoBehaviour, IGroundChecker
 
     private void OnDrawGizmosSelected()
     {
-        if (groundCheckOrigin == null) return;
+        if (!Application.isPlaying) return;
+        if (groundCheckOrigin == null && boxCollider == null) return;
 
         Gizmos.color = IsGrounded ? Color.green : Color.red;
 
